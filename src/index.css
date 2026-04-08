@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-sans text-stone-700 bg-cream;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+    line-height: 1.2;
+  }
+
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl font-light; }
+  h2 { @apply text-3xl md:text-4xl font-light; }
+  h3 { @apply text-2xl md:text-3xl font-light; }
+  h4 { @apply text-xl md:text-2xl font-light; }
+
+  p {
+    @apply leading-relaxed text-stone-600;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-28;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-nude-600 text-white font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:bg-nude-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-transparent border border-nude-400 text-nude-700 font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:bg-nude-50 hover:border-nude-500 hover:-translate-y-0.5;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-transparent border border-white/60 text-white font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white;
+  }
+
+  .btn-phone {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-black text-white font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:bg-stone-800 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .tag {
+    @apply inline-block text-xs font-sans font-medium tracking-widest uppercase text-nude-600 mb-3;
+  }
+
+  .divider-ornament {
+    @apply flex items-center gap-3 my-4;
+  }
+
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    @apply flex-1 h-px bg-sand-200;
+  }
+
+  .card-service {
+    @apply bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-sand-200 rounded-xl text-stone-700 placeholder-stone-400 focus:outline-none focus:border-nude-400 focus:ring-2 focus:ring-nude-100 transition-all duration-200;
+  }
+
+  .section-title {
+    @apply font-serif font-light text-stone-800;
+  }
+
+  .prose-custom {
+    @apply text-stone-600 leading-relaxed;
+  }
+
+  .prose-custom p {
+    @apply mb-4;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 bg-sage-50 text-sage-700 text-xs font-medium rounded-full border border-sage-200;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl border border-white/60 shadow-sm;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-texture {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9ae82' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-sand-50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-sand-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-sand-400;
+}

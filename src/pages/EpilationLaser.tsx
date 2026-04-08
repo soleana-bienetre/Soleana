@@ -1,0 +1,808 @@
+import { Link } from 'react-router-dom';
+import {
+  Zap,
+  CheckCircle,
+  Clock,
+  Phone,
+  AlertCircle,
+  Sun,
+  Snowflake,
+  Shield,
+  Star,
+  Info,
+  Calendar,
+  Users,
+  Sparkles,
+} from 'lucide-react';
+import CTABanner from '../components/ui/CTABanner';
+import FAQAccordion from '../components/ui/FAQAccordion';
+import Breadcrumb from '../components/ui/Breadcrumb';
+
+// ---------------------------------------------------------------------------
+// Data
+// ---------------------------------------------------------------------------
+
+const zonesFemme: { zone: string; prix: string }[] = [
+  { zone: 'Diagnostic gratuit', prix: 'Offert' },
+  { zone: 'Aisselles', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Avant-bras', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Bras entier', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Ligne ventrale', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Maillot simple', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Maillot échancré', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Maillot américain', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Maillot intégral', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Inter-fessier', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Fesses', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Cuisses', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Demi-jambes', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Jambes entières', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Mains ou pieds', prix: '[PRIX À DÉFINIR]' },
+];
+
+const zonesHomme: { zone: string; prix: string }[] = [
+  { zone: 'Diagnostic gratuit', prix: 'Offert' },
+  { zone: 'Aisselles', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Avant-bras', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Bras entier', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Épaules', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Dos haut ou bas', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Dos entier', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Col de chemise', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Torse', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Torse + ventre', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Maillot échancré', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Fesses', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Cuisses', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Demi-jambes', prix: '[PRIX À DÉFINIR]' },
+  { zone: 'Jambes entières', prix: '[PRIX À DÉFINIR]' },
+];
+
+const forfaitsFemme: { titre: string; zones: string; note?: string }[] = [
+  {
+    titre: 'Forfait 2 zones',
+    zones: 'Combinaison libre de 2 zones au choix',
+    note: 'Sur devis',
+  },
+  {
+    titre: 'Forfait 3 zones',
+    zones: 'Combinaison libre de 3 zones au choix',
+    note: 'Sur devis',
+  },
+  {
+    titre: 'Forfait 4 zones',
+    zones: 'Combinaison libre de 4 zones au choix',
+    note: 'Sur devis',
+  },
+  {
+    titre: 'Aisselles + Maillot',
+    zones: 'Aisselles · Maillot (simple, échancré ou américain)',
+  },
+  {
+    titre: 'Aisselles + Demi-jambes',
+    zones: 'Aisselles · Demi-jambes',
+  },
+  {
+    titre: 'Aisselles + Jambes entières',
+    zones: 'Aisselles · Jambes entières',
+  },
+  {
+    titre: 'Maillot + Demi-jambes',
+    zones: 'Maillot · Demi-jambes',
+  },
+  {
+    titre: 'Maillot + Jambes entières',
+    zones: 'Maillot · Jambes entières',
+  },
+  {
+    titre: 'Aisselles + Jambes + Maillot',
+    zones: 'Aisselles · Jambes entières · Maillot',
+    note: 'Trio complet',
+  },
+  {
+    titre: 'Aisselles + Demi-jambes + Maillot',
+    zones: 'Aisselles · Demi-jambes · Maillot',
+    note: 'Trio essentiel',
+  },
+  {
+    titre: 'Bras + Jambes + Aisselles + Maillot',
+    zones: 'Aisselles · Bras entier · Jambes entières · Maillot',
+    note: 'Forfait intégral corps',
+  },
+];
+
+const conseilsAvant: string[] = [
+  'Raser la zone à traiter 24 à 48 h avant la séance (ne pas épiler à la cire ni à la pince)',
+  "Ne pas s\'exposer au soleil ou aux UV 4 semaines avant la séance",
+  'Éviter les crèmes autobronzantes et les produits photosensibilisants',
+  'Prévenir votre praticienne de tout traitement médical en cours',
+  'Arriver avec une peau propre, sans déodorant ni parfum sur la zone',
+  "Informer votre praticienne en cas de grossesse, d\'allaitement ou de maladie de peau",
+];
+
+const conseilsApres: string[] = [
+  'Appliquer une crème apaisante ou un gel aloe vera sur la zone traitée',
+  'Éviter tout contact avec la chaleur (bain chaud, sauna, hammam) pendant 48 h',
+  "Ne pas s\'exposer au soleil sans écran total (SPF 50+) pendant 4 semaines",
+  'Ne pas raser la zone avant que les poils restants aient naturellement chuté (7 à 21 jours)',
+  'Éviter les frottements et vêtements serrés sur la zone traitée',
+  'Hydrater quotidiennement la peau entre les séances',
+];
+
+const faqItems = [
+  {
+    question: "L\'épilation laser est-elle douloureuse ?",
+    answer:
+      "La technologie laser utilisée à Soléana Bien-Être est conçue pour maximiser le confort. La sensation ressentie s\'apparente à un léger picotement ou à un élastique qui claquerait sur la peau. L\'intensité dépend de la zone traitée et de la sensibilité de chacune. Des systèmes de refroidissement intégrés permettent d\'atténuer la chaleur en temps réel.",
+  },
+  {
+    question: 'Combien de séances sont nécessaires pour un résultat durable ?',
+    answer:
+      "En moyenne, il faut entre 6 et 10 séances pour obtenir un résultat durable. Ce nombre varie selon la zone traitée, votre type de peau, la couleur et la densité du poil, ainsi que votre profil hormonal. Des séances d\'entretien annuelles ou bisannuelles peuvent être nécessaires, notamment en cas de fluctuations hormonales.",
+  },
+  {
+    question: 'À quelle fréquence dois-je revenir entre les séances ?',
+    answer:
+      "Les séances sont espacées de 6 à 8 semaines afin de respecter les cycles de croissance du poil. Cet intervalle est crucial : traiter le poil pendant sa phase active de croissance (anagène) garantit l\'efficacité de la séance. Votre praticienne établira un calendrier personnalisé lors du diagnostic gratuit.",
+  },
+  {
+    question: "L\'épilation laser convient-elle à tous les types de peau ?",
+    answer:
+      "L\'épilation laser est efficace sur la majorité des phototypes. Les résultats sont optimaux sur les peaux claires avec des poils foncés. Sur les peaux mates à foncées, des protocoles adaptés sont mis en place pour garantir sécurité et efficacité. En revanche, le laser n\'est pas indiqué sur les poils blancs, blonds très clairs ou roux, car ces pigmentations n\'absorbent pas suffisamment la lumière.",
+  },
+  {
+    question: 'Que se passe-t-il lors du diagnostic gratuit ?',
+    answer:
+      "Le diagnostic gratuit est un rendez-vous d\'environ 20 à 30 minutes pendant lequel votre praticienne analyse votre phototype, la nature de vos poils et vos antécédents médicaux. Elle vous explique le protocole adapté à votre profil, répond à toutes vos questions et établit un devis personnalisé. Aucune séance n\'a lieu lors de ce premier rendez-vous si vous le souhaitez.",
+  },
+  {
+    question: 'Puis-je continuer à me raser entre les séances ?',
+    answer:
+      'Oui, le rasage est autorisé et même recommandé entre les séances. En revanche, il est impératif de ne pas épiler à la cire, à la pince ou au fil, car ces méthodes retirent le bulbe pileux — cible de la lumière laser — et rendraient la séance inefficace.',
+  },
+  {
+    question: 'Comment fonctionne la cure épilation ?',
+    answer:
+      "La cure épilation propose 7 séances payantes, et la 8e est offerte après les 7 séances réalisées. En cas d\'arrêt anticipé, les séances effectuées sont recalculées au tarif unitaire et la différence est créditée en avoir utilisable sur des soins, massages ou produits. Au-delà de 6 séances réalisées, l\'avoir est limité à 1 séance maximum. Aucun remboursement en espèces n\'est effectué.",
+  },
+  {
+    question: "Y a-t-il des contre-indications à l\'épilation laser ?",
+    answer:
+      "Certaines situations nécessitent de reporter ou d\'adapter les séances : grossesse et allaitement, exposition solaire récente (bronzage actif), prise de médicaments photosensibilisants, certaines maladies de peau (psoriasis, eczéma actif), antécédents de keloides ou de cicatrices hypertrophiques. Un bilan complet est effectué lors du diagnostic pour identifier toute contre-indication.",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Sous-composants
+// ---------------------------------------------------------------------------
+
+interface ZoneTableProps {
+  titre: string;
+  genre: 'Femme' | 'Homme';
+  zones: { zone: string; prix: string }[];
+  accentClass: string;
+  headerClass: string;
+}
+
+function ZoneTable({ titre, genre, zones, accentClass, headerClass }: ZoneTableProps) {
+  return (
+    <div className="card-service overflow-hidden">
+      <div className={`${headerClass} px-6 py-4 flex items-center gap-3`}>
+        <span className="font-serif text-2xl font-light text-white">{titre}</span>
+        <span className="badge bg-white/20 text-white border-white/30 text-xs">
+          {genre}
+        </span>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-sand-100">
+              <th className="text-left px-6 py-3 font-sans font-semibold text-stone-500 uppercase tracking-wider text-xs">
+                Zone
+              </th>
+              <th className="text-right px-6 py-3 font-sans font-semibold text-stone-500 uppercase tracking-wider text-xs">
+                Tarif séance
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {zones.map((row, i) => (
+              <tr
+                key={i}
+                className={`border-b border-sand-50 transition-colors duration-150 ${
+                  row.zone === 'Diagnostic gratuit'
+                    ? 'bg-sage-50'
+                    : i % 2 === 0
+                    ? 'bg-white hover:bg-sand-50'
+                    : 'bg-sand-50/40 hover:bg-sand-50'
+                }`}
+              >
+                <td className="px-6 py-3.5 font-sans text-stone-700">
+                  {row.zone === 'Diagnostic gratuit' ? (
+                    <span className="flex items-center gap-2">
+                      <Star size={14} className="text-sage-600 shrink-0" />
+                      <span className="font-medium text-sage-700">{row.zone}</span>
+                    </span>
+                  ) : (
+                    row.zone
+                  )}
+                </td>
+                <td
+                  className={`px-6 py-3.5 text-right font-sans font-medium ${
+                    row.zone === 'Diagnostic gratuit'
+                      ? 'text-sage-700'
+                      : accentClass
+                  }`}
+                >
+                  {row.prix}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="px-6 py-3 bg-sand-50 border-t border-sand-100">
+        <p className="text-xs text-stone-400 font-sans">
+          * Tarifs indicatifs — nous contacter pour un devis personnalisé.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Page principale
+// ---------------------------------------------------------------------------
+
+export default function EpilationLaser() {
+  return (
+    <main className="bg-cream">
+      {/* ------------------------------------------------------------------ */}
+      {/* HERO                                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="relative bg-gradient-to-br from-sand-50 via-nude-50 to-cream overflow-hidden">
+        <div className="absolute inset-0 bg-texture opacity-60 pointer-events-none" />
+
+        {/* Decorative circle */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-nude-100/40 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-sand-200/30 blur-2xl pointer-events-none" />
+
+        <div className="relative container-wide section-padding">
+          <Breadcrumb
+            items={[
+              { label: 'Nos prestations', href: '/prestations' },
+              { label: 'Épilation laser' },
+            ]}
+          />
+
+          <div className="mt-8 max-w-3xl">
+            <span className="tag">Institut Soléana Bien-Être · Venerque</span>
+            <h1 className="mt-2 mb-6 text-stone-800 text-balance">
+              Épilation laser<br />
+              <span className="text-nude-600">à Venerque</span>
+            </h1>
+            <p className="text-lg text-stone-600 leading-relaxed max-w-2xl mb-8">
+              Dites adieu aux poils indésirables avec l'épilation laser proposée à l'institut Soléana Bien-Être,
+              situé au cœur de Venerque. Notre technologie de pointe, associée à une approche personnalisée,
+              vous garantit confort, sécurité et résultats durables. Toutes les zones du corps et tous les
+              phototypes sont accueillis après un diagnostic préalable gratuit.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <Calendar size={16} />
+                Réserver mon diagnostic gratuit
+              </a>
+              <a href="tel:0762169814" className="btn-phone">
+                <Phone size={16} />
+                07 62 16 98 14
+              </a>
+            </div>
+
+            {/* Quick badges */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {[
+                { icon: <Star size={12} />, label: 'Diagnostic offert' },
+                { icon: <Shield size={12} />, label: 'Protocole sécurisé' },
+                { icon: <Users size={12} />, label: 'Femme & Homme' },
+                { icon: <Sparkles size={12} />, label: 'Résultats durables' },
+              ].map((b, i) => (
+                <span key={i} className="badge">
+                  {b.icon}
+                  {b.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* QU'EST-CE QUE L'ÉPILATION LASER ?                                  */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Texte */}
+            <div>
+              <span className="tag">La technologie</span>
+              <h2 className="section-title mb-6">
+                Qu'est-ce que l'épilation laser ?
+              </h2>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                L'épilation laser repose sur le principe de la{' '}
+                <strong className="text-stone-700 font-medium">photothermolyse sélective</strong> : une
+                lumière monochromatique est absorbée par la mélanine contenue dans le bulbe pileux, générant
+                une chaleur ciblée qui détruit définitivement le follicule sans endommager les tissus
+                environnants.
+              </p>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Contrairement à l'épilation à la lumière pulsée (IPL), le laser offre une longueur d'onde
+                précise et une énergie maîtrisée, ce qui garantit une efficacité supérieure tout en
+                préservant le confort et la sécurité de la peau.
+              </p>
+              <p className="text-stone-600 leading-relaxed">
+                Le traitement doit être réalisé sur plusieurs séances espacées de 6 à 8 semaines, car seuls
+                les poils en phase active de croissance (phase anagène) peuvent être définitivement détruits.
+              </p>
+            </div>
+
+            {/* Icônes / Points clés */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                {
+                  icon: <Zap size={22} className="text-nude-600" />,
+                  titre: 'Technologie laser',
+                  desc: 'Lumière monochromatique ciblant précisément le bulbe pileux',
+                },
+                {
+                  icon: <Shield size={22} className="text-nude-600" />,
+                  titre: 'Sans dommage cutané',
+                  desc: 'Les tissus environnants restent intacts grâce à la sélectivité',
+                },
+                {
+                  icon: <Clock size={22} className="text-nude-600" />,
+                  titre: '6 à 10 séances',
+                  desc: 'En moyenne pour un résultat durable sur la majorité des zones',
+                },
+                {
+                  icon: <CheckCircle size={22} className="text-nude-600" />,
+                  titre: 'Résultat progressif',
+                  desc: 'Réduction visible dès les premières séances, définitive sur la durée',
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="bg-sand-50 rounded-2xl p-5 border border-sand-100 hover:shadow-sm transition-shadow duration-200"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-nude-100 flex items-center justify-center mb-3">
+                    {item.icon}
+                  </div>
+                  <h4 className="font-serif text-base font-medium text-stone-800 mb-1">{item.titre}</h4>
+                  <p className="text-sm text-stone-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* À QUI S'ADRESSE-T-ELLE ?                                           */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-sand-50">
+        <div className="container-wide">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="tag">Eligibilité</span>
+            <h2 className="section-title mb-4">À qui s'adresse l'épilation laser ?</h2>
+            <p className="text-stone-500">
+              L'épilation laser est accessible au plus grand nombre. Un diagnostic préalable gratuit permet
+              de confirmer votre éligibilité et d'adapter le protocole à votre profil.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Profils favorables */}
+            <div className="bg-white rounded-2xl p-6 border border-sand-100 shadow-sm">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-9 h-9 rounded-full bg-sage-100 flex items-center justify-center">
+                  <CheckCircle size={18} className="text-sage-600" />
+                </div>
+                <h3 className="font-serif text-xl font-light text-stone-800">Profils favorables</h3>
+              </div>
+              <ul className="space-y-3">
+                {[
+                  'Peau claire à mate avec des poils foncés',
+                  'Hommes et femmes dès 18 ans',
+                  'Peaux sensibles souhaitant une alternative douce à la cire',
+                  'Personnes avec une pousse rapide et dense',
+                  'Zones intimes, corps et visage (selon zones)',
+                  'Tous phototypes avec protocole adapté',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-stone-600">
+                    <CheckCircle size={14} className="text-sage-500 shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contre-indications */}
+            <div className="bg-white rounded-2xl p-6 border border-sand-100 shadow-sm">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-9 h-9 rounded-full bg-nude-100 flex items-center justify-center">
+                  <AlertCircle size={18} className="text-nude-600" />
+                </div>
+                <h3 className="font-serif text-xl font-light text-stone-800">Contre-indications</h3>
+              </div>
+              <ul className="space-y-3">
+                {[
+                  'Grossesse et allaitement',
+                  'Bronzage actif ou exposition solaire récente (< 4 semaines)',
+                  'Poils blancs, blonds très clairs ou roux (pigmentation insuffisante)',
+                  'Prise de médicaments photosensibilisants',
+                  'Maladies de peau actives (eczéma, psoriasis sur zone)',
+                  'Antécédents de chéloïdes ou cicatrices hypertrophiques',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-stone-600">
+                    <AlertCircle size={14} className="text-nude-400 shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* DÉROULEMENT DU PREMIER RENDEZ-VOUS                                 */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-white">
+        <div className="container-narrow">
+          <div className="text-center mb-12">
+            <span className="tag">Votre parcours</span>
+            <h2 className="section-title mb-4">
+              Déroulement de votre premier rendez-vous
+            </h2>
+            <p className="text-stone-500 max-w-xl mx-auto">
+              Le diagnostic gratuit pose les bases d'un traitement sur-mesure. Voici comment se déroule
+              votre venue à l'institut.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Ligne verticale */}
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-sand-200 hidden sm:block" />
+
+            <div className="space-y-6">
+              {[
+                {
+                  num: '01',
+                  titre: 'Accueil & échange',
+                  desc: 'Votre praticienne vous reçoit dans un cadre chaleureux et confidentiel. Elle recueille vos antécédents médicaux, votre historique de dépilation et vos objectifs.',
+                },
+                {
+                  num: '02',
+                  titre: 'Analyse de votre phototype',
+                  desc: 'Évaluation précise de votre type de peau et de la nature de vos poils (couleur, densité, épaisseur) pour sélectionner les paramètres laser adaptés.',
+                },
+                {
+                  num: '03',
+                  titre: 'Test de réaction cutanée',
+                  desc: 'Un test de sensibilité peut être réalisé sur une petite zone afin de valider la tolérance de votre peau avant tout traitement.',
+                },
+                {
+                  num: '04',
+                  titre: 'Devis personnalisé',
+                  desc: 'Présentation claire des zones à traiter, du nombre de séances estimé, des tarifs unitaires et des forfaits disponibles. Aucune surprise.',
+                },
+                {
+                  num: '05',
+                  titre: 'Questions & conseils pré-séance',
+                  desc: 'Vous repartez avec toutes les informations nécessaires pour préparer votre première séance et obtenir des résultats optimaux.',
+                },
+              ].map((step, i) => (
+                <div key={i} className="relative flex gap-6 sm:pl-10">
+                  {/* Numéro */}
+                  <div className="relative z-10 w-12 h-12 rounded-full bg-nude-600 text-white flex items-center justify-center font-sans font-semibold text-sm shrink-0 shadow-md">
+                    {step.num}
+                  </div>
+                  {/* Contenu */}
+                  <div className="bg-sand-50 rounded-2xl p-5 flex-1 border border-sand-100 hover:shadow-sm transition-shadow duration-200">
+                    <h4 className="font-serif text-lg font-light text-stone-800 mb-1">{step.titre}</h4>
+                    <p className="text-sm text-stone-500 leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <div className="inline-flex items-center gap-2 bg-sage-50 border border-sage-200 rounded-full px-5 py-2.5 text-sage-700 text-sm font-sans font-medium">
+              <Star size={14} className="text-sage-500" />
+              Le diagnostic est entièrement gratuit et sans engagement
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* ZONES FEMME                                                         */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-nude-50">
+        <div className="container-wide">
+          <div className="text-center mb-10">
+            <span className="tag">Tarifs</span>
+            <h2 className="section-title mb-2">Zones traitées — Femme</h2>
+            <p className="text-stone-500 text-sm">Prix par séance unitaire · diagnostic gratuit inclus</p>
+          </div>
+          <div className="max-w-2xl mx-auto">
+            <ZoneTable
+              titre="Zones Femme"
+              genre="Femme"
+              zones={zonesFemme}
+              accentClass="text-nude-600"
+              headerClass="bg-gradient-to-r from-nude-600 to-nude-500"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* ZONES HOMME                                                         */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+          <div className="text-center mb-10">
+            <span className="tag">Tarifs</span>
+            <h2 className="section-title mb-2">Zones traitées — Homme</h2>
+            <p className="text-stone-500 text-sm">Prix par séance unitaire · diagnostic gratuit inclus</p>
+          </div>
+          <div className="max-w-2xl mx-auto">
+            <ZoneTable
+              titre="Zones Homme"
+              genre="Homme"
+              zones={zonesHomme}
+              accentClass="text-sage-700"
+              headerClass="bg-gradient-to-r from-sage-700 to-sage-600"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* FORFAITS FEMME                                                      */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-sand-50">
+        <div className="container-wide">
+          <div className="text-center mb-12">
+            <span className="tag">Économies</span>
+            <h2 className="section-title mb-4">Forfaits combinés — Femme</h2>
+            <p className="text-stone-500 max-w-xl mx-auto">
+              Nos forfaits multi-zones vous permettent de traiter plusieurs zones simultanément à un tarif
+              avantageux. Contactez-nous pour obtenir votre devis personnalisé.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {forfaitsFemme.map((f, i) => (
+              <div
+                key={i}
+                className="card-service bg-white p-5 flex flex-col gap-3 border border-sand-100"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-serif text-lg font-light text-stone-800 leading-snug">{f.titre}</h4>
+                  {f.note && (
+                    <span className="shrink-0 inline-block text-xs font-sans font-medium bg-nude-100 text-nude-700 px-2.5 py-1 rounded-full">
+                      {f.note}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-stone-500 leading-relaxed flex-1">{f.zones}</p>
+                <div className="pt-3 border-t border-sand-100 flex items-center justify-between">
+                  <span className="text-xs font-sans text-stone-400">Tarif</span>
+                  <span className="font-sans font-semibold text-nude-600 text-sm">Sur devis</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <a href="tel:0762169814" className="btn-secondary">
+              <Phone size={15} />
+              Demander mon devis forfait
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* CURE ÉPILATION                                                      */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-white">
+        <div className="container-narrow">
+          <div className="text-center mb-8">
+            <span className="tag">Programme fidélité</span>
+            <h2 className="section-title mb-2">Cure épilation</h2>
+            <p className="text-stone-500">Engagez-vous sur la durée et bénéficiez de la 8e séance offerte.</p>
+          </div>
+
+          {/* Boîte principale */}
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-nude-700 to-nude-600 text-white shadow-xl">
+            {/* Décoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+            <div className="relative p-8 md:p-12">
+              {/* Badge vedette */}
+              <div className="inline-flex items-center gap-2 bg-white/15 rounded-full px-4 py-1.5 text-sm font-sans font-medium mb-8">
+                <Star size={14} className="text-sand-300" />
+                8e séance offerte
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                {/* Colonne 1 — Avantages */}
+                <div>
+                  <h3 className="font-serif text-2xl font-light mb-5 text-white">
+                    Les avantages de la cure
+                  </h3>
+                  <ul className="space-y-4">
+                    {[
+                      {
+                        icon: <Sparkles size={16} />,
+                        texte: '7 séances payantes, la 8e offerte après les 7 séances réalisées',
+                      },
+                      {
+                        icon: <Clock size={16} />,
+                        texte: 'Séances espacées de 6 à 8 semaines pour respecter les cycles pilaires',
+                      },
+                      {
+                        icon: <CheckCircle size={16} />,
+                        texte: 'En moyenne 6 à 10 séances pour un résultat durable',
+                      },
+                      {
+                        icon: <Star size={16} />,
+                        texte: 'Paiement en 3 ou 4 fois possible — sans frais',
+                      },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-nude-100 leading-relaxed">
+                        <span className="mt-0.5 shrink-0 text-sand-300">{item.icon}</span>
+                        {item.texte}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Colonne 2 — Conditions */}
+                <div>
+                  <h3 className="font-serif text-2xl font-light mb-5 text-white">
+                    Conditions d'utilisation
+                  </h3>
+                  <ul className="space-y-4">
+                    {[
+                      {
+                        icon: <Info size={16} />,
+                        texte: "En cas d\'arrêt anticipé : recalcul au tarif unitaire, différence créditée en avoir sur soins, massages ou produits",
+                      },
+                      {
+                        icon: <AlertCircle size={16} />,
+                        texte: "Aucun remboursement en espèces n\'est effectué",
+                      },
+                      {
+                        icon: <Info size={16} />,
+                        texte: "Au-delà de 6 séances réalisées, l\'avoir est limité à 1 séance maximum",
+                      },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-nude-200 leading-relaxed">
+                        <span className="mt-0.5 shrink-0 text-nude-300">{item.icon}</span>
+                        {item.texte}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-8">
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-nude-700 font-sans font-semibold text-sm tracking-wide rounded-full hover:bg-sand-50 transition-all duration-300 hover:-translate-y-0.5 shadow-md"
+                    >
+                      <Calendar size={15} />
+                      Souscrire à la cure
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* CONSEILS AVANT / APRÈS                                              */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-sand-50">
+        <div className="container-wide">
+          <div className="text-center mb-12">
+            <span className="tag">Préparez-vous</span>
+            <h2 className="section-title mb-4">Conseils avant et après séance</h2>
+            <p className="text-stone-500 max-w-xl mx-auto">
+              Pour des résultats optimaux et une récupération confortable, respectez ces recommandations
+              avant et après chaque séance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Avant */}
+            <div className="bg-white rounded-2xl p-6 border border-sand-100 shadow-sm">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-sand-100 flex items-center justify-center">
+                  <Sun size={20} className="text-sand-600" />
+                </div>
+                <h3 className="font-serif text-xl font-light text-stone-800">Avant la séance</h3>
+              </div>
+              <ul className="space-y-3">
+                {conseilsAvant.map((conseil, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-stone-600 leading-relaxed">
+                    <CheckCircle size={14} className="text-sand-500 shrink-0 mt-0.5" />
+                    {conseil}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Après */}
+            <div className="bg-white rounded-2xl p-6 border border-sand-100 shadow-sm">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-sage-100 flex items-center justify-center">
+                  <Snowflake size={20} className="text-sage-600" />
+                </div>
+                <h3 className="font-serif text-xl font-light text-stone-800">Après la séance</h3>
+              </div>
+              <ul className="space-y-3">
+                {conseilsApres.map((conseil, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-stone-600 leading-relaxed">
+                    <CheckCircle size={14} className="text-sage-500 shrink-0 mt-0.5" />
+                    {conseil}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* FAQ                                                                 */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="section-padding bg-white">
+        <div className="container-narrow">
+          <div className="text-center mb-12">
+            <span className="tag">Questions fréquentes</span>
+            <h2 className="section-title mb-4">Tout savoir sur l'épilation laser</h2>
+            <p className="text-stone-500 max-w-xl mx-auto">
+              Vous avez des questions ? Voici les réponses aux interrogations les plus fréquentes de nos
+              clientes et clients.
+            </p>
+          </div>
+          <FAQAccordion items={faqItems} />
+          <div className="mt-10 text-center">
+            <p className="text-stone-500 text-sm mb-4">
+              Votre question ne figure pas dans la liste ?
+            </p>
+            <a href="tel:0762169814" className="btn-phone">
+              <Phone size={15} />
+              Nous appeler — 07 62 16 98 14
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* CTA BANNER                                                          */}
+      {/* ------------------------------------------------------------------ */}
+      <CTABanner
+        title="Prête à vous libérer des poils indésirables ?"
+        subtitle="Commencez par un diagnostic gratuit à Venerque — offre sans engagement pour découvrir le protocole adapté à votre profil."
+      />
+    </main>
+  );
+}
