@@ -11,12 +11,10 @@ import {
   CheckCircle2,
   Clock,
   ArrowRight,
-  Sparkles,
   Users,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -37,7 +35,7 @@ const bienfaitsGlobaux = [
     desc: "Harmonise le corps et l'esprit grâce à des techniques holistiques issues de traditions ancestrales.",
   },
   {
-    icon: Sparkles,
+    icon: Leaf,
     title: 'Réduction du stress',
     desc: "Diminue le cortisol, l'hormone du stress, et favorise la libération d'endorphines et de sérotonine.",
   },
@@ -146,12 +144,6 @@ export default function Massages() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/85 via-stone-900/40 to-transparent" />
         <div className="relative z-10 container-wide pb-16 md:pb-24">
           <div className="max-w-3xl">
-            <Breadcrumb
-              items={[
-                { label: 'Soins corps', href: '/soins-corps' },
-                { label: 'Massages bien-être' },
-              ]}
-            />
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Rituels du monde</span>
             </div>

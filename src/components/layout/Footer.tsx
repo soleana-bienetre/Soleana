@@ -108,7 +108,7 @@ export default function Footer() {
             <div className="space-y-3 pt-4 border-t border-stone-800">
               <div className="flex items-start gap-3">
                 <MapPin size={15} className="text-nude-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-stone-400">1 Rue de la Fraternité<br />31810 Venerque, France</span>
+                <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-sm text-stone-400 hover:text-nude-400 transition-colors">1 Rue de la Fraternité<br />31810 Venerque, France</a>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={15} className="text-nude-500 shrink-0" />

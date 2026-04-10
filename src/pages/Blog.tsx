@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Clock,
@@ -7,11 +7,13 @@ import {
   BookOpen,
   Rss,
 } from 'lucide-react';
-import Breadcrumb from '../components/ui/Breadcrumb';
 import CTABanner from '../components/ui/CTABanner';
+import { supabase } from '../lib/supabase';
+import type { BlogArticle } from '../lib/supabase';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
+// Adapter: maps BlogArticle to local Article shape used by sub-components
 interface Article {
   id: string;
   slug: string;
@@ -24,9 +26,22 @@ interface Article {
   featured?: boolean;
 }
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+function toArticle(a: BlogArticle): Article {
+  return {
+    id: a.id,
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt ?? '',
+    category: a.category ?? 'Bien-être',
+    date: a.published_at ? new Date(a.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
+    readTime: `${a.read_time} min`,
+    image: a.og_image_url ?? 'https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=800',
+  };
+}
 
-const articles: Article[] = [
+// ─── Static fallback data (affiché si aucun article en base) ────────────────
+
+const staticArticles: Article[] = [
   {
     id: '1',
     slug: 'combien-seances-epilation-laser',
@@ -149,7 +164,7 @@ function CategoryBadge({ category }: { category: string }) {
 function FeaturedArticleCard({ article }: { article: Article }) {
   return (
     <Link
-      to={`/conseils/${article.slug}`}
+      to={`/blog/${article.slug}`}
       className="group block bg-white rounded-3xl overflow-hidden border border-sand-100 shadow-sm hover:shadow-md transition-all duration-300"
     >
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -200,7 +215,7 @@ function FeaturedArticleCard({ article }: { article: Article }) {
 function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
-      to={`/conseils/${article.slug}`}
+      to={`/blog/${article.slug}`}
       className="group card-service flex flex-col bg-white"
     >
       {/* Image */}
@@ -247,12 +262,24 @@ function ArticleCard({ article }: { article: Article }) {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('Tous');
+  const [articles, setArticles] = useState<Article[]>(staticArticles);
 
-  const featuredArticle = articles.find((a) => a.featured);
+  useEffect(() => {
+    supabase
+      .from('blog_articles')
+      .select('*')
+      .eq('published', true)
+      .order('published_at', { ascending: false })
+      .then(({ data }) => {
+        if (data && data.length > 0) setArticles(data.map(toArticle));
+      });
+  }, []);
+
+  const featuredArticle = articles.find((a) => a.featured) ?? articles[0];
 
   const displayedArticles =
     activeCategory === 'Tous'
-      ? articles.filter((a) => !a.featured)
+      ? articles.filter((a) => a !== featuredArticle)
       : articles.filter((a) => a.category === activeCategory);
 
   return (
@@ -260,7 +287,6 @@ export default function Blog() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">
-          <Breadcrumb items={[{ label: 'Conseils & Blog' }]} />
           <div className="mt-8 text-center">
             <span className="tag">Nos conseils bien-être</span>
             <h1 className="section-title text-4xl md:text-5xl lg:text-6xl mt-2">

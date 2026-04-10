@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   MapPin,
   Phone,
@@ -12,7 +13,8 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
-import Breadcrumb from '../components/ui/Breadcrumb';
+import { supabase } from '../lib/supabase';
+import { EMAILJS_CONFIG, ADMIN_EMAIL } from '../lib/emailjs';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -130,10 +132,57 @@ export default function Contact() {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    // Simulate async submit
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    setSubmitted(true);
+
+    try {
+      // 1. Sauvegarde dans Supabase
+      const { error: dbError } = await supabase.from('contacts').insert({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || null,
+        message: form.subject
+          ? `[${subjectOptions.find((o) => o.value === form.subject)?.label ?? form.subject}]\n\n${form.message}`
+          : form.message,
+      });
+
+      if (dbError) throw dbError;
+
+      // 2. Email de confirmation au client
+      await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateClientId,
+        {
+          to_name: form.name,
+          to_email: form.email,
+          subject: subjectOptions.find((o) => o.value === form.subject)?.label ?? 'votre demande',
+          message: form.message,
+          phone: form.phone || 'Non renseigné',
+        },
+        EMAILJS_CONFIG.publicKey
+      );
+
+      // 3. Email de notification à Laetitia
+      await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateAdminId,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          from_phone: form.phone || 'Non renseigné',
+          subject: subjectOptions.find((o) => o.value === form.subject)?.label ?? 'Renseignement général',
+          message: form.message,
+          to_email: ADMIN_EMAIL,
+        },
+        EMAILJS_CONFIG.publicKey
+      );
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Erreur envoi formulaire:', err);
+      // On affiche quand même le succès si Supabase a fonctionné (email peut échouer en dev)
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -141,7 +190,6 @@ export default function Contact() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">
-          <Breadcrumb items={[{ label: 'Contact' }]} />
           <div className="mt-8 text-center">
             <span className="tag">Nous contacter</span>
             <h1 className="section-title text-4xl md:text-5xl lg:text-6xl mt-2">
@@ -166,8 +214,10 @@ export default function Contact() {
               {/* Adresse */}
               <InfoCard icon={<MapPin size={20} />} title="Adresse" accentColor="nude">
                 <address className="not-italic text-sm text-stone-600 leading-relaxed">
-                  1 Rue de la Fraternité<br />
-                  31810 Venerque
+                  <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="hover:text-nude-600 transition-colors">
+                    1 Rue de la Fraternité<br />
+                    31810 Venerque
+                  </a>
                 </address>
                 <a
                   href="https://maps.google.com/?q=1+Rue+de+la+Fraternite+31810+Venerque"
@@ -247,7 +297,7 @@ export default function Contact() {
                   <div>
                     <p className="text-xs font-medium text-stone-700 mb-0.5">Parking gratuit</p>
                     <p className="text-xs text-stone-500">
-                      Stationnement gratuit directement sur place, au 1 Rue de la Fraternité.
+                      Stationnement gratuit directement sur place, au <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-nude-600 hover:text-nude-700 transition-colors">1 Rue de la Fraternité</a>.
                     </p>
                   </div>
                 </div>

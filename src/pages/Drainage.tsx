@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -137,12 +136,6 @@ export default function Drainage() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/85 via-stone-900/45 to-transparent" />
         <div className="relative z-10 container-wide pb-16 md:pb-24">
           <div className="max-w-3xl">
-            <Breadcrumb
-              items={[
-                { label: 'Soins corps', href: '/soins-corps' },
-                { label: 'Drainage & Maderothérapie' },
-              ]}
-            />
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Drainage & Remodelage</span>
             </div>

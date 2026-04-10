@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
+  Leaf,
   Clock,
   Star,
   CheckCircle2,
   ArrowRight,
-  Leaf,
   Zap,
   Heart,
   Sun,
@@ -16,7 +15,6 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -47,7 +45,7 @@ const bienfaits = [
     desc: "Favorise l'élimination des toxines et réduit les poches, cernes et gonflements par des manœuvres de drainage précises.",
   },
   {
-    icon: Sparkles,
+    icon: Leaf,
     title: 'Effet anti-âge global',
     desc: "Stimule la production de collagène et d'élastine, atténue les rides fines et redonne de la densité à la peau.",
   },
@@ -181,12 +179,6 @@ export default function Kobido() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/40 to-transparent" />
         <div className="relative z-10 container-wide pb-16 md:pb-24">
           <div className="max-w-3xl">
-            <Breadcrumb
-              items={[
-                { label: 'Soins visage', href: '/soins-visage' },
-                { label: 'Kobido' },
-              ]}
-            />
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Soin Signature</span>
             </div>
@@ -472,7 +464,7 @@ export default function Kobido() {
             <div className="bg-white rounded-3xl p-8 shadow-sm border border-sage-100">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-sage-100 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-sage-700" />
+                  <Leaf className="w-5 h-5 text-sage-700" />
                 </div>
                 <h3 className="font-serif text-xl font-light text-stone-800">Première cure</h3>
               </div>

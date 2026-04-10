@@ -8,7 +8,6 @@ import {
   FileText,
   ChevronRight,
 } from 'lucide-react';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -76,7 +75,6 @@ export default function MentionsLegales() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream py-12 md:py-16">
         <div className="container-narrow">
-          <Breadcrumb items={[{ label: 'Mentions légales' }]} />
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-nude-50 rounded-2xl flex items-center justify-center">

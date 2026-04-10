@@ -12,11 +12,10 @@ import {
   Info,
   Calendar,
   Users,
-  Sparkles,
+  Leaf,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -268,12 +267,6 @@ export default function EpilationLaser() {
         <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-sand-200/30 blur-2xl pointer-events-none" />
 
         <div className="relative container-wide section-padding">
-          <Breadcrumb
-            items={[
-              { label: 'Nos prestations', href: '/prestations' },
-              { label: 'Épilation laser' },
-            ]}
-          />
 
           <div className="mt-8 max-w-3xl">
             <span className="tag">Institut Soléana Bien-Être · Venerque</span>
@@ -304,7 +297,7 @@ export default function EpilationLaser() {
                 { icon: <Star size={12} />, label: 'Diagnostic offert' },
                 { icon: <Shield size={12} />, label: 'Protocole sécurisé' },
                 { icon: <Users size={12} />, label: 'Femme & Homme' },
-                { icon: <Sparkles size={12} />, label: 'Résultats durables' },
+                { icon: <Leaf size={12} />, label: 'Résultats durables' },
               ].map((b, i) => (
                 <span key={i} className="badge">
                   {b.icon}
@@ -649,7 +642,7 @@ export default function EpilationLaser() {
                   <ul className="space-y-4">
                     {[
                       {
-                        icon: <Sparkles size={16} />,
+                        icon: <Leaf size={16} />,
                         texte: '7 séances payantes, la 8e offerte après les 7 séances réalisées',
                       },
                       {

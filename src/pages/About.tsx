@@ -12,10 +12,8 @@ import {
   Quote,
   Award,
   Clock,
-  Sparkles,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 const values = [
   {
@@ -69,7 +67,7 @@ const formations = [
     type: 'Technologie laser',
     color: 'border-ecru-300 bg-ecru-50',
     badgeColor: 'bg-ecru-100 text-ecru-800',
-    icon: Sparkles,
+    icon: Leaf,
   },
   {
     title: 'Certificat Socio-Esthétique',
@@ -138,7 +136,7 @@ const reasons = [
       "Soléana utilise la gamme Estime & Sens, des cosmétiques naturels, biologiques et fabriqués en France, formulés pour respecter la peau et l'environnement.",
   },
   {
-    icon: Sparkles,
+    icon: Leaf,
     title: 'Protocoles personnalisés',
     description:
       'Pas de copier-coller : chaque soin est adapté à votre peau, vos besoins du moment et vos objectifs. Votre praticienne ajuste son protocole à chaque séance.',
@@ -177,7 +175,6 @@ export default function About() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-900/65 via-stone-900/50 to-stone-900/70" />
         </div>
         <div className="relative z-10 container-narrow">
-          <Breadcrumb items={[{ label: 'À propos' }]} />
           <div className="mt-8">
             <span className="tag text-nude-200">Notre histoire</span>
             <h1 className="font-serif font-light text-white text-4xl sm:text-5xl md:text-6xl mt-2 mb-6 leading-tight">

@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import CTABanner from '../components/ui/CTABanner';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── FAQ Data ─────────────────────────────────────────────────────────────────
 
@@ -251,7 +250,6 @@ export default function FAQ() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">
-          <Breadcrumb items={[{ label: 'FAQ' }]} />
           <div className="mt-8 text-center">
             <span className="tag">Foire aux questions</span>
             <h1 className="section-title text-4xl md:text-5xl lg:text-6xl mt-2">

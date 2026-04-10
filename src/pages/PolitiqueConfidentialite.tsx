@@ -13,7 +13,6 @@ import {
   AlertTriangle,
   ClipboardList,
 } from 'lucide-react';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -127,9 +126,6 @@ export default function PolitiqueConfidentialite() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream py-12 md:py-16">
         <div className="container-narrow">
-          <Breadcrumb
-            items={[{ label: 'Politique de confidentialité' }]}
-          />
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-sage-50 rounded-2xl flex items-center justify-center">
@@ -213,7 +209,7 @@ export default function PolitiqueConfidentialite() {
                 <InfoBlock color="sand">
                   <div className="space-y-1.5 text-sm text-stone-700">
                     <p><span className="font-medium">Soléana Bien-Être</span> – Laetitia Sevrin</p>
-                    <p>1 Rue de la Fraternité, 31810 Venerque</p>
+                    <p><a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-nude-600 hover:text-nude-700 transition-colors">1 Rue de la Fraternité, 31810 Venerque</a></p>
                     <p>
                       Tél. :{' '}
                       <a href="tel:0762169814" className="text-nude-600 hover:text-nude-700">
@@ -440,7 +436,7 @@ export default function PolitiqueConfidentialite() {
                     </p>
                     <p>
                       <span className="font-medium">Par courrier :</span> Soléana Bien-Être –
-                      Laetitia Sevrin, 1 Rue de la Fraternité, 31810 Venerque
+                      Laetitia Sevrin, <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-nude-600 hover:text-nude-700 transition-colors">1 Rue de la Fraternité, 31810 Venerque</a>
                     </p>
                     <p>
                       <span className="font-medium">Par téléphone :</span>{' '}

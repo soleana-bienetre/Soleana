@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import {
   Leaf,
-  Sparkles,
   Heart,
   Clock,
   CheckCircle,
@@ -17,7 +16,6 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -123,7 +121,7 @@ const etapes = [
     num: '03',
     titre: 'Exfoliation & peeling',
     desc: "Selon votre type de peau, un gommage enzymatique ou mécanique doux est appliqué pour débarrasser l\'épiderme des cellules mortes et favoriser le renouvellement cellulaire.",
-    icon: <Sparkles size={16} className="text-nude-600" />,
+    icon: <Leaf size={16} className="text-nude-600" />,
   },
   {
     num: '04',
@@ -176,7 +174,7 @@ const typesPeau = [
   {
     type: 'Peau mature & marquée',
     desc: "Relâchement, ridules, perte d\'éclat. Les protocoles anti-âge et tenseurs stimulent la synthèse de collagène et redensifient les tissus.",
-    icon: <Sparkles size={20} />,
+    icon: <Leaf size={20} />,
     bg: 'bg-nude-50',
     border: 'border-nude-200',
     iconColor: 'text-nude-600',
@@ -204,7 +202,7 @@ const typesPeau = [
 
 const bienfaits = [
   {
-    icon: <Sparkles size={24} className="text-nude-600" />,
+    icon: <Leaf size={24} className="text-nude-600" />,
     titre: 'Teint lumineux',
     desc: 'Résultat visible dès la première séance : teint unifié, peau repulpée et éclat retrouvé.',
   },
@@ -284,12 +282,6 @@ export default function SoinsVisage() {
         <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-sand-200/30 blur-2xl pointer-events-none" />
 
         <div className="relative container-wide section-padding">
-          <Breadcrumb
-            items={[
-              { label: 'Nos prestations', href: '/prestations' },
-              { label: 'Soins du visage' },
-            ]}
-          />
 
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -320,7 +312,7 @@ export default function SoinsVisage() {
                   { icon: <Leaf size={12} />, label: 'Produits bio certifiés' },
                   { icon: <Shield size={12} />, label: 'Diagnostic inclus' },
                   { icon: <Heart size={12} />, label: 'Peau sensible bienvenus' },
-                  { icon: <Sparkles size={12} />, label: 'Résultat visible' },
+                  { icon: <Leaf size={12} />, label: 'Résultat visible' },
                 ].map((b, i) => (
                   <span key={i} className="badge">
                     {b.icon}
@@ -335,7 +327,7 @@ export default function SoinsVisage() {
               <div className="bg-white rounded-3xl p-8 shadow-md border border-sand-100">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-full bg-nude-100 flex items-center justify-center">
-                    <Sparkles size={18} className="text-nude-600" />
+                    <Leaf size={18} className="text-nude-600" />
                   </div>
                   <div>
                     <p className="font-sans font-semibold text-stone-800 text-sm">Soléana Bien-Être</p>

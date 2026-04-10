@@ -15,6 +15,14 @@ import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminContacts from './pages/admin/AdminContacts';
+import AdminBlog from './pages/admin/AdminBlog';
+import AdminBlogForm from './pages/admin/AdminBlogForm';
+import AdminReviews from './pages/admin/AdminReviews';
+import AdminReviewForm from './pages/admin/AdminReviewForm';
+import ProtectedRoute from './components/admin/ProtectedRoute';
 
 function SchemaOrg() {
   useEffect(() => {
@@ -105,7 +113,26 @@ function ScrollToTop() {
   return null;
 }
 
+function AdminRoutes() {
+  return (
+    <Routes>
+      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/contacts" element={<ProtectedRoute><AdminContacts /></ProtectedRoute>} />
+      <Route path="/admin/blog" element={<ProtectedRoute><AdminBlog /></ProtectedRoute>} />
+      <Route path="/admin/blog/:id" element={<ProtectedRoute><AdminBlogForm /></ProtectedRoute>} />
+      <Route path="/admin/avis" element={<ProtectedRoute><AdminReviews /></ProtectedRoute>} />
+      <Route path="/admin/avis/:id" element={<ProtectedRoute><AdminReviewForm /></ProtectedRoute>} />
+    </Routes>
+  );
+}
+
 function AppLayout() {
+  const { pathname } = useLocation();
+  const isAdmin = pathname.startsWith('/admin');
+
+  if (isAdmin) return <AdminRoutes />;
+
   return (
     <div className="flex flex-col min-h-screen">
       <SchemaOrg />

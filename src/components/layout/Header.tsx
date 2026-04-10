@@ -29,14 +29,18 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    // Vérifie la position dès le montage (refresh, navigation)
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Réinitialise la position de scroll à chaque changement de page
   useEffect(() => {
+    setIsScrolled(window.scrollY > 20);
     setIsMobileOpen(false);
     setOpenDropdown(null);
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <header
@@ -63,7 +67,7 @@ export default function Header() {
                 {link.children ? (
                   <button
                     className={`flex items-center gap-1 font-sans text-sm font-medium transition-colors duration-200 py-2 ${
-                      isHero ? 'text-white hover:text-nude-200' : isScrolled ? 'text-stone-700 hover:text-nude-600' : 'text-stone-800 hover:text-nude-600'
+                      isHero ? 'text-white hover:text-white/75' : isScrolled ? 'text-stone-700 hover:text-nude-600' : 'text-stone-800 hover:text-nude-600'
                     }`}
                     onMouseEnter={() => setOpenDropdown(link.label)}
                     onMouseLeave={() => setOpenDropdown(null)}
@@ -78,7 +82,7 @@ export default function Header() {
                       location.pathname === link.href
                         ? isHero ? 'text-white after:w-full after:bg-white' : 'text-nude-600 after:w-full'
                         : isHero
-                        ? 'text-white hover:text-nude-200 after:bg-white'
+                        ? 'text-white hover:text-white/75 after:bg-white'
                         : isScrolled
                         ? 'text-stone-700 hover:text-nude-600'
                         : 'text-stone-800 hover:text-nude-600'
@@ -125,7 +129,7 @@ export default function Header() {
           </div>
 
           <button
-            className={`lg:hidden p-2 rounded-xl transition-colors ${isHero ? 'text-white hover:text-nude-200' : 'text-stone-700 hover:text-nude-600 hover:bg-sand-50'}`}
+            className={`lg:hidden p-2 rounded-xl transition-colors ${isHero ? 'text-white hover:text-white/75' : 'text-stone-700 hover:text-nude-600 hover:bg-sand-50'}`}
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label="Menu"
           >

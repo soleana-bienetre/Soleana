@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
+  Leaf,
   Star,
   Zap,
-  Leaf,
   Hand,
   Wind,
   Droplets,
@@ -14,7 +13,6 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
-import Breadcrumb from '../components/ui/Breadcrumb';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -39,7 +37,7 @@ const categories: PriceCategory[] = [
   {
     id: 'laser-femme',
     label: 'Épilation laser femme',
-    icon: <Sparkles size={18} />,
+    icon: <Leaf size={18} />,
     color: 'nude',
     items: [
       { name: 'Lèvre supérieure', price: '[PRIX À DÉFINIR]' },
@@ -304,7 +302,6 @@ export default function Tarifs() {
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">
-          <Breadcrumb items={[{ label: 'Tarifs' }]} />
           <div className="mt-8 text-center">
             <span className="tag">Tarification transparente</span>
             <h1 className="section-title text-4xl md:text-5xl lg:text-6xl mt-2">

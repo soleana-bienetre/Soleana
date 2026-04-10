@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronDown,
@@ -8,7 +8,6 @@ import {
   Clock,
   Car,
   Calendar,
-  Sparkles,
   Heart,
   Shield,
   Leaf,
@@ -20,7 +19,8 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import { testimonials } from '../data/testimonials';
+import { supabase } from '../lib/supabase';
+import type { Review } from '../lib/supabase';
 
 const faqItems = [
   {
@@ -61,7 +61,7 @@ const services = [
     tag: 'Technologie avancée',
   },
   {
-    icon: Sparkles,
+    icon: Leaf,
     title: 'Soins du visage',
     slug: 'soins-visage',
     description:
@@ -110,7 +110,7 @@ const reassuranceItems = [
     desc: 'Un cocon chaleureux pensé pour votre détente',
   },
   {
-    icon: Sparkles,
+    icon: Leaf,
     title: 'Soins personnalisés',
     desc: 'Chaque protocole est adapté à vos besoins',
   },
@@ -137,15 +137,23 @@ const hours = [
 ];
 
 export default function Home() {
+  const [reviews, setReviews] = useState<Review[]>([]);
+
   useEffect(() => {
     document.title =
       "Soléana Bien-Être | Institut de bien-être et d\'esthétique à Venerque (31810)";
+    supabase
+      .from('reviews')
+      .select('*')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => { if (data) setReviews(data); });
   }, []);
 
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-start sm:items-end overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <img
@@ -158,47 +166,61 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-900/30 via-transparent to-stone-900/40" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 xl:px-32">
-          <div className="max-w-2xl">
-            <p className="tag text-nude-200 tracking-widest mb-5 text-xs md:text-sm">
-              Venerque · Haute-Garonne (31)
-            </p>
-            <h1 className="font-serif font-light text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 text-balance">
-              Institut de bien-être<br className="hidden sm:block" />
-              <span className="italic text-nude-200"> et d'esthétique</span><br className="hidden sm:block" />
-              à Venerque
+        {/* Content — titre + paragraphe en haut à gauche sur mobile, en bas sur desktop */}
+        <div className="relative z-10 w-full px-6 sm:px-10 md:px-12 lg:px-20 xl:px-32 pt-24 sm:pt-0 pb-0 sm:pb-14 md:pb-16 lg:pb-20">
+          <div className="max-w-2xl text-left sm:text-left mx-0">
+
+            <h1 className="font-serif font-light text-white text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 md:mb-8">
+              <span className="italic text-nude-200">Institut de bien-être</span><br />
+              <span className="italic text-nude-200">et d'esthétique</span><br />
+              <span>à Venerque</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/85 font-light max-w-xl mb-10 leading-relaxed">
-              Un espace de soin et de détente pensé pour vous.
-              Épilation laser, soins du visage, Kobido, massages et modelage corps
-              — tous les soins signés Soléana Bien-Être.
+
+            <p className="text-base sm:text-lg md:text-xl text-white/85 font-light max-w-xl mb-0 sm:mb-12 leading-relaxed">
+              Un espace de soin et de détente<br className="sm:hidden" />
+              pensé pour vous.<br />
+              Épilation laser, soins du visage,<br className="sm:hidden" />
+              Kobido,<br className="sm:hidden" />
+              massages<br className="hidden sm:block" />
+              et modelage corps.
             </p>
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <Link to="/contact" className="btn-primary text-base px-8 py-4 shadow-lg shadow-nude-900/30">
-                <Calendar size={18} />
+
+            {/* Boutons + badge — masqués sur mobile, visibles sur sm+ */}
+            <div className="hidden sm:flex flex-row items-start gap-4 mt-0">
+              <Link to="/contact" className="btn-primary text-base px-8 py-4 shadow-lg shadow-nude-900/30 justify-center">
+                <Calendar size={15} />
                 Prendre rendez-vous
               </Link>
-              <Link to="/soins" className="btn-outline-light text-base px-8 py-4">
-                <Sparkles size={18} />
+              <Link to="/soins" className="btn-outline-light text-base px-8 py-4 justify-center">
+                <Leaf size={15} />
                 Découvrir les soins
               </Link>
             </div>
-
-            {/* Rating badge */}
-            <div className="mt-10 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2.5">
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={14} className="fill-ecru-400 text-ecru-400" />
-                ))}
-              </div>
+            <div className="hidden sm:inline-flex mt-12 items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2.5">
+              <Star size={13} className="fill-ecru-400 text-ecru-400 shrink-0" />
               <span className="text-white/90 text-sm font-medium">5/5 – Avis clients vérifiés</span>
             </div>
           </div>
         </div>
 
+        {/* Boutons + badge mobile — absolus juste au-dessus de "Découvrir" */}
+        <div className="sm:hidden absolute bottom-28 left-0 right-0 z-10 px-6 flex flex-col items-center gap-3">
+          <Link to="/contact" className="btn-primary w-full text-sm px-5 py-3 shadow-lg shadow-nude-900/30 justify-center">
+            <Calendar size={15} />
+            Prendre rendez-vous
+          </Link>
+          <Link to="/soins" className="btn-outline-light w-full text-sm px-5 py-3 justify-center">
+            <Leaf size={15} />
+            Découvrir les soins
+          </Link>
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
+            <Star size={13} className="fill-ecru-400 text-ecru-400 shrink-0" />
+            <span className="text-white/90 text-xs font-medium">5/5 – Avis clients vérifiés</span>
+          </div>
+        </div>
+
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 animate-bounce">
+        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex flex-col items-center gap-2 text-white/60 animate-bounce">
           <span className="text-xs tracking-widest uppercase font-sans">Découvrir</span>
           <ChevronDown size={20} />
         </div>
@@ -208,10 +230,10 @@ export default function Home() {
       <section className="bg-white border-b border-sand-100 py-8 md:py-10">
         <div className="container-wide">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4">
-            {reassuranceItems.map((item) => (
+            {reassuranceItems.map((item, idx) => (
               <div
                 key={item.title}
-                className="flex flex-col items-center text-center gap-2 group"
+                className={`flex flex-col items-center text-center gap-2 group${idx === 4 ? ' col-span-2 md:col-span-1' : ''}`}
               >
                 <div className="w-12 h-12 rounded-full bg-nude-50 flex items-center justify-center group-hover:bg-nude-100 transition-colors duration-200">
                   <item.icon size={22} className="text-nude-600" />
@@ -433,34 +455,34 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.filter((t) => t.name !== '[Prénom N.]').map((testimonial) => (
+            {reviews.map((review) => (
               <div
-                key={testimonial.id}
+                key={review.id}
                 className="bg-white rounded-2xl p-7 shadow-sm border border-nude-100 hover:shadow-md transition-shadow duration-300 flex flex-col"
               >
                 <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[...Array(review.rating)].map((_, i) => (
                     <Star key={i} size={14} className="fill-ecru-400 text-ecru-400" />
                   ))}
                 </div>
-                {testimonial.service && (
-                  <span className="badge mb-4 self-start">{testimonial.service}</span>
+                {review.service && (
+                  <span className="badge mb-4 self-start">{review.service}</span>
                 )}
                 <blockquote className="flex-1 font-serif text-lg font-light text-stone-700 italic leading-relaxed mb-5">
-                  "{testimonial.text}"
+                  "{review.text}"
                 </blockquote>
                 <div className="flex items-center gap-3 pt-4 border-t border-sand-100">
                   <div className="w-10 h-10 rounded-full bg-nude-100 flex items-center justify-center shrink-0">
                     <span className="font-sans font-semibold text-nude-700 text-sm">
-                      {testimonial.initials}
+                      {review.initials}
                     </span>
                   </div>
                   <div>
-                    <p className="font-sans font-medium text-stone-800 text-sm">{testimonial.name}</p>
+                    <p className="font-sans font-medium text-stone-800 text-sm">{review.name}</p>
                     <div className="flex items-center gap-1 text-stone-400 text-xs">
                       <MapPin size={11} />
-                      <span>{testimonial.location}</span>
-                      {testimonial.date && <span>· {testimonial.date}</span>}
+                      <span>{review.location}</span>
+                      {review.date && <span>· {review.date}</span>}
                     </div>
                   </div>
                 </div>
@@ -469,9 +491,9 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-10">
-            <Link to="/avis" className="btn-secondary">
+            <a href="https://share.google/jGJyCa48zgPxyUJTG" target="_blank" rel="noopener noreferrer" className="btn-secondary">
               Voir tous les avis
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -545,6 +567,12 @@ export default function Home() {
                   Réservation en ligne disponible 24h/24 – Prise de rendez-vous simple et rapide.
                 </p>
               </div>
+              <div className="mt-5 flex justify-center lg:hidden">
+                <Link to="/contact" className="btn-primary text-sm px-6 py-3">
+                  <Calendar size={15} />
+                  Prendre rendez-vous
+                </Link>
+              </div>
             </div>
 
             {/* Map placeholder */}
@@ -559,8 +587,9 @@ export default function Home() {
                   <MapPin size={24} className="text-white" />
                 </div>
                 <p className="font-serif text-xl text-stone-800 mb-1">Soléana Bien-Être</p>
-                <p className="font-sans text-stone-600 text-sm">1 Rue de la Fraternité</p>
-                <p className="font-sans text-stone-600 text-sm mb-4">31810 Venerque</p>
+                <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="font-sans text-stone-600 text-sm hover:text-nude-600 transition-colors">
+                  1 Rue de la Fraternité<br />31810 Venerque
+                </a>
                 <a
                   href="https://maps.google.com/?q=1+Rue+de+la+Fraternité+31810+Venerque"
                   target="_blank"
@@ -592,11 +621,11 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="font-sans text-xs font-medium text-stone-400 uppercase tracking-widest mb-1.5">Adresse</p>
-                  <p className="text-stone-600 text-sm leading-relaxed">
+                  <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-stone-600 text-sm leading-relaxed hover:text-nude-600 transition-colors">
                     1 Rue de la Fraternité<br />
                     31810 Venerque<br />
                     Haute-Garonne (31)
-                  </p>
+                  </a>
                 </div>
                 <div>
                   <p className="font-sans text-xs font-medium text-stone-400 uppercase tracking-widest mb-1.5">Accès</p>
@@ -606,8 +635,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mt-7 flex flex-col gap-3">
-                <Link to="/contact" className="btn-primary justify-center">
+              <div className="mt-7 flex flex-col items-center sm:items-stretch gap-3">
+                <Link to="/contact" className="btn-primary justify-center w-auto sm:w-full">
                   <Calendar size={16} />
                   Prendre rendez-vous
                 </Link>
