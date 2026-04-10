@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Star, ArrowLeft, Save } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type Review } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { Review } from '../../lib/supabase';
 
 const SERVICES = ['Épilation laser', 'Soins du visage', 'Kobido', 'Massage bien-être', 'Drainage & Maderothérapie', 'Autre'];
 
@@ -34,7 +35,12 @@ export default function AdminReviewForm() {
 
   useEffect(() => {
     if (isEdit) {
-      supabaseAdmin.from('reviews').select('*').eq('id', id).single().then(({ data }) => {
+      adminRequest<Review | null>({
+        op: 'select',
+        resource: 'reviews',
+        filters: [{ column: 'id', value: id ?? '' }],
+        single: true,
+      }).then((data) => {
         if (data) setForm({ ...data });
       });
     }
@@ -57,9 +63,18 @@ export default function AdminReviewForm() {
     setSaving(true);
     const payload = { ...form, initials: form.initials || getInitials(form.name) };
     if (isEdit) {
-      await supabaseAdmin.from('reviews').update(payload).eq('id', id);
+      await adminRequest({
+        op: 'update',
+        resource: 'reviews',
+        data: payload,
+        filters: [{ column: 'id', value: id ?? '' }],
+      });
     } else {
-      await supabaseAdmin.from('reviews').insert(payload);
+      await adminRequest({
+        op: 'insert',
+        resource: 'reviews',
+        data: payload,
+      });
     }
     navigate('/admin/avis');
   }

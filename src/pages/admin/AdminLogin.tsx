@@ -6,16 +6,21 @@ import { adminLogin } from '../../lib/adminAuth';
 export default function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (adminLogin(password)) {
+    setLoading(true);
+
+    if (await adminLogin(password)) {
       navigate('/admin/dashboard');
     } else {
       setError('Mot de passe incorrect.');
       setPassword('');
     }
+
+    setLoading(false);
   }
 
   return (
@@ -50,9 +55,10 @@ export default function AdminLogin() {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-3 bg-stone-900 text-white rounded-xl text-sm font-medium hover:bg-stone-800 transition-colors"
           >
-            Accéder à l'admin
+            {loading ? 'Connexion...' : "Accéder à l'admin"}
           </button>
         </form>
       </div>

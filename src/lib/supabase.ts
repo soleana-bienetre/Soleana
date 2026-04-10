@@ -1,14 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://ssenglsjrkjmambtxckl.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzZW5nbHNqcmtqbWFtYnR4Y2tsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3Mzc2OTQsImV4cCI6MjA5MTMxMzY5NH0.TmdhyIw21vdAha0Uh1TCY3mm6tkxijnI-Tz3vDsTWUE';
-const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzZW5nbHNqcmtqbWFtYnR4Y2tsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTczNzY5NCwiZXhwIjoyMDkxMzEzNjk0fQ.bUTsTejUsaNCH8YR5Dw-gyuHrgq2P_jfoykJUoGiYrg';
+function getRequiredEnv(name: keyof ImportMetaEnv): string {
+  const value = import.meta.env[name];
 
-// Client public (lecture des données publiées)
+  if (!value) {
+    throw new Error(`Variable d'environnement manquante: ${name}`);
+  }
+
+  return value;
+}
+
+const supabaseUrl = getRequiredEnv('VITE_SUPABASE_URL');
+const supabaseAnonKey = getRequiredEnv('VITE_SUPABASE_ANON_KEY');
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// Client admin (bypasse RLS via service role)
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
 export type Contact = {
   id: string;

@@ -1,12 +1,18 @@
-// ─── EmailJS Configuration ────────────────────────────────────────────────────
-// Remplacez ces valeurs après avoir configuré votre compte EmailJS
-// (voir instructions dans le README ou demandez à Jordan)
+function getRequiredEnv(name: keyof ImportMetaEnv): string {
+  const value = import.meta.env[name];
+
+  if (!value) {
+    throw new Error(`Variable d'environnement manquante: ${name}`);
+  }
+
+  return value;
+}
 
 export const EMAILJS_CONFIG = {
-  publicKey: 'YNZfD7c0b8zbm1eGG',
-  serviceId: 'service_7qn3iac',
-  templateClientId: 'template_w9sdp8p',  // notification au client : on a bien reçu ton message
-  templateAdminId: 'template_2675nrn',   // notification à Laetitia : nouveau message reçu
+  publicKey: getRequiredEnv('VITE_EMAILJS_PUBLIC_KEY'),
+  serviceId: getRequiredEnv('VITE_EMAILJS_SERVICE_ID'),
+  templateClientId: getRequiredEnv('VITE_EMAILJS_TEMPLATE_CLIENT_ID'),
+  templateAdminId: getRequiredEnv('VITE_EMAILJS_TEMPLATE_ADMIN_ID'),
 };
 
-export const ADMIN_EMAIL = 'soleana.bienetre@gmail.com';
+export const ADMIN_EMAIL = getRequiredEnv('VITE_ADMIN_EMAIL');

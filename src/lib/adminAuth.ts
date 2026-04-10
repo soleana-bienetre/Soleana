@@ -1,15 +1,27 @@
-// Authentification admin simple par mot de passe stocké localement
-// Pour un usage mono-utilisateur (Laetitia)
+const AUTH_KEY = 'soleana_admin_token';
 
-const ADMIN_PASSWORD = 'soleana2026!';
-const AUTH_KEY = 'soleana_admin_auth';
+type AdminAuthResponse = {
+  token?: string;
+};
 
-export function adminLogin(password: string): boolean {
-  if (password === ADMIN_PASSWORD) {
-    sessionStorage.setItem(AUTH_KEY, 'true');
-    return true;
+export async function adminLogin(password: string): Promise<boolean> {
+  const response = await fetch('/.netlify/functions/admin-auth', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password }),
+  });
+
+  const payload = (await response.json().catch(() => ({}))) as AdminAuthResponse;
+
+  if (!response.ok || !payload.token) {
+    sessionStorage.removeItem(AUTH_KEY);
+    return false;
   }
-  return false;
+
+  sessionStorage.setItem(AUTH_KEY, payload.token);
+  return true;
 }
 
 export function adminLogout() {
@@ -17,5 +29,9 @@ export function adminLogout() {
 }
 
 export function isAdminAuthenticated(): boolean {
-  return sessionStorage.getItem(AUTH_KEY) === 'true';
+  return Boolean(sessionStorage.getItem(AUTH_KEY));
+}
+
+export function getAdminToken(): string | null {
+  return sessionStorage.getItem(AUTH_KEY);
 }

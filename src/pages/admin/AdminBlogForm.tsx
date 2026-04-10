@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save, Upload, X, Loader2, Eye } from 'lucide-react';
+import { ArrowLeft, Save, Upload, X, Eye } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type BlogArticle } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { BlogArticle } from '../../lib/supabase';
 
 const CATEGORIES = ['Bien-être', 'Épilation laser', 'Soins du visage', 'Kobido', 'Massages', 'Conseils beauté', 'Actualités'];
 
@@ -36,6 +37,22 @@ async function convertToWebp(file: File): Promise<Blob> {
     };
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load error')); };
     img.src = url;
+  });
+}
+
+async function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+        return;
+      }
+
+      reject(new Error('Unable to read image.'));
+    };
+    reader.onerror = () => reject(new Error('Unable to read image.'));
+    reader.readAsDataURL(blob);
   });
 }
 
@@ -74,7 +91,12 @@ export default function AdminBlogForm() {
 
   useEffect(() => {
     if (isEdit) {
-      supabaseAdmin.from('blog_articles').select('*').eq('id', id).single().then(({ data }) => {
+      adminRequest<BlogArticle | null>({
+        op: 'select',
+        resource: 'blog_articles',
+        filters: [{ column: 'id', value: id ?? '' }],
+        single: true,
+      }).then((data) => {
         if (data) {
           setForm({
             ...data,
@@ -116,13 +138,14 @@ export default function AdminBlogForm() {
     try {
       const webp = await convertToWebp(imageFile);
       const filename = `${seoSlug(form.title || 'article')}-${Date.now()}.webp`;
-      const { error: uploadError } = await supabaseAdmin.storage
-        .from('blog-images')
-        .upload(filename, webp, { contentType: 'image/webp', upsert: true });
-      if (uploadError) throw uploadError;
-      const { data } = supabaseAdmin.storage.from('blog-images').getPublicUrl(filename);
-      return data.publicUrl;
-    } catch (err) {
+      const base64Data = await blobToDataUrl(webp);
+      return await adminRequest<string>({
+        op: 'uploadBlogImage',
+        fileName: filename,
+        contentType: 'image/webp',
+        base64Data,
+      });
+    } catch {
       setError('Erreur lors de l\'upload de l\'image.');
       return null;
     } finally {
@@ -159,11 +182,30 @@ export default function AdminBlogForm() {
     }
 
     if (isEdit) {
-      const { error: err } = await supabaseAdmin.from('blog_articles').update(payload).eq('id', id);
-      if (err) { setError(err.message); setSaving(false); return; }
+      try {
+        await adminRequest({
+          op: 'update',
+          resource: 'blog_articles',
+          data: payload,
+          filters: [{ column: 'id', value: id ?? '' }],
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde.');
+        setSaving(false);
+        return;
+      }
     } else {
-      const { error: err } = await supabaseAdmin.from('blog_articles').insert({ ...payload, created_at: new Date().toISOString() });
-      if (err) { setError(err.message); setSaving(false); return; }
+      try {
+        await adminRequest({
+          op: 'insert',
+          resource: 'blog_articles',
+          data: { ...payload, created_at: new Date().toISOString() },
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde.');
+        setSaving(false);
+        return;
+      }
     }
     navigate('/admin/blog');
   }

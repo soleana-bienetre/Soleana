@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Mail, Trash2, Check, Phone } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type Contact } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { Contact } from '../../lib/supabase';
 
 export default function AdminContacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -9,10 +10,11 @@ export default function AdminContacts() {
   const [selected, setSelected] = useState<Contact | null>(null);
 
   async function load() {
-    const { data } = await supabaseAdmin
-      .from('contacts')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const data = await adminRequest<Contact[]>({
+      op: 'select',
+      resource: 'contacts',
+      order: [{ column: 'created_at', ascending: false }],
+    });
     setContacts(data ?? []);
     setLoading(false);
   }
@@ -20,14 +22,23 @@ export default function AdminContacts() {
   useEffect(() => { load(); }, []);
 
   async function markRead(id: string) {
-    await supabaseAdmin.from('contacts').update({ is_read: true }).eq('id', id);
+    await adminRequest({
+      op: 'update',
+      resource: 'contacts',
+      data: { is_read: true },
+      filters: [{ column: 'id', value: id }],
+    });
     setContacts((prev) => prev.map((c) => c.id === id ? { ...c, is_read: true } : c));
     if (selected?.id === id) setSelected((s) => s ? { ...s, is_read: true } : s);
   }
 
   async function deleteContact(id: string) {
     if (!confirm('Supprimer ce message ?')) return;
-    await supabaseAdmin.from('contacts').delete().eq('id', id);
+    await adminRequest({
+      op: 'delete',
+      resource: 'contacts',
+      filters: [{ column: 'id', value: id }],
+    });
     setContacts((prev) => prev.filter((c) => c.id !== id));
     if (selected?.id === id) setSelected(null);
   }

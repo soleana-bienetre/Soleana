@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, FileText, Star, Eye } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ contacts: 0, unread: 0, articles: 0, reviews: 0 });
 
   useEffect(() => {
     async function load() {
-      const [{ count: contacts }, { count: unread }, { count: articles }, { count: reviews }] =
+      const [contacts, unread, articles, reviews] =
         await Promise.all([
-          supabaseAdmin.from('contacts').select('*', { count: 'exact', head: true }),
-          supabaseAdmin.from('contacts').select('*', { count: 'exact', head: true }).eq('is_read', false),
-          supabaseAdmin.from('blog_articles').select('*', { count: 'exact', head: true }),
-          supabaseAdmin.from('reviews').select('*', { count: 'exact', head: true }),
+          adminRequest<number>({ op: 'count', resource: 'contacts' }),
+          adminRequest<number>({ op: 'count', resource: 'contacts', filters: [{ column: 'is_read', value: false }] }),
+          adminRequest<number>({ op: 'count', resource: 'blog_articles' }),
+          adminRequest<number>({ op: 'count', resource: 'reviews' }),
         ]);
-      setStats({ contacts: contacts ?? 0, unread: unread ?? 0, articles: articles ?? 0, reviews: reviews ?? 0 });
+      setStats({ contacts, unread, articles, reviews });
     }
     load();
   }, []);

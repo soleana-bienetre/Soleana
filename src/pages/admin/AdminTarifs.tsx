@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Pencil, Check, X, PlusCircle } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type Tarif } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { Tarif } from '../../lib/supabase';
 
 type GroupedCategory = {
   id: string;
@@ -19,11 +20,14 @@ export default function AdminTarifs() {
   const [saving, setSaving] = useState(false);
 
   async function load() {
-    const { data } = await supabaseAdmin
-      .from('tarifs')
-      .select('*')
-      .order('category_order')
-      .order('item_order');
+    const data = await adminRequest<Tarif[]>({
+      op: 'select',
+      resource: 'tarifs',
+      order: [
+        { column: 'category_order', ascending: true },
+        { column: 'item_order', ascending: true },
+      ],
+    });
 
     if (data) {
       const map = new Map<string, GroupedCategory>();
@@ -52,10 +56,12 @@ export default function AdminTarifs() {
 
   async function saveEdit(tarif: Tarif) {
     setSaving(true);
-    await supabaseAdmin
-      .from('tarifs')
-      .update({ price: editPrice, note: editNote || null, updated_at: new Date().toISOString() })
-      .eq('id', tarif.id);
+    await adminRequest({
+      op: 'update',
+      resource: 'tarifs',
+      data: { price: editPrice, note: editNote || null, updated_at: new Date().toISOString() },
+      filters: [{ column: 'id', value: tarif.id }],
+    });
     setCategories((prev) =>
       prev.map((cat) => ({
         ...cat,
@@ -69,7 +75,12 @@ export default function AdminTarifs() {
   }
 
   async function toggleVisible(tarif: Tarif) {
-    await supabaseAdmin.from('tarifs').update({ visible: !tarif.visible }).eq('id', tarif.id);
+    await adminRequest({
+      op: 'update',
+      resource: 'tarifs',
+      data: { visible: !tarif.visible },
+      filters: [{ column: 'id', value: tarif.id }],
+    });
     setCategories((prev) =>
       prev.map((cat) => ({
         ...cat,
@@ -86,11 +97,12 @@ export default function AdminTarifs() {
     const price = prompt('Prix :') ?? '[PRIX À DÉFINIR]';
     const cat = categories.find((c) => c.id === categoryId);
     const nextOrder = (cat?.items.length ?? 0) + 1;
-    const { data } = await supabaseAdmin
-      .from('tarifs')
-      .insert({ category_id: categoryId, category_label: categoryLabel, category_order: categoryOrder, name, price, item_order: nextOrder })
-      .select()
-      .single();
+    const data = await adminRequest<Tarif>({
+      op: 'insert',
+      resource: 'tarifs',
+      data: { category_id: categoryId, category_label: categoryLabel, category_order: categoryOrder, name, price, item_order: nextOrder },
+      single: true,
+    });
     if (data) {
       setCategories((prev) =>
         prev.map((cat) =>

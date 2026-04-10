@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, Plus, Trash2, Eye, EyeOff, Edit2 } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type BlogArticle } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { BlogArticle } from '../../lib/supabase';
 
 export default function AdminBlog() {
   const [articles, setArticles] = useState<BlogArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function load() {
-    const { data } = await supabaseAdmin
-      .from('blog_articles')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const data = await adminRequest<BlogArticle[]>({
+      op: 'select',
+      resource: 'blog_articles',
+      order: [{ column: 'created_at', ascending: false }],
+    });
     setArticles(data ?? []);
     setLoading(false);
   }
@@ -21,16 +23,25 @@ export default function AdminBlog() {
 
   async function togglePublished(article: BlogArticle) {
     const published = !article.published;
-    await supabaseAdmin.from('blog_articles').update({
-      published,
-      published_at: published ? new Date().toISOString() : null,
-    }).eq('id', article.id);
+    await adminRequest({
+      op: 'update',
+      resource: 'blog_articles',
+      data: {
+        published,
+        published_at: published ? new Date().toISOString() : null,
+      },
+      filters: [{ column: 'id', value: article.id }],
+    });
     setArticles((prev) => prev.map((a) => a.id === article.id ? { ...a, published } : a));
   }
 
   async function deleteArticle(id: string) {
     if (!confirm('Supprimer cet article définitivement ?')) return;
-    await supabaseAdmin.from('blog_articles').delete().eq('id', id);
+    await adminRequest({
+      op: 'delete',
+      resource: 'blog_articles',
+      filters: [{ column: 'id', value: id }],
+    });
     setArticles((prev) => prev.filter((a) => a.id !== id));
   }
 

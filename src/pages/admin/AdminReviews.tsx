@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Plus, Trash2, Eye, EyeOff, Edit2 } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { supabaseAdmin, type Review } from '../../lib/supabase';
+import { adminRequest } from '../../lib/adminApi';
+import type { Review } from '../../lib/supabase';
 
 export default function AdminReviews() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function load() {
-    const { data } = await supabaseAdmin
-      .from('reviews')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const data = await adminRequest<Review[]>({
+      op: 'select',
+      resource: 'reviews',
+      order: [{ column: 'created_at', ascending: false }],
+    });
     setReviews(data ?? []);
     setLoading(false);
   }
@@ -20,13 +22,22 @@ export default function AdminReviews() {
   useEffect(() => { load(); }, []);
 
   async function togglePublished(review: Review) {
-    await supabaseAdmin.from('reviews').update({ published: !review.published }).eq('id', review.id);
+    await adminRequest({
+      op: 'update',
+      resource: 'reviews',
+      data: { published: !review.published },
+      filters: [{ column: 'id', value: review.id }],
+    });
     setReviews((prev) => prev.map((r) => r.id === review.id ? { ...r, published: !r.published } : r));
   }
 
   async function deleteReview(id: string) {
     if (!confirm('Supprimer cet avis ?')) return;
-    await supabaseAdmin.from('reviews').delete().eq('id', id);
+    await adminRequest({
+      op: 'delete',
+      resource: 'reviews',
+      filters: [{ column: 'id', value: id }],
+    });
     setReviews((prev) => prev.filter((r) => r.id !== id));
   }
 
