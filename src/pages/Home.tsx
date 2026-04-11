@@ -575,28 +575,36 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="lg:col-span-1 rounded-2xl overflow-hidden shadow-sm border border-sand-100 min-h-[280px] relative bg-sand-100">
-              <img
-                src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=700"
-                alt="Soléana Bien-Être – 1 Rue de la Fraternité, Venerque"
-                className="w-full h-full object-cover opacity-40"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-                <div className="w-14 h-14 rounded-full bg-nude-600 shadow-lg flex items-center justify-center mb-4">
-                  <MapPin size={24} className="text-white" />
+            {/* Google Map */}
+            <div className="lg:col-span-1 rounded-2xl overflow-hidden shadow-sm border border-sand-100 min-h-[280px] flex flex-col">
+              <div className="flex-1 min-h-[220px]">
+                <iframe
+                  title="Soléana Bien-Être – 1 Rue de la Fraternité, 31810 Venerque"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.3!2d1.5487!3d43.4024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12aebb1c2f2e4f5b%3A0x0!2s1+Rue+de+la+Fraternit%C3%A9%2C+31810+Venerque!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: '220px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="bg-white px-5 py-4 flex items-center justify-between gap-3 border-t border-sand-100">
+                <div>
+                  <p className="font-serif text-sm text-stone-800">Soléana Bien-Être</p>
+                  <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="text-stone-500 text-xs hover:text-nude-600 transition-colors">
+                    1 Rue de la Fraternité, 31810 Venerque
+                  </a>
                 </div>
-                <p className="font-serif text-xl text-stone-800 mb-1">Soléana Bien-Être</p>
-                <a href="https://maps.app.goo.gl/RYgHzauJiXPw43ja7" target="_blank" rel="noopener noreferrer" className="font-sans text-stone-600 text-sm hover:text-nude-600 transition-colors">
-                  1 Rue de la Fraternité<br />31810 Venerque
-                </a>
                 <a
                   href="https://maps.google.com/?q=1+Rue+de+la+Fraternité+31810+Venerque"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary text-sm px-5 py-2.5"
+                  className="shrink-0 inline-flex items-center gap-1.5 bg-nude-600 text-white text-xs font-medium px-3 py-2 rounded-xl hover:bg-nude-700 transition-colors"
                 >
-                  Itinéraire GPS
+                  <MapPin size={12} />
+                  Itinéraire
                 </a>
               </div>
             </div>

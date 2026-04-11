@@ -13,6 +13,7 @@ import Tarifs from './pages/Tarifs';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import BlogArticle from './pages/BlogArticle';
 import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
 import AdminLogin from './pages/admin/AdminLogin';
@@ -22,7 +23,10 @@ import AdminBlog from './pages/admin/AdminBlog';
 import AdminBlogForm from './pages/admin/AdminBlogForm';
 import AdminReviews from './pages/admin/AdminReviews';
 import AdminReviewForm from './pages/admin/AdminReviewForm';
+import AdminTarifs from './pages/admin/AdminTarifs';
+import AdminPhotos from './pages/admin/AdminPhotos';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import { SiteImagesProvider } from './contexts/SiteImagesContext';
 
 function SchemaOrg() {
   useEffect(() => {
@@ -123,6 +127,8 @@ function AdminRoutes() {
       <Route path="/admin/blog/:id" element={<ProtectedRoute><AdminBlogForm /></ProtectedRoute>} />
       <Route path="/admin/avis" element={<ProtectedRoute><AdminReviews /></ProtectedRoute>} />
       <Route path="/admin/avis/:id" element={<ProtectedRoute><AdminReviewForm /></ProtectedRoute>} />
+      <Route path="/admin/tarifs" element={<ProtectedRoute><AdminTarifs /></ProtectedRoute>} />
+      <Route path="/admin/photos" element={<ProtectedRoute><AdminPhotos /></ProtectedRoute>} />
     </Routes>
   );
 }
@@ -151,6 +157,7 @@ function AppLayout() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/politique-de-confidentialite" element={<PolitiqueConfidentialite />} />
           <Route path="*" element={<Home />} />
@@ -164,7 +171,9 @@ function AppLayout() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppLayout />
+      <SiteImagesProvider>
+        <AppLayout />
+      </SiteImagesProvider>
     </BrowserRouter>
   );
 }

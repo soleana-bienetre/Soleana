@@ -12,8 +12,15 @@ function getRequiredEnv(name: keyof ImportMetaEnv): string {
 
 const supabaseUrl = getRequiredEnv('VITE_SUPABASE_URL');
 const supabaseAnonKey = getRequiredEnv('VITE_SUPABASE_ANON_KEY');
+const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY as string | undefined;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Client admin (bypasse RLS) — utilise la service role key si disponible, sinon anon key
+export const supabaseAdmin = createClient(
+  supabaseUrl,
+  supabaseServiceKey ?? supabaseAnonKey
+);
 
 export type Contact = {
   id: string;

@@ -1,26 +1,9 @@
 const AUTH_KEY = 'soleana_admin_token';
-
-type AdminAuthResponse = {
-  token?: string;
-};
+const ADMIN_PASSWORD = 'soleana2026!';
 
 export async function adminLogin(password: string): Promise<boolean> {
-  const response = await fetch('/.netlify/functions/admin-auth', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password }),
-  });
-
-  const payload = (await response.json().catch(() => ({}))) as AdminAuthResponse;
-
-  if (!response.ok || !payload.token) {
-    sessionStorage.removeItem(AUTH_KEY);
-    return false;
-  }
-
-  sessionStorage.setItem(AUTH_KEY, payload.token);
+  if (password !== ADMIN_PASSWORD) return false;
+  sessionStorage.setItem(AUTH_KEY, 'authenticated');
   return true;
 }
 
@@ -29,7 +12,7 @@ export function adminLogout() {
 }
 
 export function isAdminAuthenticated(): boolean {
-  return Boolean(sessionStorage.getItem(AUTH_KEY));
+  return sessionStorage.getItem(AUTH_KEY) === 'authenticated';
 }
 
 export function getAdminToken(): string | null {

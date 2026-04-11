@@ -25,7 +25,8 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
 
-  const isHero = location.pathname === '/' && !isScrolled;
+  const noHeroPages = ['/epilation-laser', '/soins-visage', '/tarifs', '/blog', '/contact'];
+  const isHero = !isScrolled && !noHeroPages.includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);

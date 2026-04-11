@@ -1,4 +1,4 @@
-import { adminLogout, getAdminToken } from './adminAuth';
+import { supabaseAdmin } from './supabase';
 
 type FilterValue = string | number | boolean | null;
 
@@ -56,46 +56,93 @@ type AdminRequestPayload =
       base64Data: string;
     };
 
-type AdminResponse<T> = {
-  data?: T;
-  count?: number;
-  publicUrl?: string;
-  error?: string;
-};
+function applyFilters(query: ReturnType<typeof supabaseAdmin.from>, filters?: AdminFilter[]) {
+  let q = query;
+  for (const f of filters ?? []) {
+    q = q.eq(f.column, f.value) as typeof q;
+  }
+  return q;
+}
 
 export async function adminRequest<T>(payload: AdminRequestPayload): Promise<T> {
-  const token = getAdminToken();
-
-  if (!token) {
-    throw new Error('Session administrateur expirée.');
-  }
-
-  const response = await fetch('/.netlify/functions/admin', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const body = (await response.json().catch(() => ({}))) as AdminResponse<T>;
-
-  if (response.status === 401) {
-    adminLogout();
-  }
-
-  if (!response.ok) {
-    throw new Error(body.error || 'Erreur serveur.');
-  }
-
-  if (payload.op === 'count') {
-    return (body.count ?? 0) as T;
-  }
-
+  // ── Upload image ──────────────────────────────────────────────────────────
   if (payload.op === 'uploadBlogImage') {
-    return (body.publicUrl ?? '') as T;
+    const { fileName, base64Data } = payload;
+    // Convert base64 data URL to Uint8Array
+    const base64 = base64Data.split(',')[1];
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+    const { error } = await supabaseAdmin.storage
+      .from('blog-images')
+      .upload(fileName, bytes, { contentType: 'image/webp', upsert: true });
+
+    if (error) throw new Error(error.message);
+
+    const { data: urlData } = supabaseAdmin.storage
+      .from('blog-images')
+      .getPublicUrl(fileName);
+
+    return (urlData.publicUrl ?? '') as T;
   }
 
-  return body.data as T;
+  // ── Count ─────────────────────────────────────────────────────────────────
+  if (payload.op === 'count') {
+    let q = supabaseAdmin.from(payload.resource).select('*', { count: 'exact', head: true });
+    q = applyFilters(q, payload.filters) as typeof q;
+    const { count, error } = await q;
+    if (error) throw new Error(error.message);
+    return (count ?? 0) as T;
+  }
+
+  // ── Select ────────────────────────────────────────────────────────────────
+  if (payload.op === 'select') {
+    let q = supabaseAdmin.from(payload.resource).select(payload.columns ?? '*');
+    q = applyFilters(q, payload.filters) as typeof q;
+    for (const o of payload.order ?? []) {
+      q = q.order(o.column, { ascending: o.ascending ?? true }) as typeof q;
+    }
+    if (payload.single) {
+      const { data, error } = await q.single();
+      if (error) throw new Error(error.message);
+      return data as T;
+    }
+    const { data, error } = await q;
+    if (error) throw new Error(error.message);
+    return data as T;
+  }
+
+  // ── Insert ────────────────────────────────────────────────────────────────
+  if (payload.op === 'insert') {
+    let q = supabaseAdmin.from(payload.resource).insert(payload.data).select(payload.columns ?? '*');
+    if (payload.single) {
+      const { data, error } = await q.single();
+      if (error) throw new Error(error.message);
+      return data as T;
+    }
+    const { data, error } = await q;
+    if (error) throw new Error(error.message);
+    return data as T;
+  }
+
+  // ── Update ────────────────────────────────────────────────────────────────
+  if (payload.op === 'update') {
+    let q = supabaseAdmin.from(payload.resource).update(payload.data);
+    q = applyFilters(q, payload.filters) as typeof q;
+    const { error } = await q;
+    if (error) throw new Error(error.message);
+    return undefined as T;
+  }
+
+  // ── Delete ────────────────────────────────────────────────────────────────
+  if (payload.op === 'delete') {
+    let q = supabaseAdmin.from(payload.resource).delete();
+    q = applyFilters(q, payload.filters) as typeof q;
+    const { error } = await q;
+    if (error) throw new Error(error.message);
+    return undefined as T;
+  }
+
+  throw new Error('Opération inconnue');
 }

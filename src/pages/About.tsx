@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSiteImages } from '../contexts/SiteImagesContext';
 import { Link } from 'react-router-dom';
 import {
   Heart,
@@ -156,6 +157,8 @@ const reasons = [
 ];
 
 export default function About() {
+  const { getUrl } = useSiteImages();
+
   useEffect(() => {
     document.title =
       'À propos de Soléana Bien-Être | Laetitia Sevrin, praticienne à Venerque (31)';
@@ -167,7 +170,7 @@ export default function About() {
       <section className="relative py-24 md:py-36 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/Capture_d'écran_2026-04-05_à_21.17.50.png"
+            src={getUrl('about-hero')}
             alt="Institut Soléana Bien-Être – espace d'accueil"
             className="w-full h-full object-cover object-center"
             loading="eager"
@@ -197,7 +200,7 @@ export default function About() {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/5]">
                 <img
-                  src="/Capture_d'écran_2026-04-05_à_21.17.50.png"
+                  src={getUrl('about-portrait')}
                   alt="Accueil de l'institut Soléana Bien-Être à Venerque"
                   className="w-full h-full object-cover object-center"
                 />
@@ -270,7 +273,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
               <img
-                src="/Capture_d'écran_2026-04-05_à_21.17.50.png"
+                src={getUrl('about-gallery-1')}
                 alt="Espace d'accueil – Soléana Bien-Être"
                 className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
@@ -282,7 +285,7 @@ export default function About() {
             </div>
             <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
               <img
-                src="/Capture_d'écran_2026-04-05_à_21.18.01.png"
+                src={getUrl('about-gallery-2')}
                 alt="Cabine soins et laser – Soléana Bien-Être"
                 className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
@@ -294,7 +297,7 @@ export default function About() {
             </div>
             <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
               <img
-                src="/Capture_d'écran_2026-04-05_à_21.18.10.png"
+                src={getUrl('about-gallery-3')}
                 alt="Cabine massage – Soléana Bien-Être"
                 className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
@@ -428,7 +431,7 @@ export default function About() {
               </p>
               <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[16/9]">
                 <img
-                  src="/Capture_d'écran_2026-04-05_à_21.18.01.png"
+                  src={getUrl('about-why')}
                   alt="Cabine de soins et épilation laser – Soléana Bien-Être"
                   className="w-full h-full object-cover"
                 />
@@ -472,7 +475,7 @@ export default function About() {
             {/* Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video lg:aspect-square">
               <img
-                src="/Capture_d'écran_2026-04-05_à_21.18.10.png"
+                src={getUrl('about-estime-sens')}
                 alt="Cabine de massage avec huiles Estime & Sens – Soléana Bien-Être"
                 className="w-full h-full object-cover object-center"
               />
