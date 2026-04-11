@@ -93,6 +93,33 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
     alt: 'Cabine de massage avec huiles Estime & Sens',
     aspect: '1/1',
   },
+  {
+    key: 'about-gallery-4',
+    label: 'Galerie – Photo supplémentaire 1',
+    page: 'À propos',
+    section: 'Galerie photos (optionnel)',
+    defaultUrl: '',
+    alt: 'Institut Soléana Bien-Être',
+    aspect: '4/3',
+  },
+  {
+    key: 'about-gallery-5',
+    label: 'Galerie – Photo supplémentaire 2',
+    page: 'À propos',
+    section: 'Galerie photos (optionnel)',
+    defaultUrl: '',
+    alt: 'Institut Soléana Bien-Être',
+    aspect: '4/3',
+  },
+  {
+    key: 'about-gallery-6',
+    label: 'Galerie – Photo supplémentaire 3',
+    page: 'À propos',
+    section: 'Galerie photos (optionnel)',
+    defaultUrl: '',
+    alt: 'Institut Soléana Bien-Être',
+    aspect: '4/3',
+  },
 
   // ── Kobido ────────────────────────────────────────────────────────────────
   {

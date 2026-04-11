@@ -270,44 +270,40 @@ export default function About() {
               <em>pensés pour votre confort</em>
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
-              <img
-                src={getUrl('about-gallery-1')}
-                alt="Espace d'accueil – Soléana Bien-Être"
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-serif text-lg font-light">Espace d'accueil</p>
-                <p className="font-sans text-xs text-white/70 mt-0.5">Un cadre chaleureux dès l'entrée</p>
+          {(() => {
+            const fixed = [
+              { key: 'about-gallery-1', label: 'Espace d\'accueil', sub: 'Un cadre chaleureux dès l\'entrée' },
+              { key: 'about-gallery-2', label: 'Cabine laser & soins', sub: 'Équipements homologués & certifiés' },
+              { key: 'about-gallery-3', label: 'Cabine massage & détente', sub: 'Huiles Estime & Sens, 100% naturelles' },
+            ];
+            const extra = ['about-gallery-4', 'about-gallery-5', 'about-gallery-6']
+              .map((k) => ({ key: k, url: getUrl(k) }))
+              .filter((e) => e.url && !e.url.startsWith('/Capture'));
+            const allPhotos = [
+              ...fixed.map((f) => ({ key: f.key, url: getUrl(f.key), label: f.label, sub: f.sub })),
+              ...extra.map((e) => ({ key: e.key, url: e.url, label: 'Institut Soléana', sub: '' })),
+            ];
+            return (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {allPhotos.map((photo) => (
+                  <div key={photo.key} className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
+                    <img
+                      src={photo.url}
+                      alt={`${photo.label} – Soléana Bien-Être`}
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {photo.label && (
+                      <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="font-serif text-lg font-light">{photo.label}</p>
+                        {photo.sub && <p className="font-sans text-xs text-white/70 mt-0.5">{photo.sub}</p>}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
-            <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
-              <img
-                src={getUrl('about-gallery-2')}
-                alt="Cabine soins et laser – Soléana Bien-Être"
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-serif text-lg font-light">Cabine laser & soins</p>
-                <p className="font-sans text-xs text-white/70 mt-0.5">Équipements homologués & certifiés</p>
-              </div>
-            </div>
-            <div className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
-              <img
-                src={getUrl('about-gallery-3')}
-                alt="Cabine massage – Soléana Bien-Être"
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="font-serif text-lg font-light">Cabine massage & détente</p>
-                <p className="font-sans text-xs text-white/70 mt-0.5">Huiles Estime & Sens, 100% naturelles</p>
-              </div>
-            </div>
-          </div>
+            );
+          })()}
         </div>
       </section>
 

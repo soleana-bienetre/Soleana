@@ -4,7 +4,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import { supabaseAdmin } from '../../lib/supabase';
 import { IMAGE_REGISTRY, getSlotsByPage, type ImageSlot } from '../../lib/siteImages';
 
-const BUCKET = 'site-images';
+const BUCKET = 'Images du site';
 
 function slugify(str: string): string {
   return str
