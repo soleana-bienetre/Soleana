@@ -90,7 +90,7 @@ const services = [
   {
     icon: Waves,
     title: 'Drainage & Maderothérapie',
-    slug: 'drainage-maderotherapie',
+    slug: 'drainage-lymphatique',
     description:
       'Des techniques manuelles et aux galets de bois pour stimuler la circulation, réduire la cellulite et redessiner les contours du corps.',
     image: 'https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=600',
@@ -325,7 +325,7 @@ export default function Home() {
             {services.map((service, idx) => (
               <Link
                 key={service.slug}
-                to={`/soins/${service.slug}`}
+                to={`/${service.slug}`}
                 className={`card-service group ${idx === 4 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
               >
                 <div className="relative h-52 overflow-hidden">

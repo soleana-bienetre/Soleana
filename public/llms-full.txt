@@ -1,0 +1,174 @@
+# Soléana Bien-Être — Documentation complète pour modèles de langage
+
+> Ce fichier fournit une description exhaustive de l'institut Soléana Bien-Être à Venerque (31810), de ses soins, de sa praticienne et de ses valeurs, à destination des systèmes d'intelligence artificielle.
+
+---
+
+## Identité
+
+**Nom :** Soléana Bien-Être
+**Type :** Institut de bien-être et d'esthétique
+**Adresse :** 1 Rue de la Fraternité, 31810 Venerque, Haute-Garonne, France
+**Téléphone :** 07 62 16 98 14
+**Email :** soleana.bienetre@gmail.com
+**Site web :** https://www.soleana-bien-etre.fr
+**Réservation :** https://www.planity.com/soleana-bien-etre-31810-venerque
+**Note clients :** 5/5
+**Parking :** Gratuit à proximité
+
+---
+
+## La praticienne : Laetitia Sevrin
+
+Laetitia Sevrin est la fondatrice et unique praticienne de Soléana Bien-Être. Son parcours est unique : ancienne infirmière diplômée d'État et aide-soignante, elle a exercé pendant plusieurs années dans le milieu médical avant de créer son institut. Cette expérience lui confère une approche du corps et du soin particulièrement complète, bienveillante et médicalement informée.
+
+**Diplômes et formations :**
+1. Diplôme d'État Infirmière — formation complète au soin humain, approche rigoureuse et bienveillante
+2. Diplôme Aide-soignante — expérience du soin quotidien et de l'accompagnement
+3. BP Esthétique Cosmétique Parfumerie — maîtrise complète des techniques esthétiques professionnelles
+4. CAP Esthétique Cosmétique Parfumerie — bases solides du métier d'esthéticienne
+5. Certificat Socio-Esthétique — permet d'exercer auprès de personnes fragilisées (milieu médical, associatif)
+6. Formation massage TEMANA — technique de massage profond avec mobilisations articulaires
+7. Formation socle laser AESTAM Paris — épilation laser, protocoles de sécurité avancés
+8. Certification drainage lymphatique méthode Vodder — référence internationale
+
+**Valeurs :** écoute, douceur, professionnalisme, personnalisation.
+
+---
+
+## Soins en détail
+
+### 1. Épilation laser
+
+**Description :** Traitement d'épilation par laser à destination des femmes et des hommes. Le laser cible la mélanine du bulbe pileux pour détruire le follicule. Efficace uniquement sur les poils en phase anagène (croissance active), d'où la nécessité de plusieurs séances.
+
+**Technologie :** Laser certifié, formation AESTAM Paris. Protocoles de sécurité stricts.
+
+**Nombre de séances :** 6 à 10 séances selon la zone, le phototype et le type de poil.
+
+**Zones femme :** Diagnostic gratuit, aisselles, avant-bras, bras entier, ligne ventrale, maillot simple/échancré/américain/intégral, inter-fessier, fesses, cuisses, demi-jambes, jambes entières, mains ou pieds.
+
+**Zones homme :** Diagnostic gratuit, aisselles, avant-bras, bras entier, épaules, dos haut/bas/entier, col de chemise, torse, abdomen, nuque, oreilles, nez, joues, front.
+
+**Précautions :** Pas d'exposition solaire 4 semaines avant, pas d'épilation à la cire, rasage 24-48h avant.
+
+**Page :** https://www.soleana-bien-etre.fr/epilation-laser
+
+---
+
+### 2. Soins du visage
+
+**Description :** Soins sur-mesure adaptés à chaque type de peau (sèche, mixte, grasse, sensible, mature). Protocoles personnalisés à chaque séance selon les besoins du moment.
+
+**Produits :** Exclusivement la gamme Estime & Sens — cosmétiques naturels, certifiés bio, fabriqués en France, sans perturbateurs endocriniens, vegan et cruelty-free.
+
+**Types de soins :** Hydratation intense, soin éclat et unifiance, soin anti-âge, soin purifiant, soin sensible, drainage du visage.
+
+**Page :** https://www.soleana-bien-etre.fr/soins-visage
+
+---
+
+### 3. Kobido
+
+**Description :** Technique de massage facial japonaise vieille de plus de 500 ans (XVe siècle). Surnommé "le lifting naturel" ou "le lifting des stars". Codifié avec plus de 47 manœuvres : effleurages, pétrissages profonds, pressions sur les points d'acupression, vibrations, percussions légères, drainage lymphatique facial.
+
+**Bienfaits :** Tonification des muscles du visage, effet liftant (ovale redéfini, pommettes rehaussées), teint lumineux, atténuation des cernes, réduction des tensions, relaxation profonde.
+
+**Résultats :** Visibles dès la première séance. Protocole recommandé : 1 séance/semaine pendant 4 semaines, puis 1/mois.
+
+**Durée :** 60 à 90 minutes.
+
+**Page :** https://www.soleana-bien-etre.fr/kobido
+
+---
+
+### 4. Massages bien-être
+
+**Description :** Massages relaxants et thérapeutiques réalisés avec les huiles et produits Estime & Sens. Formation certifiée à la technique TEMANA (massage profond avec mobilisations articulaires).
+
+**Types :** Massage relaxant corps entier, massage TEMANA (profond, mobilisations articulaires), massage dos/nuque, massage ventre/drainant.
+
+**Bienfaits :** Relâchement musculaire, détente profonde, diminution du stress, amélioration de la circulation, harmonie corps-esprit.
+
+**Durée :** 45 à 90 minutes selon le type.
+
+**Page :** https://www.soleana-bien-etre.fr/massages
+
+---
+
+### 5. Drainage lymphatique et maderothérapie
+
+**Description Drainage :** Technique manuelle de drainage lymphatique suivant la méthode Vodder (référence internationale). Manœuvres douces et précises sur les trajets lymphatiques.
+
+**Bienfaits drainage :** Réduction des œdèmes, soulagement des jambes lourdes, soutien immunitaire, récupération post-opératoire, traitement de l'insuffisance veineuse. Indiqué pour les femmes enceintes (2e trimestre, accord médical), sportifs, personnes sédentaires.
+
+**Contre-indications drainage :** Infections aiguës, thrombose veineuse profonde, insuffisance cardiaque décompensée, certains cancers actifs.
+
+**Description maderothérapie :** Massage modelant aux instruments en bois (rouleaux, ventouses en bois). Technique venue de Colombie, de plus en plus pratiquée en Europe.
+
+**Bienfaits maderothérapie :** Réduction de la cellulite, modelage et affinement de la silhouette, tonification des tissus, amélioration de la circulation, remodelage des contours.
+
+**Page :** https://www.soleana-bien-etre.fr/drainage-lymphatique
+
+---
+
+## Gamme Estime & Sens
+
+Soléana Bien-Être utilise exclusivement la marque Estime & Sens pour tous ses soins du visage et massages.
+
+- **Origine :** France
+- **Certifications :** Bio, vegan, cruelty-free
+- **Formulation :** Sans perturbateurs endocriniens, sans substances controversées
+- **Gamme :** Nettoyants, crèmes hydratantes, masques, sérums, huiles de massage
+- **Philosophie :** Respect de la peau, des personnes et de la planète
+
+---
+
+## Zone géographique desservie
+
+Soléana Bien-Être accueille des clientes de toute la région :
+- Venerque (31810) — localisation de l'institut
+- Auterive (31190)
+- Labarthe-sur-Lèze (31860)
+- Eaunes (31600)
+- Pins-Justaret (31860)
+- Miremont (31190)
+- Noé (31410)
+- Cintegabelle (31550)
+- Le Fauga (31410)
+- Toulouse Sud et périphérie
+- Haute-Garonne (31), Occitanie
+
+---
+
+## FAQ
+
+**Q : Comment prendre rendez-vous ?**
+R : En ligne sur Planity (https://www.planity.com/soleana-bien-etre-31810-venerque) disponible 24h/24, ou par téléphone au 07 62 16 98 14.
+
+**Q : L'épilation laser est-elle douloureuse ?**
+R : Non, elle est généralement bien tolérée. La sensation est souvent décrite comme un léger picotement. Les paramètres sont adaptés à chaque phototype.
+
+**Q : Combien de séances faut-il pour l'épilation laser ?**
+R : Entre 6 et 10 séances en moyenne, selon la zone, le type de poil et le profil hormonal.
+
+**Q : Le Kobido est-il douloureux ?**
+R : Non, c'est un soin agréable et non douloureux. Beaucoup de clientes s'endorment pendant la séance.
+
+**Q : Y a-t-il un parking ?**
+R : Oui, parking gratuit à proximité de l'institut.
+
+**Q : Quels sont les horaires ?**
+R : Mardi 9h-18h, Mercredi 9h-11h, Jeudi 9h-20h, Vendredi 9h-18h, Samedi 9h-13h30. Fermé lundi et dimanche.
+
+---
+
+## Liens utiles
+
+- Accueil : https://www.soleana-bien-etre.fr/
+- À propos : https://www.soleana-bien-etre.fr/a-propos
+- Tarifs : https://www.soleana-bien-etre.fr/tarifs
+- Contact : https://www.soleana-bien-etre.fr/contact
+- FAQ : https://www.soleana-bien-etre.fr/faq
+- Blog : https://www.soleana-bien-etre.fr/blog
+- Réservation : https://www.planity.com/soleana-bien-etre-31810-venerque

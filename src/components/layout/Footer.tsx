@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Instagram, Facebook, Heart, Calendar } from 'lucide-react';
+import { Phone, MapPin, Clock, Instagram, Facebook, Calendar } from 'lucide-react';
 
 const horaires = [
   { jour: 'Lundi', heure: 'Fermé' },
@@ -151,8 +151,16 @@ export default function Footer() {
           <p className="text-xs text-stone-500">
             © {currentYear} Soléana Bien-Être – Laetitia Sevrin – 1 Rue de la Fraternité, 31810 Venerque
           </p>
-          <p className="text-xs text-stone-600 flex items-center gap-1">
-            Fait avec <Heart size={11} className="text-nude-500 fill-current" /> en France
+          <p className="text-xs text-stone-600">
+            Site réalisé par{' '}
+            <a
+              href="https://webfityou.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-500 hover:text-nude-400 transition-colors underline underline-offset-2"
+            >
+              WebFitYou
+            </a>
           </p>
           <div className="flex items-center gap-4">
             <Link to="/mentions-legales" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
