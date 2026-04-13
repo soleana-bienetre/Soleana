@@ -28,6 +28,60 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
     alt: 'Soins bien-être Soléana Venerque',
     aspect: '4/5',
   },
+  {
+    key: 'home-laetitia',
+    label: 'Photo section "Votre praticienne"',
+    page: 'Accueil',
+    section: 'Section Laetitia Sevrin',
+    defaultUrl: 'https://images.pexels.com/photos/3997990/pexels-photo-3997990.jpeg?auto=compress&cs=tinysrgb&w=800',
+    alt: 'Laetitia Sevrin – praticienne Soléana Bien-Être',
+    aspect: '4/5',
+  },
+  {
+    key: 'home-service-epilation',
+    label: 'Carte soin – Épilation laser',
+    page: 'Accueil',
+    section: 'Cartes soins',
+    defaultUrl: 'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=600',
+    alt: 'Épilation laser – Soléana Bien-Être',
+    aspect: '16/9',
+  },
+  {
+    key: 'home-service-soins-visage',
+    label: 'Carte soin – Soins du visage',
+    page: 'Accueil',
+    section: 'Cartes soins',
+    defaultUrl: 'https://images.pexels.com/photos/3762875/pexels-photo-3762875.jpeg?auto=compress&cs=tinysrgb&w=600',
+    alt: 'Soins du visage – Soléana Bien-Être',
+    aspect: '16/9',
+  },
+  {
+    key: 'home-service-kobido',
+    label: 'Carte soin – Kobido',
+    page: 'Accueil',
+    section: 'Cartes soins',
+    defaultUrl: 'https://images.pexels.com/photos/3997990/pexels-photo-3997990.jpeg?auto=compress&cs=tinysrgb&w=600',
+    alt: 'Kobido massage facial – Soléana Bien-Être',
+    aspect: '16/9',
+  },
+  {
+    key: 'home-service-massages',
+    label: 'Carte soin – Massages bien-être',
+    page: 'Accueil',
+    section: 'Cartes soins',
+    defaultUrl: 'https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=600',
+    alt: 'Massages bien-être – Soléana Bien-Être',
+    aspect: '16/9',
+  },
+  {
+    key: 'home-service-drainage',
+    label: 'Carte soin – Drainage & Maderothérapie',
+    page: 'Accueil',
+    section: 'Cartes soins',
+    defaultUrl: 'https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=600',
+    alt: 'Drainage lymphatique et maderothérapie – Soléana Bien-Être',
+    aspect: '16/9',
+  },
 
   // ── À propos ─────────────────────────────────────────────────────────────
   {
@@ -123,6 +177,15 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
 
   // ── Kobido ────────────────────────────────────────────────────────────────
   {
+    key: 'kobido-hero',
+    label: 'Photo de couverture (hero)',
+    page: 'Kobido',
+    section: 'Bannière en-tête',
+    defaultUrl: 'https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Massage Kobido lifting naturel – Soléana Bien-Être',
+    aspect: '16/9',
+  },
+  {
     key: 'kobido-main',
     label: 'Photo principale',
     page: 'Kobido',
@@ -142,6 +205,15 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
   },
 
   // ── Massages ──────────────────────────────────────────────────────────────
+  {
+    key: 'massages-hero',
+    label: 'Photo de couverture (hero)',
+    page: 'Massages bien-être',
+    section: 'Bannière en-tête',
+    defaultUrl: 'https://images.pexels.com/photos/3997989/pexels-photo-3997989.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Massage bien-être Soléana Venerque',
+    aspect: '16/9',
+  },
   {
     key: 'massages-main',
     label: 'Photo principale',
@@ -171,6 +243,15 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
   },
 
   // ── Drainage ──────────────────────────────────────────────────────────────
+  {
+    key: 'drainage-hero',
+    label: 'Photo de couverture (hero)',
+    page: 'Drainage & Maderothérapie',
+    section: 'Bannière en-tête',
+    defaultUrl: 'https://images.pexels.com/photos/6663371/pexels-photo-6663371.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    alt: 'Drainage lymphatique Soléana Venerque',
+    aspect: '16/9',
+  },
   {
     key: 'drainage-main',
     label: 'Photo principale',

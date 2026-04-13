@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
+import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -271,8 +273,13 @@ const faqItems = [
 // ---------------------------------------------------------------------------
 
 export default function SoinsVisage() {
+  const { getUrl } = useSiteImages();
   return (
     <main className="bg-cream">
+      <PageMeta
+        title="Soins du visage à Venerque – Sur-mesure | Soléana"
+        description="Soins du visage personnalisés à Venerque (31) : hydratation, éclat, anti-âge, peau sensible. Produits bio Estime & Sens. Diagnostic cutané offert. Réservez votre soin chez Soléana."
+      />
       {/* ------------------------------------------------------------------ */}
       {/* HERO                                                                */}
       {/* ------------------------------------------------------------------ */}

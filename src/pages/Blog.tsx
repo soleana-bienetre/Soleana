@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PageMeta } from '../lib/useMeta';
 import {
   Clock,
   ChevronRight,
@@ -284,6 +285,10 @@ export default function Blog() {
 
   return (
     <>
+      <PageMeta
+        title="Blog bien-être & beauté – Conseils Soléana Venerque"
+        description="Conseils bien-être, guides soins et réponses à vos questions par Laetitia Sevrin. Kobido, épilation laser, drainage lymphatique : tout savoir avant votre prochaine séance."
+      />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">

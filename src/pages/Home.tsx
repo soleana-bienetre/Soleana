@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronDown,
@@ -21,6 +21,8 @@ import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { supabase } from '../lib/supabase';
 import type { Review } from '../lib/supabase';
+import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 
 const faqItems = [
   {
@@ -55,45 +57,45 @@ const services = [
     icon: Zap,
     title: 'Épilation laser',
     slug: 'epilation-laser',
+    imageKey: 'home-service-epilation',
     description:
       'Une solution durable et efficace pour une peau durablement lisse. Protocole adapté à chaque phototype pour un confort maximal.',
-    image: 'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=600',
     tag: 'Technologie avancée',
   },
   {
     icon: Leaf,
     title: 'Soins du visage',
     slug: 'soins-visage',
+    imageKey: 'home-service-soins-visage',
     description:
       "Des soins sur-mesure pour révéler l\'éclat naturel de votre peau. Hydratation, éclat, anti-âge : des rituels personnalisés avec des produits d\'exception.",
-    image: 'https://images.pexels.com/photos/3762875/pexels-photo-3762875.jpeg?auto=compress&cs=tinysrgb&w=600',
     tag: 'Soin signature',
   },
   {
     icon: Hand,
     title: 'Kobido',
     slug: 'kobido',
+    imageKey: 'home-service-kobido',
     description:
       'Le massage facial japonais ancestral, véritable lifting naturel. Tonifie, sculpte et illumine le visage pour un teint rayonnant.',
-    image: 'https://images.pexels.com/photos/3997990/pexels-photo-3997990.jpeg?auto=compress&cs=tinysrgb&w=600',
     tag: 'Art japonais',
   },
   {
     icon: Heart,
     title: 'Massages bien-être',
     slug: 'massages',
+    imageKey: 'home-service-massages',
     description:
       'Des massages profonds et enveloppants pour relâcher les tensions, apaiser le corps et retrouver une harmonie intérieure profonde.',
-    image: 'https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=600',
     tag: 'Détente totale',
   },
   {
     icon: Waves,
     title: 'Drainage & Maderothérapie',
     slug: 'drainage-lymphatique',
+    imageKey: 'home-service-drainage',
     description:
       'Des techniques manuelles et aux galets de bois pour stimuler la circulation, réduire la cellulite et redessiner les contours du corps.',
-    image: 'https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg?auto=compress&cs=tinysrgb&w=600',
     tag: 'Modelage corps',
   },
 ];
@@ -137,11 +139,32 @@ const hours = [
 ];
 
 export default function Home() {
+  const { getUrl } = useSiteImages();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const totalSlides = Math.ceil(reviews.length / 3);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide((index + totalSlides) % totalSlides);
+  };
+
+  const startAuto = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % (Math.ceil(reviews.length / 3) || 1));
+    }, 5000);
+  };
 
   useEffect(() => {
-    document.title =
-      "Soléana Bien-Être | Institut de bien-être et d\'esthétique à Venerque (31810)";
+    if (reviews.length > 3) {
+      startAuto();
+      return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    }
+  }, [reviews.length]);
+
+  useEffect(() => {
     supabase
       .from('reviews')
       .select('*')
@@ -152,12 +175,16 @@ export default function Home() {
 
   return (
     <main>
+      <PageMeta
+        title="Soléana Bien-Être – Institut de beauté à Venerque (31)"
+        description="Offrez-vous un moment de bien-être à Venerque (31) : épilation laser, Kobido, soins du visage et drainage. Praticienne certifiée. Réservez en ligne sur Planity."
+      />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-start sm:items-end overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <img
-            src="/hero-spa.png"
+            src={getUrl('home-hero')}
             alt="Moment de détente au spa – Soléana Bien-Être à Venerque"
             className="w-full h-full object-cover object-center"
             loading="eager"
@@ -256,7 +283,7 @@ export default function Home() {
             <div className="relative order-2 lg:order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-[4/5]">
                 <img
-                  src="/decouvir.png"
+                  src={getUrl('home-discover')}
                   alt="Institut Soléana Bien-Être – espace soin"
                   className="w-full h-full object-cover object-center"
                 />
@@ -330,7 +357,7 @@ export default function Home() {
               >
                 <div className="relative h-52 overflow-hidden">
                   <img
-                    src={service.image}
+                    src={getUrl(service.imageKey)}
                     alt={service.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
@@ -412,23 +439,11 @@ export default function Home() {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-lg aspect-[3/4]">
                 <img
-                  src="https://images.pexels.com/photos/3997990/pexels-photo-3997990.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src={getUrl('home-laetitia')}
                   alt="Laetitia Sevrin – praticienne Soléana Bien-Être"
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/30 to-transparent" />
-              </div>
-              {/* Credential badge */}
-              <div className="absolute -top-5 -left-4 md:left-0 glass-card p-4 shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center">
-                    <Leaf size={18} className="text-sage-600" />
-                  </div>
-                  <div>
-                    <p className="font-sans font-semibold text-stone-800 text-sm">Produits bio</p>
-                    <p className="font-sans text-stone-400 text-xs">Gamme Estime & Sens</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -436,7 +451,7 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
-      <section className="section-padding bg-nude-50">
+      <section className="section-padding bg-nude-50 overflow-hidden">
         <div className="container-wide">
           <div className="text-center mb-14">
             <span className="tag">Témoignages</span>
@@ -447,47 +462,85 @@ export default function Home() {
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={18} className="fill-ecru-500 text-ecru-500" />
+                  <Star key={i} size={18} style={{ fill: '#FBBC04', color: '#FBBC04' }} />
                 ))}
               </div>
               <span className="text-stone-500 font-sans text-sm ml-1">5/5 – Note moyenne</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review) => (
-              <div
-                key={review.id}
-                className="bg-white rounded-2xl p-7 shadow-sm border border-nude-100 hover:shadow-md transition-shadow duration-300 flex flex-col"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-ecru-400 text-ecru-400" />
-                  ))}
-                </div>
-                {review.service && (
-                  <span className="badge mb-4 self-start">{review.service}</span>
-                )}
-                <blockquote className="flex-1 font-serif text-lg font-light text-stone-700 italic leading-relaxed mb-5">
-                  "{review.text}"
-                </blockquote>
-                <div className="flex items-center gap-3 pt-4 border-t border-sand-100">
-                  <div className="w-10 h-10 rounded-full bg-nude-100 flex items-center justify-center shrink-0">
-                    <span className="font-sans font-semibold text-nude-700 text-sm">
-                      {review.initials}
-                    </span>
+          {/* Carousel wrapper */}
+          <div className="relative overflow-hidden">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {Array.from({ length: totalSlides || 1 }).map((_, slideIdx) => {
+                const group = reviews.slice(slideIdx * 3, slideIdx * 3 + 3);
+                const padded: (Review | null)[] = [...group];
+                while (padded.length < 3) padded.push(null);
+                return (
+                  <div key={slideIdx} className="flex-shrink-0 w-full flex gap-6">
+                    {padded.map((review, i) => (
+                      <div
+                        key={review ? review.id : `ghost-${i}`}
+                        className={`flex-1 min-w-0 rounded-2xl p-7 shadow-sm border transition-shadow duration-300 flex flex-col ${
+                          review
+                            ? 'bg-white border-nude-100 hover:shadow-md'
+                            : 'invisible border-transparent'
+                        }`}
+                        aria-hidden={!review}
+                      >
+                        {review && <>
+                          <div className="flex gap-1 mb-4">
+                            {[...Array(review.rating)].map((_, j) => (
+                              <Star key={j} size={14} style={{ fill: '#FBBC04', color: '#FBBC04' }} />
+                            ))}
+                          </div>
+                          {review.service && (
+                            <span className="badge mb-4 self-start">{review.service}</span>
+                          )}
+                          <blockquote className="flex-1 font-serif text-lg font-light text-stone-700 italic leading-relaxed mb-5">
+                            "{review.text}"
+                          </blockquote>
+                          <div className="flex items-center gap-3 pt-4 border-t border-sand-100">
+                            <div className="w-10 h-10 rounded-full bg-nude-100 flex items-center justify-center shrink-0">
+                              <span className="font-sans font-semibold text-nude-700 text-sm">
+                                {review.initials}
+                              </span>
+                            </div>
+                            <div>
+                              <p className="font-sans font-medium text-stone-800 text-sm">{review.name}</p>
+                              <div className="flex items-center gap-1 text-stone-400 text-xs">
+                                <MapPin size={11} />
+                                <span>{review.location}</span>
+                                {review.date && <span>· {review.date}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        </>}
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <p className="font-sans font-medium text-stone-800 text-sm">{review.name}</p>
-                    <div className="flex items-center gap-1 text-stone-400 text-xs">
-                      <MapPin size={11} />
-                      <span>{review.location}</span>
-                      {review.date && <span>· {review.date}</span>}
-                    </div>
-                  </div>
-                </div>
+                );
+              })}
+            </div>
+
+            {/* Dots navigation */}
+            {totalSlides > 1 && (
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: totalSlides }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { goToSlide(i); startAuto(); }}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      i === currentSlide ? 'bg-nude-600 w-6' : 'bg-nude-300 hover:bg-nude-400'
+                    }`}
+                    aria-label={`Groupe d'avis ${i + 1}`}
+                  />
+                ))}
               </div>
-            ))}
+            )}
           </div>
 
           <div className="text-center mt-10">

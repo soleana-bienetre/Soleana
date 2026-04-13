@@ -30,11 +30,15 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    // Vérifie la position dès le montage (refresh, navigation)
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileOpen]);
 
   // Réinitialise la position de scroll à chaque changement de page
   useEffect(() => {
@@ -140,7 +144,7 @@ export default function Header() {
       </div>
 
       {isMobileOpen && (
-        <div className="lg:hidden bg-white border-t border-sand-100 shadow-lg">
+        <div className="lg:hidden bg-white border-t border-sand-100 shadow-lg max-h-[calc(100vh-5rem)] overflow-y-auto">
           <nav className="container-wide py-4 space-y-1">
             {navLinks.map((link) => (
               <div key={link.label}>

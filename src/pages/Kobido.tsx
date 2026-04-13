@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
+import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -164,20 +166,22 @@ const faqItems = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Kobido() {
+  const { getUrl } = useSiteImages();
   return (
     <main className="min-h-screen bg-cream">
+      <PageMeta
+        title="Kobido à Venerque – Lifting naturel japonais | Soléana"
+        description="Découvrez le Kobido, massage facial japonais aux effets liftants visibles dès la 1ère séance. Tonifie, sculpte et illumine le visage naturellement. Réservez à Venerque."
+      />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[72vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              'url(https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=1600)',
-          }}
+          style={{ backgroundImage: `url(${getUrl('kobido-hero')})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/40 to-transparent" />
-        <div className="relative z-10 container-wide pb-16 md:pb-24">
+        <div className="relative z-10 container-wide pt-24 pb-16 md:pt-0 md:pb-24">
           <div className="max-w-3xl">
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Soin Signature</span>
@@ -248,7 +252,7 @@ export default function Kobido() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/3997993/pexels-photo-3997993.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('kobido-main')}
                   alt="Massage Kobido – soin lifting naturel du visage"
                   className="w-full h-full object-cover"
                 />
@@ -410,7 +414,7 @@ export default function Kobido() {
             <div className="relative">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/3997991/pexels-photo-3997991.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('kobido-secondary')}
                   alt="Soin Sublime et Kobido – soin visage premium Soléana Bien-Être"
                   className="w-full h-full object-cover"
                 />

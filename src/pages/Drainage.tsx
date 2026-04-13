@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
+import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -121,20 +123,22 @@ const faqItems = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Drainage() {
+  const { getUrl } = useSiteImages();
   return (
     <main className="min-h-screen bg-cream">
+      <PageMeta
+        title="Drainage lymphatique & Maderothérapie Venerque | Soléana"
+        description="Jambes légères, silhouette affinée, récupération post-op. Drainage Vodder et maderothérapie à Venerque (31) par Laetitia Sevrin, certifiée. Résultats visibles dès la 1ère séance."
+      />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[72vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              'url(https://images.pexels.com/photos/6663371/pexels-photo-6663371.jpeg?auto=compress&cs=tinysrgb&w=1600)',
-          }}
+          style={{ backgroundImage: `url(${getUrl('drainage-hero')})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/85 via-stone-900/45 to-transparent" />
-        <div className="relative z-10 container-wide pb-16 md:pb-24">
+        <div className="relative z-10 container-wide pt-24 pb-16 md:pt-0 md:pb-24">
           <div className="max-w-3xl">
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Drainage & Remodelage</span>
@@ -214,7 +218,7 @@ export default function Drainage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/3997991/pexels-photo-3997991.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('drainage-main')}
                   alt="Drainage lymphatique méthode Vodder – Soléana Bien-Être"
                   className="w-full h-full object-cover"
                 />
@@ -236,7 +240,7 @@ export default function Drainage() {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/5938409/pexels-photo-5938409.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('drainage-secondary')}
                   alt="Maderothérapie – massage avec instruments en bois"
                   className="w-full h-full object-cover"
                 />

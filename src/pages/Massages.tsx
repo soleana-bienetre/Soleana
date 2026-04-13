@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
+import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -129,20 +131,22 @@ const faqItems = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Massages() {
+  const { getUrl } = useSiteImages();
   return (
     <main className="min-h-screen bg-cream">
+      <PageMeta
+        title="Massages bien-être à Venerque – Détente profonde | Soléana"
+        description="Massages relaxants et thérapeutiques à Venerque (31). Massage TEMANA, relaxant corps entier, ventre drainant. Laetitia vous accueille dans un cadre apaisant. Réservez en ligne."
+      />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[72vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              'url(https://images.pexels.com/photos/3997989/pexels-photo-3997989.jpeg?auto=compress&cs=tinysrgb&w=1600)',
-          }}
+          style={{ backgroundImage: `url(${getUrl('massages-hero')})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/85 via-stone-900/40 to-transparent" />
-        <div className="relative z-10 container-wide pb-16 md:pb-24">
+        <div className="relative z-10 container-wide pt-24 pb-16 md:pt-0 md:pb-24">
           <div className="max-w-3xl">
             <div className="mt-6 mb-4">
               <span className="tag text-nude-200">Rituels du monde</span>
@@ -233,7 +237,7 @@ export default function Massages() {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/5938408/pexels-photo-5938408.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('massages-main')}
                   alt="Massage Ayurvédique Abhyanga – Soléana Bien-Être Venerque"
                   className="w-full h-full object-cover"
                 />
@@ -381,7 +385,7 @@ export default function Massages() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/3757952/pexels-photo-3757952.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('massages-secondary')}
                   alt="Massage Balinais – Soléana Bien-Être Venerque"
                   className="w-full h-full object-cover"
                 />
@@ -405,7 +409,7 @@ export default function Massages() {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.pexels.com/photos/7646811/pexels-photo-7646811.jpeg?auto=compress&cs=tinysrgb&w=900"
+                  src={getUrl('massages-tertiary')}
                   alt="Massage prénatal et postnatal – Soléana Bien-Être Venerque"
                   className="w-full h-full object-cover"
                 />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PageMeta } from '../lib/useMeta';
 import {
   Leaf,
   Star,
@@ -299,6 +300,10 @@ export default function Tarifs() {
 
   return (
     <>
+      <PageMeta
+        title="Tarifs soins & épilation laser Venerque | Soléana"
+        description="Tous les tarifs de Soléana Bien-Être à Venerque (31) : épilation laser, Kobido, soins du visage, massages, drainage. Transparent, sans surprise. Réservez en ligne sur Planity."
+      />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">

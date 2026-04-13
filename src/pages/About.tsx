@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { useSiteImages } from '../contexts/SiteImagesContext';
+import { PageMeta } from '../lib/useMeta';
 import { Link } from 'react-router-dom';
 import {
   Heart,
@@ -159,13 +159,12 @@ const reasons = [
 export default function About() {
   const { getUrl } = useSiteImages();
 
-  useEffect(() => {
-    document.title =
-      'À propos de Soléana Bien-Être | Laetitia Sevrin, praticienne à Venerque (31)';
-  }, []);
-
   return (
     <main>
+      <PageMeta
+        title="À propos – Laetitia Sevrin, praticienne | Soléana Venerque"
+        description="Infirmière reconvertie, Laetitia Sevrin a créé Soléana pour allier soin médical et esthétique. Certifiée Vodder, AESTAM et TEMANA. Découvrez son parcours à Venerque (31)."
+      />
       {/* ── PAGE HERO ──────────────────────────────────────────────────── */}
       <section className="relative py-24 md:py-36 overflow-hidden">
         <div className="absolute inset-0">

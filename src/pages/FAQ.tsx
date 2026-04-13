@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { PageMeta } from '../lib/useMeta';
 import {
   MapPin,
   Zap,
@@ -247,6 +248,10 @@ export default function FAQ() {
 
   return (
     <>
+      <PageMeta
+        title="FAQ – Questions fréquentes | Soléana Bien-Être Venerque"
+        description="Toutes les réponses à vos questions : durée des séances, nombre de séances laser, indications du Kobido, parking, réservation… Soléana Bien-Être répond avant votre visite."
+      />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">
