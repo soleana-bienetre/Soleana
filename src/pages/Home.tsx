@@ -145,9 +145,16 @@ export default function Home() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const totalSlides = Math.ceil(reviews.length / 3);
+  const totalMobileSlides = reviews.length;
+  const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
+  const mobileIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goToSlide = (index: number) => {
     setCurrentSlide((index + totalSlides) % totalSlides);
+  };
+
+  const goToMobileSlide = (index: number) => {
+    setCurrentMobileSlide((index + totalMobileSlides) % (totalMobileSlides || 1));
   };
 
   const startAuto = () => {
@@ -157,10 +164,24 @@ export default function Home() {
     }, 5000);
   };
 
+  const startMobileAuto = () => {
+    if (mobileIntervalRef.current) clearInterval(mobileIntervalRef.current);
+    mobileIntervalRef.current = setInterval(() => {
+      setCurrentMobileSlide(prev => (prev + 1) % (reviews.length || 1));
+    }, 4000);
+  };
+
   useEffect(() => {
     if (reviews.length > 3) {
       startAuto();
       return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    }
+  }, [reviews.length]);
+
+  useEffect(() => {
+    if (reviews.length > 1) {
+      startMobileAuto();
+      return () => { if (mobileIntervalRef.current) clearInterval(mobileIntervalRef.current); };
     }
   }, [reviews.length]);
 
@@ -469,8 +490,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Carousel wrapper */}
-          <div className="relative overflow-hidden">
+          {/* ── Carousel desktop (3 par slide) ── */}
+          <div className="hidden md:block relative overflow-hidden">
             <div
               className="flex transition-transform duration-700 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -525,8 +546,6 @@ export default function Home() {
                 );
               })}
             </div>
-
-            {/* Dots navigation */}
             {totalSlides > 1 && (
               <div className="flex justify-center gap-2 mt-8">
                 {Array.from({ length: totalSlides }).map((_, i) => (
@@ -537,6 +556,59 @@ export default function Home() {
                       i === currentSlide ? 'bg-nude-600 w-6' : 'bg-nude-300 hover:bg-nude-400'
                     }`}
                     aria-label={`Groupe d'avis ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ── Carousel mobile (1 par slide) ── */}
+          <div className="md:hidden relative overflow-hidden">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentMobileSlide * 100}%)` }}
+            >
+              {reviews.map((review) => (
+                <div key={review.id} className="flex-shrink-0 w-full px-1">
+                  <div className="bg-white border border-nude-100 rounded-2xl p-6 shadow-sm flex flex-col">
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(review.rating)].map((_, j) => (
+                        <Star key={j} size={14} style={{ fill: '#FBBC04', color: '#FBBC04' }} />
+                      ))}
+                    </div>
+                    {review.service && (
+                      <span className="badge mb-3 self-start">{review.service}</span>
+                    )}
+                    <blockquote className="flex-1 font-serif text-base font-light text-stone-700 italic leading-relaxed mb-5">
+                      "{review.text}"
+                    </blockquote>
+                    <div className="flex items-center gap-3 pt-4 border-t border-sand-100">
+                      <div className="w-10 h-10 rounded-full bg-nude-100 flex items-center justify-center shrink-0">
+                        <span className="font-sans font-semibold text-nude-700 text-sm">{review.initials}</span>
+                      </div>
+                      <div>
+                        <p className="font-sans font-medium text-stone-800 text-sm">{review.name}</p>
+                        <div className="flex items-center gap-1 text-stone-400 text-xs">
+                          <MapPin size={11} />
+                          <span>{review.location}</span>
+                          {review.date && <span>· {review.date}</span>}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {totalMobileSlides > 1 && (
+              <div className="flex justify-center gap-2 mt-6">
+                {reviews.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { goToMobileSlide(i); startMobileAuto(); }}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      i === currentMobileSlide ? 'bg-nude-600 w-5' : 'bg-nude-300 hover:bg-nude-400'
+                    }`}
+                    aria-label={`Avis ${i + 1}`}
                   />
                 ))}
               </div>
