@@ -37,6 +37,7 @@ function toArticle(a: BlogArticle): Article {
     date: a.published_at ? new Date(a.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
     readTime: `${a.read_time} min`,
     image: a.og_image_url ?? 'https://images.pexels.com/photos/3985329/pexels-photo-3985329.jpeg?auto=compress&cs=tinysrgb&w=800',
+    featured: a.featured ?? false,
   };
 }
 
@@ -263,7 +264,7 @@ function ArticleCard({ article }: { article: Article }) {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('Tous');
-  const [articles, setArticles] = useState<Article[]>(staticArticles);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     supabase
@@ -273,6 +274,7 @@ export default function Blog() {
       .order('published_at', { ascending: false })
       .then(({ data }) => {
         if (data && data.length > 0) setArticles(data.map(toArticle));
+        else setArticles(staticArticles);
       });
   }, []);
 
