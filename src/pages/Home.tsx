@@ -235,10 +235,10 @@ export default function Home() {
 
             {/* Boutons + badge — masqués sur mobile, visibles sur sm+ */}
             <div className="hidden sm:flex flex-row items-start gap-4 mt-0">
-              <Link to="/contact" className="btn-primary text-base px-8 py-4 shadow-lg shadow-nude-900/30 justify-center">
+              <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 shadow-lg shadow-nude-900/30 justify-center">
                 <Calendar size={15} />
                 Prendre rendez-vous
-              </Link>
+              </a>
               <Link to="/soins" className="btn-outline-light text-base px-8 py-4 justify-center">
                 <Leaf size={15} />
                 Découvrir les soins
@@ -253,10 +253,10 @@ export default function Home() {
 
         {/* Boutons + badge mobile — absolus juste au-dessus de "Découvrir" */}
         <div className="sm:hidden absolute bottom-28 left-0 right-0 z-10 px-6 flex flex-col items-center gap-3">
-          <Link to="/contact" className="btn-primary w-full text-sm px-5 py-3 shadow-lg shadow-nude-900/30 justify-center">
+          <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-sm px-5 py-3 shadow-lg shadow-nude-900/30 justify-center">
             <Calendar size={15} />
             Prendre rendez-vous
-          </Link>
+          </a>
           <Link to="/soins" className="btn-outline-light w-full text-sm px-5 py-3 justify-center">
             <Leaf size={15} />
             Découvrir les soins
