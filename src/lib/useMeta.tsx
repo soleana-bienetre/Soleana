@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://www.soleana-bienetre.com';
-const OG_IMAGE = `${SITE_URL}/logo-share.png`;
+const OG_IMAGE = `${SITE_URL}/og-share.jpg`;
 
 interface PageMetaProps {
   title: string;
