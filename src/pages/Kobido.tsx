@@ -17,6 +17,7 @@ import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
 import { PageMeta } from '../lib/useMeta';
+import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -167,6 +168,8 @@ const faqItems = [
 
 export default function Kobido() {
   const { getUrl } = useSiteImages();
+  const { tarifs: kobidoTarifs } = useCategoryTarifs('kobido');
+
   return (
     <main className="min-h-screen bg-cream">
       <PageMeta
@@ -545,9 +548,22 @@ export default function Kobido() {
               </div>
             ))}
           </div>
-          <p className="text-center text-stone-400 text-sm mt-10">
-            Les tarifs sont communiqués sur demande. Contactez-nous pour un devis personnalisé.
-          </p>
+          {kobidoTarifs.length > 0 && (
+            <div className="mt-10 max-w-lg mx-auto rounded-2xl border border-sand-200 overflow-hidden">
+              {kobidoTarifs.map((t, i) => (
+                <a
+                  key={t.id}
+                  href="https://www.planity.com/soleana-bien-etre-31810-venerque"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center justify-between px-5 py-3 hover:bg-sand-50 transition-colors ${i > 0 ? 'border-t border-sand-100' : ''}`}
+                >
+                  <span className="text-sm text-stone-700">{t.name}</span>
+                  <span className="text-sm font-semibold text-nude-700 shrink-0 ml-4">{t.price}</span>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageMeta } from '../lib/useMeta';
 import {
@@ -10,231 +10,211 @@ import {
   Droplets,
   Tag,
   Info,
-  CreditCard,
-  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
+import { supabase } from '../lib/supabase';
+import type { Tarif } from '../lib/supabase';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// ─── Static config (icônes, couleurs, notes catégorie) ───────────────────────
 
-interface PriceItem {
-  name: string;
-  price: string;
+interface CategoryConfig {
+  icon: React.ReactNode;
+  color: string;
   note?: string;
+  promoNote?: string;
+  infoText?: string;
 }
+
+const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
+  'laser-femme': {
+    icon: <Leaf size={18} />,
+    color: 'nude',
+  },
+  'laser-homme': {
+    icon: <Zap size={18} />,
+    color: 'sage',
+  },
+  'forfaits-laser': {
+    icon: <Star size={18} />,
+    color: 'sand',
+    promoNote: 'Forfait 2 zones : -20€\nForfait 3 zones : -30€\nForfait 4 zones : -40€',
+  },
+  'soins-visage': {
+    icon: <Leaf size={18} />,
+    color: 'sage',
+  },
+  kobido: {
+    icon: <Hand size={18} />,
+    color: 'nude',
+  },
+  massages: {
+    icon: <Wind size={18} />,
+    color: 'sand',
+  },
+  drainage: {
+    icon: <Droplets size={18} />,
+    color: 'sage',
+  },
+  cure: {
+    icon: <Info size={18} />,
+    color: 'nude',
+    infoText: `Recommandations avant / après une séance laser\nAfin de garantir l'efficacité et la sécurité du traitement, merci de respecter les consignes suivantes :\n\nAVANT LA SÉANCE :\n- Ne pas s'exposer au soleil ou aux UV (minimum 2 semaines avant)\n- Ne pas appliquer d'autobronzant\n- Raser la zone 24 à 48h avant la séance\n- Ne pas appliquer de crème, huile, parfum ou déodorant le jour J\n- Ne pas prendre de médicaments photosensibilisants (certains antibiotiques, traitements spécifiques...)\n- Ne pas utiliser d'huiles essentielles sur la zone\n\nCONTRE-INDICATIONS :\n- Grossesse / allaitement\n- Prise de traitements photosensibilisants\n- Exposition solaire récente\n- Certaines pathologies (à voir ensemble lors du bilan)\n\nAPRÈS LA SÉANCE :\n- Éviter le soleil et les UV pendant au moins 2 semaines\n- Éviter le sport, sauna, hammam et chaleur excessive pendant 24 à 48h\n- Ne pas appliquer de produits irritants sur la zone\n- Hydrater la peau si nécessaire\n\nLe respect de ces recommandations est essentiel pour garantir des résultats optimaux et éviter tout risque.`,
+  },
+};
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface PriceCategory {
   id: string;
   label: string;
   icon: React.ReactNode;
   color: string;
-  items: PriceItem[];
+  items: Tarif[];
   note?: string;
+  promoNote?: string;
+  infoText?: string;
 }
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const categories: PriceCategory[] = [
-  {
-    id: 'laser-femme',
-    label: 'Épilation laser femme',
-    icon: <Leaf size={18} />,
-    color: 'nude',
-    items: [
-      { name: 'Lèvre supérieure', price: '[PRIX À DÉFINIR]' },
-      { name: 'Menton', price: '[PRIX À DÉFINIR]' },
-      { name: 'Visage complet', price: '[PRIX À DÉFINIR]' },
-      { name: 'Aisselles', price: '[PRIX À DÉFINIR]' },
-      { name: 'Bras complets', price: '[PRIX À DÉFINIR]' },
-      { name: 'Avant-bras', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maillot classique', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maillot intégral', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maillot brésilien', price: '[PRIX À DÉFINIR]' },
-      { name: 'Demi-jambes', price: '[PRIX À DÉFINIR]' },
-      { name: 'Jambes complètes', price: '[PRIX À DÉFINIR]' },
-      { name: 'Orteils & pieds', price: '[PRIX À DÉFINIR]' },
-      { name: 'Ventre (ligne de flottaison)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Dos complet', price: '[PRIX À DÉFINIR]' },
-    ],
-    note: 'Paiement en 3 ou 4 fois sans frais disponible pour les forfaits laser.',
-  },
-  {
-    id: 'laser-homme',
-    label: 'Épilation laser homme',
-    icon: <Zap size={18} />,
-    color: 'sage',
-    items: [
-      { name: 'Nuque', price: '[PRIX À DÉFINIR]' },
-      { name: 'Oreilles', price: '[PRIX À DÉFINIR]' },
-      { name: 'Nez', price: '[PRIX À DÉFINIR]' },
-      { name: 'Sourcils', price: '[PRIX À DÉFINIR]' },
-      { name: 'Barbe (contour)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Aisselles', price: '[PRIX À DÉFINIR]' },
-      { name: 'Torse / pectoraux', price: '[PRIX À DÉFINIR]' },
-      { name: 'Abdomen', price: '[PRIX À DÉFINIR]' },
-      { name: 'Dos complet', price: '[PRIX À DÉFINIR]' },
-      { name: 'Épaules', price: '[PRIX À DÉFINIR]' },
-      { name: 'Bras complets', price: '[PRIX À DÉFINIR]' },
-      { name: 'Jambes complètes', price: '[PRIX À DÉFINIR]' },
-      { name: 'Demi-jambes', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maillot homme', price: '[PRIX À DÉFINIR]' },
-    ],
-    note: 'Paiement en 3 ou 4 fois sans frais disponible pour les forfaits laser.',
-  },
-  {
-    id: 'forfaits-laser',
-    label: 'Forfaits laser',
-    icon: <Star size={18} />,
-    color: 'sand',
-    items: [
-      { name: 'Forfait 6 séances – 1 zone', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait 8 séances – 1 zone', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait 10 séances – 1 zone', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait duo – 2 zones (6 séances)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait trio – 3 zones (6 séances)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait corps complet femme', price: 'Sur devis' },
-      { name: 'Forfait corps complet homme', price: 'Sur devis' },
-    ],
-    note: 'Paiement en 3 ou 4 fois sans frais pour tout forfait laser. Contactez-nous pour un devis personnalisé selon vos zones et votre nombre de séances.',
-  },
-  {
-    id: 'soins-visage',
-    label: 'Soins visage',
-    icon: <Leaf size={18} />,
-    color: 'sage',
-    items: [
-      {
-        name: 'Soin Éclat Express',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Soin rapide et revitalisant pour un teint lumineux en toutes circonstances.',
-      },
-      {
-        name: 'Soin Bio-Expert',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Protocole naturel à base de formules bio pour peaux sensibles et exigeantes.',
-      },
-      {
-        name: 'Soin Human',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Soin holistique adapté à chaque type de peau, combinant technicité et bien-être.',
-      },
-    ],
-  },
-  {
-    id: 'kobido',
-    label: 'Kobido',
-    icon: <Hand size={18} />,
-    color: 'nude',
-    items: [
-      {
-        name: 'Kobido express (30 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Massage facial tonifiant pour une pause ressourçante express.',
-      },
-      {
-        name: 'Kobido complet (60 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Protocole complet pour un véritable lifting naturel et une détente profonde.',
-      },
-      {
-        name: 'Soin Sublime & Kobido (90 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: "Alliance d\'un soin visage personnalisé et d\'un massage Kobido pour un résultat optimal.",
-      },
-      { name: 'Forfait 3 séances Kobido complet', price: '[PRIX À DÉFINIR]' },
-      { name: 'Forfait 5 séances Kobido complet', price: '[PRIX À DÉFINIR]' },
-    ],
-  },
-  {
-    id: 'massages',
-    label: 'Massages',
-    icon: <Wind size={18} />,
-    color: 'sand',
-    items: [
-      {
-        name: 'Massage Abhyanga (60 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: "Massage ayurvédique aux huiles chaudes pour rééquilibrer le corps et l\'esprit.",
-      },
-      {
-        name: 'Massage Balinais (60 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Alliance de pétrissage profond et de pressions douces pour une détente totale.',
-      },
-      {
-        name: 'Massage Balinais (90 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Version prolongée pour une immersion bien-être complète.',
-      },
-      {
-        name: 'Massage Pré-Natal (60 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: 'Massage adapté aux futures mamans, réalisé en position sécurisée.',
-      },
-      {
-        name: 'Massage Post-Natal (60 min)',
-        price: '[PRIX À DÉFINIR]',
-        note: "Massage doux et récupérateur pour accompagner le corps après l\'accouchement.",
-      },
-    ],
-  },
-  {
-    id: 'drainage',
-    label: 'Drainage & Maderothérapie',
-    icon: <Droplets size={18} />,
-    color: 'sage',
-    items: [
-      { name: 'Drainage lymphatique manuel (45 min)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Drainage lymphatique manuel (60 min)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maderothérapie corps (45 min)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Maderothérapie corps (60 min)', price: '[PRIX À DÉFINIR]' },
-      { name: 'Combo Drainage + Maderothérapie (75 min)', price: '[PRIX À DÉFINIR]' },
-    ],
-  },
-  {
-    id: 'cure',
-    label: 'Cure 10 séances',
-    icon: <Tag size={18} />,
-    color: 'nude',
-    items: [
-      {
-        name: 'Cure Drainage & Remodelage Naturel – 10 séances',
-        price: 'Sur devis',
-        note: 'Programme complet alliant drainage lymphatique et maderothérapie pour des résultats durables sur le galbe, la silhouette et la circulation.',
-      },
-    ],
-    note: 'Programme personnalisé selon vos objectifs. Contactez-nous pour établir un devis et un planning adaptés.',
-  },
-];
-
-const filterTabs = [
-  { id: 'tous', label: 'Tous' },
-  { id: 'laser-femme', label: 'Laser femme' },
-  { id: 'laser-homme', label: 'Laser homme' },
-  { id: 'forfaits-laser', label: 'Forfaits laser' },
-  { id: 'soins-visage', label: 'Soins visage' },
-  { id: 'kobido', label: 'Kobido' },
-  { id: 'massages', label: 'Massages' },
-  { id: 'drainage', label: 'Drainage' },
-  { id: 'cure', label: 'Cure 10 séances' },
-];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
+// Formate une note en séparant chaque "•" et chaque " - " sur sa propre ligne
+function formatNote(note: string): string[] {
+  return note
+    .split('\n')
+    .flatMap((line) => {
+      // Sépare sur les "•"
+      const bulletParts = line.split(/(?=•)/).map((s) => s.trim()).filter(Boolean);
+      const parts = bulletParts.length > 1 ? bulletParts : [line.trim()];
+      // Pour chaque segment, sépare aussi sur " - " (tiret entouré d'espaces)
+      return parts.flatMap((segment) =>
+        segment
+          .split(/(?= - )/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      );
+    })
+    .filter(Boolean);
+}
+
+// Compte les mots dans un tableau de lignes
+function countWords(lines: string[]): number {
+  return lines.join(' ').split(/\s+/).filter(Boolean).length;
+}
+
+// Tronque le texte après N mots en préservant les lignes
+function truncateToWords(lines: string[], maxWords: number): { preview: string[]; rest: string[] } {
+  let wordCount = 0;
+  let cutLine = 0;
+  let cutChar = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const words = lines[i].split(/\s+/).filter(Boolean);
+    if (wordCount + words.length >= maxWords) {
+      const needed = maxWords - wordCount;
+      cutLine = i;
+      cutChar = words.slice(0, needed).join(' ').length;
+      break;
+    }
+    wordCount += words.length;
+    cutLine = i + 1;
+    cutChar = -1;
+  }
+  if (cutChar === -1) {
+    return { preview: lines.slice(0, cutLine), rest: lines.slice(cutLine) };
+  }
+  const truncatedLine = lines[cutLine].slice(0, cutChar);
+  const remainderLine = lines[cutLine].slice(cutChar).trim();
+  const preview = [...lines.slice(0, cutLine), truncatedLine].filter(Boolean);
+  const rest = [remainderLine, ...lines.slice(cutLine + 1)].filter(Boolean);
+  return { preview, rest };
+}
+
+const WORD_LIMIT = 18;
+
+function ItemNote({ note }: { note: string }) {
+  const [open, setOpen] = useState(false);
+  const lines = formatNote(note);
+  const totalWords = countWords(lines);
+  const hasMore = totalWords > WORD_LIMIT;
+  const { preview, rest } = hasMore ? truncateToWords(lines, WORD_LIMIT) : { preview: lines, rest: [] };
+  const visible = open ? lines : preview;
+
+  return (
+    <div className="mt-1.5" onClick={(e) => e.preventDefault()}>
+      <div className="space-y-0.5">
+        {visible.map((line, i) => (
+          <p key={i} className="font-sans text-xs text-stone-400 leading-relaxed">
+            {line}{!open && i === visible.length - 1 && hasMore && rest.length > 0 ? '…' : ''}
+          </p>
+        ))}
+      </div>
+      {hasMore && (
+        <button
+          onClick={(e) => { e.preventDefault(); setOpen((v) => !v); }}
+          className="mt-1 inline-flex items-center gap-0.5 text-xs text-nude-500 hover:text-nude-700 font-medium transition-colors"
+        >
+          {open ? (
+            <><ChevronUp size={11} /> Réduire</>
+          ) : (
+            <><ChevronDown size={11} /> En savoir plus</>
+          )}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function CategoryNote({ note }: { note: string }) {
+  const [open, setOpen] = useState(false);
+  const lines = formatNote(note);
+  const totalWords = countWords(lines);
+  const hasMore = totalWords > WORD_LIMIT;
+  const { preview, rest } = hasMore ? truncateToWords(lines, WORD_LIMIT) : { preview: lines, rest: [] };
+  const visible = open ? lines : preview;
+
+  return (
+    <div>
+      <div className="space-y-0.5">
+        {visible.map((line, i) => (
+          <p key={i} className="text-xs text-stone-500 leading-relaxed">
+            {line}{!open && i === visible.length - 1 && hasMore && rest.length > 0 ? '…' : ''}
+          </p>
+        ))}
+      </div>
+      {hasMore && (
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="mt-1.5 inline-flex items-center gap-0.5 text-xs text-nude-500 hover:text-nude-700 font-medium transition-colors"
+        >
+          {open ? (
+            <><ChevronUp size={11} /> Réduire</>
+          ) : (
+            <><ChevronDown size={11} /> En savoir plus</>
+          )}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function ColorBadge({ color, children }: { color: string; children: React.ReactNode }) {
   const map: Record<string, string> = {
-    nude: 'bg-nude-50 text-nude-700 border-nude-200',
-    sage: 'bg-sage-50 text-sage-700 border-sage-200',
-    sand: 'bg-sand-50 text-sand-700 border-sand-200',
+    nude: 'bg-nude-50 text-nude-700 border-nude-200 group-hover:bg-nude-200 group-hover:text-nude-800 group-hover:border-nude-300',
+    sage: 'bg-sage-50 text-sage-700 border-sage-200 group-hover:bg-sage-200 group-hover:text-sage-800 group-hover:border-sage-300',
+    sand: 'bg-sand-50 text-sand-700 border-sand-200 group-hover:bg-sand-200 group-hover:text-sand-800 group-hover:border-sand-300',
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full border ${map[color] ?? map.nude}`}>
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full border transition-all duration-200 ${map[color] ?? map.nude}`}>
       {children}
     </span>
   );
 }
 
 function PriceCategoryCard({ category }: { category: PriceCategory }) {
+  const [infoOpen, setInfoOpen] = useState(false);
+
   const headerColors: Record<string, string> = {
     nude: 'from-nude-600 to-nude-700',
     sage: 'from-sage-600 to-sage-700',
@@ -253,25 +233,82 @@ function PriceCategoryCard({ category }: { category: PriceCategory }) {
         </div>
       </div>
 
+      {/* Promo Note */}
+      {category.promoNote && (
+        <div className="px-6 py-3 bg-sand-100 border-b border-sand-200 flex items-center gap-2">
+          <Tag size={13} className="text-sand-600 shrink-0" />
+          <p className="text-xs font-medium text-sand-700 whitespace-pre-line">{category.promoNote}</p>
+        </div>
+      )}
+
+      {/* Info dépliable */}
+      {category.infoText && (
+        <div className="border-b border-nude-100 bg-nude-50/40 px-6 py-4">
+          <div className="flex items-start gap-2 mb-2">
+            <Info size={13} className="text-nude-500 shrink-0 mt-0.5" />
+            <p className="text-xs font-semibold text-nude-700 uppercase tracking-wide">Laser</p>
+          </div>
+
+          {/* Contenu — tronqué ou complet */}
+          <div className={`text-xs text-stone-500 leading-relaxed space-y-2 ${!infoOpen ? 'line-clamp-2' : ''}`}>
+            {category.infoText.split('\n\n').map((block, i) => {
+              const lines = block.split('\n');
+              const title = lines[0];
+              const rest = lines.slice(1);
+              return (
+                <div key={i}>
+                  {title && (
+                    <p className={`font-semibold text-stone-600 ${i > 0 ? 'mt-2' : ''}`}>{title}</p>
+                  )}
+                  {rest.map((line, j) => (
+                    <p key={j} className="pl-1">{line}</p>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => setInfoOpen((v) => !v)}
+            className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-nude-600 hover:text-nude-700 transition-colors"
+          >
+            {infoOpen ? (
+              <><ChevronUp size={13} /> Réduire</>
+            ) : (
+              <><ChevronDown size={13} /> En savoir plus</>
+            )}
+          </button>
+        </div>
+      )}
+
       {/* Price Table */}
       <div className="divide-y divide-sand-50">
-        {category.items.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-start justify-between gap-4 px-6 py-4 hover:bg-sand-50/50 transition-colors duration-150"
+        {category.items.map((item) => (
+          <a
+            key={item.id}
+            href="https://www.planity.com/soleana-bien-etre-31810-venerque"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start justify-between gap-4 px-6 py-4 hover:bg-nude-50/60 transition-all duration-200 cursor-pointer group"
           >
             <div className="flex-1 min-w-0">
-              <p className="font-sans text-sm font-medium text-stone-700">{item.name}</p>
-              {item.note && (
-                <p className="font-sans text-xs text-stone-400 mt-0.5 leading-relaxed">{item.note}</p>
-              )}
+              <div className="flex items-center gap-1.5">
+                <p className="font-sans text-sm font-medium text-stone-700 group-hover:text-nude-700 transition-colors duration-200">
+                  {item.name}
+                </p>
+                <ExternalLink
+                  size={11}
+                  className="text-nude-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 mt-0.5"
+                />
+              </div>
+              {item.note && <ItemNote note={item.note} />}
             </div>
-            <div className="shrink-0">
+            <div className="shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5">
               <ColorBadge color={category.color}>
                 {item.price}
               </ColorBadge>
             </div>
-          </div>
+          </a>
         ))}
       </div>
 
@@ -280,7 +317,7 @@ function PriceCategoryCard({ category }: { category: PriceCategory }) {
         <div className="px-6 py-4 bg-sand-50 border-t border-sand-100">
           <div className="flex items-start gap-2">
             <Info size={14} className="text-sand-500 mt-0.5 shrink-0" />
-            <p className="text-xs text-stone-500 leading-relaxed">{category.note}</p>
+            <CategoryNote note={category.note} />
           </div>
         </div>
       )}
@@ -291,7 +328,48 @@ function PriceCategoryCard({ category }: { category: PriceCategory }) {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function Tarifs() {
+  const [categories, setCategories] = useState<PriceCategory[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>('tous');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      const { data, error } = await supabase
+        .from('tarifs')
+        .select('*')
+        .eq('visible', true)
+        .order('category_order', { ascending: true })
+        .order('item_order', { ascending: true });
+
+      if (!error && data) {
+        const map = new Map<string, PriceCategory>();
+        for (const tarif of data as Tarif[]) {
+          if (!map.has(tarif.category_id)) {
+            const config = CATEGORY_CONFIG[tarif.category_id] ?? { icon: <Tag size={18} />, color: 'nude' };
+            map.set(tarif.category_id, {
+              id: tarif.category_id,
+              label: tarif.category_label,
+              icon: config.icon,
+              color: config.color,
+              note: config.note,
+              promoNote: config.promoNote,
+              infoText: config.infoText,
+              items: [],
+            });
+          }
+          map.get(tarif.category_id)!.items.push(tarif);
+        }
+        setCategories(Array.from(map.values()));
+      }
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  const filterTabs = [
+    { id: 'tous', label: 'Tous' },
+    ...categories.map((c) => ({ id: c.id, label: c.label })),
+  ];
 
   const visibleCategories =
     activeFilter === 'tous'
@@ -318,33 +396,11 @@ export default function Tarifs() {
             </p>
 
             {/* Disclaimer */}
-            <div className="mt-8 inline-flex items-start gap-3 bg-white border border-sand-200 rounded-2xl px-6 py-4 text-left max-w-xl">
-              <Info size={16} className="text-nude-500 mt-0.5 shrink-0" />
-              <p className="text-xs text-stone-500 leading-relaxed">
-                Les tarifs sont à titre indicatif et peuvent évoluer. Contactez-nous pour un
-                devis personnalisé adapté à vos besoins.
-              </p>
-            </div>
           </div>
         </div>
       </section>
 
       {/* ── Laser Payment Banner ── */}
-      <div className="bg-nude-600 py-4">
-        <div className="container-wide flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
-          <CreditCard size={16} className="text-nude-200 shrink-0" />
-          <p className="text-sm text-white">
-            <span className="font-semibold">Épilation laser :</span> paiement en 3 ou 4 fois
-            sans frais disponible sur les forfaits.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-1 text-nude-100 text-xs font-medium hover:text-white transition-colors underline underline-offset-2"
-          >
-            En savoir plus <ChevronRight size={12} />
-          </Link>
-        </div>
-      </div>
 
       {/* ── Filter Tabs ── */}
       <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-sand-100 shadow-sm">
@@ -370,11 +426,29 @@ export default function Tarifs() {
       {/* ── Price Cards Grid ── */}
       <section className="section-padding bg-cream">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {visibleCategories.map((category) => (
-              <PriceCategoryCard key={category.id} category={category} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="card-service animate-pulse">
+                  <div className="h-20 bg-stone-200 rounded-t-2xl" />
+                  <div className="p-6 space-y-3">
+                    {[...Array(4)].map((_, j) => (
+                      <div key={j} className="flex justify-between">
+                        <div className="h-4 bg-stone-100 rounded w-2/3" />
+                        <div className="h-4 bg-stone-100 rounded w-16" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {visibleCategories.map((category) => (
+                <PriceCategoryCard key={category.id} category={category} />
+              ))}
+            </div>
+          )}
 
           {/* Global note */}
           <div className="mt-12 bg-white border border-sand-200 rounded-2xl p-6 md:p-8 text-center">

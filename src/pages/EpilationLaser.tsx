@@ -17,46 +17,13 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { PageMeta } from '../lib/useMeta';
+import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ---------------------------------------------------------------------------
 // Data
 // ---------------------------------------------------------------------------
 
-const zonesFemme: { zone: string; prix: string }[] = [
-  { zone: 'Diagnostic gratuit', prix: 'Offert' },
-  { zone: 'Aisselles', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Avant-bras', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Bras entier', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Ligne ventrale', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Maillot simple', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Maillot échancré', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Maillot américain', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Maillot intégral', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Inter-fessier', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Fesses', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Cuisses', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Demi-jambes', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Jambes entières', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Mains ou pieds', prix: '[PRIX À DÉFINIR]' },
-];
-
-const zonesHomme: { zone: string; prix: string }[] = [
-  { zone: 'Diagnostic gratuit', prix: 'Offert' },
-  { zone: 'Aisselles', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Avant-bras', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Bras entier', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Épaules', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Dos haut ou bas', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Dos entier', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Col de chemise', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Torse', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Torse + ventre', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Maillot échancré', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Fesses', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Cuisses', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Demi-jambes', prix: '[PRIX À DÉFINIR]' },
-  { zone: 'Jambes entières', prix: '[PRIX À DÉFINIR]' },
-];
+const DIAG_ENTRY = { zone: 'Diagnostic gratuit', prix: 'Offert' };
 
 const forfaitsFemme: { titre: string; zones: string; note?: string }[] = [
   {
@@ -255,6 +222,11 @@ function ZoneTable({ titre, genre, zones, accentClass, headerClass }: ZoneTableP
 // ---------------------------------------------------------------------------
 
 export default function EpilationLaser() {
+  const { byCategory } = useCategoryTarifs(['laser-femme', 'laser-homme']);
+
+  const zonesFemme = [DIAG_ENTRY, ...byCategory('laser-femme').map((t) => ({ zone: t.name, prix: t.price }))];
+  const zonesHomme = [DIAG_ENTRY, ...byCategory('laser-homme').map((t) => ({ zone: t.name, prix: t.price }))];
+
   return (
     <main className="bg-cream">
       <PageMeta

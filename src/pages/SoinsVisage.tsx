@@ -18,6 +18,7 @@ import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
 import { PageMeta } from '../lib/useMeta';
+import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -274,6 +275,10 @@ const faqItems = [
 
 export default function SoinsVisage() {
   const { getUrl } = useSiteImages();
+  const { getPrice } = useCategoryTarifs('soins-visage');
+
+  const soinsWithPrices = soins.map((s) => ({ ...s, prix: getPrice(s.titre) }));
+
   return (
     <main className="bg-cream">
       <PageMeta
@@ -540,7 +545,7 @@ export default function SoinsVisage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {soins.map((soin) => (
+            {soinsWithPrices.map((soin) => (
               <div
                 key={soin.slug}
                 className="card-service bg-white border border-sand-100 flex flex-col overflow-hidden"

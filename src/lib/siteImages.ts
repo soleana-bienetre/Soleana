@@ -33,7 +33,7 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
     label: 'Photo section "Votre praticienne"',
     page: 'Accueil',
     section: 'Section Laetitia Sevrin',
-    defaultUrl: 'https://images.pexels.com/photos/3997990/pexels-photo-3997990.jpeg?auto=compress&cs=tinysrgb&w=800',
+    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Praticienne%20de%20bien-etre.webp',
     alt: 'Laetitia Sevrin – praticienne Soléana Bien-Être',
     aspect: '4/5',
   },
