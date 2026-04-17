@@ -36,7 +36,7 @@ function SchemaOrg() {
         '@type': ['LocalBusiness', 'BeautySalon', 'HealthAndBeautyBusiness'],
         name: 'Soléana Bien-Être',
         description: "Institut de bien-être et d'esthétique à Venerque (31810). Épilation laser, soins du visage, Kobido, massages bien-être, drainage lymphatique et maderothérapie.",
-        url: 'https://www.soleana-bien-etre.fr',
+        url: 'https://www.soleana-bienetre.com',
         telephone: '+33762169814',
         priceRange: '€€',
         image: 'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg',
@@ -87,7 +87,7 @@ function SchemaOrg() {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
         name: 'Soléana Bien-Être',
-        url: 'https://www.soleana-bien-etre.fr',
+        url: 'https://www.soleana-bienetre.com',
         description: "Institut de bien-être et d'esthétique à Venerque – Épilation laser, soins visage, Kobido, massages, drainage lymphatique.",
       },
     ];

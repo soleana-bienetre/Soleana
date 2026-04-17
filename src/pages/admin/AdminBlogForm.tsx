@@ -356,7 +356,7 @@ export default function AdminBlogForm() {
                   <div className="bg-stone-50 rounded-xl p-4 border border-stone-100">
                     <p className="text-xs text-stone-400 mb-2">Aperçu Google</p>
                     <p className="text-blue-700 text-sm font-medium leading-snug line-clamp-1">{form.meta_title || form.title}</p>
-                    <p className="text-green-700 text-xs mt-0.5">soleana-bien-etre.fr/blog/{form.slug}</p>
+                    <p className="text-green-700 text-xs mt-0.5">soleana-bienetre.com/blog/{form.slug}</p>
                     <p className="text-stone-500 text-xs mt-1 line-clamp-2">{form.meta_description || form.excerpt || '—'}</p>
                   </div>
                 )}

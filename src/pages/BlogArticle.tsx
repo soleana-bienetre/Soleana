@@ -162,7 +162,7 @@ export default function BlogArticlePage() {
           setOg('og:title', a.meta_title || a.title);
           setOg('og:description', a.meta_description || a.excerpt || '');
           setOg('og:type', 'article');
-          setOg('og:url', `https://www.soleana-bien-etre.fr/blog/${a.slug}`);
+          setOg('og:url', `https://www.soleana-bienetre.com/blog/${a.slug}`);
           if (a.og_image_url) setOg('og:image', a.og_image_url);
 
           // ── JSON-LD Article ───────────────────────────────────────────
@@ -185,10 +185,10 @@ export default function BlogArticlePage() {
             publisher: {
               '@type': 'LocalBusiness',
               name: 'Soléana Bien-Être',
-              url: 'https://www.soleana-bien-etre.fr',
+              url: 'https://www.soleana-bienetre.com',
               address: { '@type': 'PostalAddress', streetAddress: '1 Rue de la Fraternité', addressLocality: 'Venerque', postalCode: '31810', addressCountry: 'FR' },
             },
-            mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.soleana-bien-etre.fr/blog/${a.slug}` },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.soleana-bienetre.com/blog/${a.slug}` },
             keywords: a.tags?.join(', '),
             articleSection: a.category,
             inLanguage: 'fr-FR',
