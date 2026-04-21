@@ -4,6 +4,7 @@ import { PageMeta } from '../lib/useMeta';
 import {
   Clock,
   ChevronRight,
+  ChevronLeft,
   ArrowRight,
   BookOpen,
   Rss,
@@ -262,9 +263,12 @@ function ArticleCard({ article }: { article: Article }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
+const ARTICLES_PER_PAGE = 6;
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('Tous');
   const [articles, setArticles] = useState<Article[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     supabase
@@ -280,10 +284,26 @@ export default function Blog() {
 
   const featuredArticle = articles.find((a) => a.featured) ?? articles[0];
 
-  const displayedArticles =
+  const filteredArticles =
     activeCategory === 'Tous'
       ? articles.filter((a) => a !== featuredArticle)
       : articles.filter((a) => a.category === activeCategory);
+
+  const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
+  const displayedArticles = filteredArticles.slice(
+    (currentPage - 1) * ARTICLES_PER_PAGE,
+    currentPage * ARTICLES_PER_PAGE
+  );
+
+  function handleCategoryChange(cat: string) {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  }
+
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+    document.getElementById('articles-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   return (
     <>
@@ -314,7 +334,7 @@ export default function Blog() {
             {filterCategories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 className={`shrink-0 px-4 py-2 rounded-full text-xs font-sans font-medium tracking-wide transition-all duration-200 ${
                   activeCategory === cat
                     ? 'bg-nude-600 text-white shadow-sm'
@@ -342,7 +362,7 @@ export default function Blog() {
       )}
 
       {/* ── Articles Grid ── */}
-      <section className="section-padding bg-cream">
+      <section id="articles-grid" className="section-padding bg-cream scroll-mt-20">
         <div className="container-wide">
           {activeCategory !== 'Tous' && (
             <div className="mb-8">
@@ -350,7 +370,7 @@ export default function Blog() {
                 {activeCategory}
               </h2>
               <p className="text-sm text-stone-400 mt-1">
-                {displayedArticles.length} article{displayedArticles.length !== 1 ? 's' : ''}
+                {filteredArticles.length} article{filteredArticles.length !== 1 ? 's' : ''}
               </p>
             </div>
           )}
@@ -358,16 +378,70 @@ export default function Blog() {
           {activeCategory === 'Tous' && (
             <div className="flex items-center gap-2 mb-8">
               <h2 className="font-serif text-xl font-light text-stone-700">Tous les articles</h2>
-              <span className="text-xs text-stone-400 ml-1">({articles.length} articles)</span>
+              <span className="text-xs text-stone-400 ml-1">({filteredArticles.length} articles)</span>
             </div>
           )}
 
           {displayedArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayedArticles.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {displayedArticles.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
+
+              {/* ── Pagination ── */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-12">
+                  {/* Précédent */}
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans font-medium border border-sand-200 text-stone-600 hover:bg-sand-50 hover:border-sand-300 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                  >
+                    <ChevronLeft size={15} />
+                    Précédent
+                  </button>
+
+                  {/* Numéros de pages */}
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      const isActive = page === currentPage;
+                      const isNear = Math.abs(page - currentPage) <= 1 || page === 1 || page === totalPages;
+                      if (!isNear) {
+                        if (page === currentPage - 2 || page === currentPage + 2) {
+                          return <span key={page} className="px-1 text-stone-400 text-sm">…</span>;
+                        }
+                        return null;
+                      }
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page)}
+                          className={`w-9 h-9 rounded-full text-sm font-sans font-medium transition-all duration-200 ${
+                            isActive
+                              ? 'bg-nude-600 text-white shadow-sm'
+                              : 'text-stone-600 hover:bg-sand-100'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Suivant */}
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans font-medium border border-sand-200 text-stone-600 hover:bg-sand-50 hover:border-sand-300 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                  >
+                    Suivant
+                    <ChevronRight size={15} />
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <div className="w-14 h-14 bg-sand-50 rounded-full flex items-center justify-center mb-4">
@@ -380,7 +454,7 @@ export default function Blog() {
                 De nouveaux articles arrivent prochainement dans cette catégorie.
               </p>
               <button
-                onClick={() => setActiveCategory('Tous')}
+                onClick={() => handleCategoryChange('Tous')}
                 className="btn-secondary"
               >
                 Voir tous les articles
