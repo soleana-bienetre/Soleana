@@ -16,6 +16,8 @@ import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
+import PolitiqueCookies from './pages/PolitiqueCookies';
+import CookieBanner from './components/ui/CookieBanner';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminContacts from './pages/admin/AdminContacts';
@@ -144,6 +146,7 @@ function AppLayout() {
       <SchemaOrg />
       <ScrollToTop />
       <Header />
+      <CookieBanner />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -160,6 +163,7 @@ function AppLayout() {
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/politique-de-confidentialite" element={<PolitiqueConfidentialite />} />
+          <Route path="/politique-cookies" element={<PolitiqueCookies />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

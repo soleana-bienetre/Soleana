@@ -29,6 +29,7 @@ const liens = [
   { label: 'Contact', href: '/contact' },
   { label: 'Mentions légales', href: '/mentions-legales' },
   { label: 'Politique de confidentialité', href: '/politique-de-confidentialite' },
+  { label: 'Politique de cookies', href: '/politique-cookies' },
 ];
 
 export default function Footer() {
@@ -172,6 +173,9 @@ export default function Footer() {
             </Link>
             <Link to="/politique-de-confidentialite" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
               Confidentialité
+            </Link>
+            <Link to="/politique-cookies" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
+              Cookies
             </Link>
           </div>
         </div>
