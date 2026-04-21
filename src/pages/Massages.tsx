@@ -391,7 +391,7 @@ export default function Massages() {
                 />
               </div>
               <div className="absolute -bottom-5 -left-5 bg-sage-700 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light">75 – 90 min</p>
+                <p className="font-serif text-xl font-light text-white">75 – 90 min</p>
                 <p className="text-sage-200 text-xs mt-1">détente profonde</p>
               </div>
             </div>
