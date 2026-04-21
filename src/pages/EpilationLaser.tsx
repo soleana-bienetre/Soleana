@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import {
-  Zap,
   CheckCircle,
   Clock,
   Phone,
@@ -270,41 +269,26 @@ export default function EpilationLaser() {
               </p>
             </div>
 
-            {/* Icônes / Points clés */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                {
-                  icon: <Zap size={22} className="text-nude-600" />,
-                  titre: 'Technologie laser',
-                  desc: 'Lumière monochromatique ciblant précisément le bulbe pileux',
-                },
-                {
-                  icon: <Shield size={22} className="text-nude-600" />,
-                  titre: 'Sans dommage cutané',
-                  desc: 'Les tissus environnants restent intacts grâce à la sélectivité',
-                },
-                {
-                  icon: <Clock size={22} className="text-nude-600" />,
-                  titre: '6 à 10 séances',
-                  desc: 'En moyenne pour un résultat durable sur la majorité des zones',
-                },
-                {
-                  icon: <CheckCircle size={22} className="text-nude-600" />,
-                  titre: 'Résultat progressif',
-                  desc: 'Réduction visible dès les premières séances, définitive sur la durée',
-                },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-sand-50 rounded-2xl p-5 border border-sand-100 hover:shadow-sm transition-shadow duration-200"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-nude-100 flex items-center justify-center mb-3">
-                    {item.icon}
-                  </div>
-                  <h4 className="font-serif text-base font-medium text-stone-800 mb-1">{item.titre}</h4>
-                  <p className="text-sm text-stone-500 leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
+            {/* Photo */}
+            <div className="relative">
+              <img
+                src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/epilation-laser-combien-de-seances-sont-vraiment-necessaires-1776761123130.webp"
+                alt="Épilation laser — combien de séances sont nécessaires ?"
+                className="w-full h-80 lg:h-96 object-cover rounded-3xl shadow-md"
+                loading="lazy"
+              />
+              {/* Badge flottant */}
+              <div className="absolute bottom-5 left-5 flex flex-wrap gap-2">
+                {[
+                  { icon: <Clock size={12} />, label: '6 à 10 séances' },
+                  { icon: <CheckCircle size={12} />, label: 'Résultats durables' },
+                ].map((b, i) => (
+                  <span key={i} className="badge bg-white/90 backdrop-blur-sm text-stone-700 border-white/60 shadow-sm">
+                    {b.icon}
+                    {b.label}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -650,6 +634,31 @@ export default function EpilationLaser() {
                     </Link>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* PHOTO — CURE / REPOUSSE                                            */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="bg-white pb-0">
+        <div className="container-wide">
+          <div className="relative overflow-hidden rounded-3xl shadow-md">
+            <img
+              src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/est-ce-que-les-poils-repoussent-vraiment-apres-une-cure-depilation-laser-complete-1776775995251.webp"
+              alt="Est-ce que les poils repoussent après une cure d'épilation laser ?"
+              className="w-full h-64 md:h-80 object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+            <div className="absolute inset-0 flex items-center px-8 md:px-14">
+              <div className="max-w-md">
+                <span className="inline-block text-xs font-sans font-medium text-white/70 uppercase tracking-widest mb-2">Question fréquente</span>
+                <p className="font-serif text-2xl md:text-3xl font-light text-white leading-snug">
+                  Les poils repoussent-ils après une cure complète ?
+                </p>
               </div>
             </div>
           </div>
