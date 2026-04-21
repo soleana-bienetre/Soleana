@@ -215,7 +215,7 @@ export default function Home() {
         </div>
 
         {/* Content — titre + paragraphe en haut à gauche sur mobile, en bas sur desktop */}
-        <div className="relative z-10 w-full px-6 sm:px-10 md:px-12 lg:px-20 xl:px-32 pt-24 sm:pt-0 pb-0 sm:pb-14 md:pb-16 lg:pb-20">
+        <div className="relative z-10 w-full px-6 sm:px-10 md:px-12 lg:px-20 xl:px-32 pt-24 sm:pt-24 md:pt-0 pb-0 sm:pb-14 md:pb-16 lg:pb-20">
           <div className="max-w-2xl text-left sm:text-left mx-0">
 
             <h1 className="font-serif font-light text-white text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 md:mb-8">
