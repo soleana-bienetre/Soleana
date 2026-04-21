@@ -261,7 +261,7 @@ export default function Kobido() {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-3xl font-light">+600</p>
+                <p className="font-serif text-3xl font-light text-white">+600</p>
                 <p className="text-xs font-medium text-nude-100 mt-1">ans d'histoire japonaise</p>
               </div>
             </div>

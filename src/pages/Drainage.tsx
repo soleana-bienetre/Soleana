@@ -227,7 +227,7 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-sage-700 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-2xl font-light">Méthode Vodder</p>
+                <p className="font-serif text-2xl font-light text-white">Méthode Vodder</p>
                 <p className="text-sage-200 text-xs mt-1">référence mondiale depuis 1932</p>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light">Bois naturel</p>
+                <p className="font-serif text-xl font-light text-white">Bois naturel</p>
                 <p className="text-nude-200 text-xs mt-1">instruments artisanaux</p>
               </div>
             </div>
