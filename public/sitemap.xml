@@ -84,43 +84,78 @@
 
   <!-- Articles de blog -->
   <url>
-    <loc>https://www.soleana-bienetre.com/blog/kobido-lifting-naturel-japonais-bienfaits</loc>
-    <lastmod>2026-04-01</lastmod>
+    <loc>https://www.soleana-bienetre.com/blog/pourquoi-faire-un-soin-du-visage-en-institut</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.soleana-bienetre.com/blog/combien-seances-epilation-laser-necessaires</loc>
-    <lastmod>2026-03-15</lastmod>
+    <loc>https://www.soleana-bienetre.com/blog/pourquoi-soffrir-un-massage-corps-en-institut-plutot-qu-attendre-detre-epuise</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.soleana-bienetre.com/blog/drainage-lymphatique-benefices-indications</loc>
-    <lastmod>2026-02-20</lastmod>
+    <loc>https://www.soleana-bienetre.com/blog/maderotherapie-massage-instruments-en-bois</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.soleana-bienetre.com/blog/pourquoi-le-kobido-a-un-effet-anti-age</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.soleana-bienetre.com/blog/repousse-poils-apres-epilation-laser-complete</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.soleana-bienetre.com/blog/quest-ce-que-la-methode-vodder-le-guide-complet-du-drainage-lymphatique</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.soleana-bienetre.com/blog/kobido-lifting-naturel-japonais-bienfaits</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.soleana-bienetre.com/blog/combien-seances-epilation-laser-necessaires</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.soleana-bienetre.com/mentions-legales</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.soleana-bienetre.com/politique-de-confidentialite</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.soleana-bienetre.com/politique-cookies</loc>
+    <lastmod>2026-04-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
