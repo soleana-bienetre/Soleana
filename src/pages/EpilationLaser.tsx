@@ -13,6 +13,7 @@ import {
   Calendar,
   Users,
   Leaf,
+  ExternalLink,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
@@ -23,60 +24,9 @@ import { useCategoryTarifs } from '../lib/useTarifs';
 // Data
 // ---------------------------------------------------------------------------
 
-const DIAG_ENTRY = { zone: 'Diagnostic gratuit', prix: 'Offert' };
+const PLANITY_URL = 'https://www.planity.com/soleana-bien-etre-31810-venerque';
 
-const forfaitsFemme: { titre: string; zones: string; note?: string }[] = [
-  {
-    titre: 'Forfait 2 zones',
-    zones: 'Combinaison libre de 2 zones au choix',
-    note: 'Sur devis',
-  },
-  {
-    titre: 'Forfait 3 zones',
-    zones: 'Combinaison libre de 3 zones au choix',
-    note: 'Sur devis',
-  },
-  {
-    titre: 'Forfait 4 zones',
-    zones: 'Combinaison libre de 4 zones au choix',
-    note: 'Sur devis',
-  },
-  {
-    titre: 'Aisselles + Maillot',
-    zones: 'Aisselles · Maillot (simple, échancré ou américain)',
-  },
-  {
-    titre: 'Aisselles + Demi-jambes',
-    zones: 'Aisselles · Demi-jambes',
-  },
-  {
-    titre: 'Aisselles + Jambes entières',
-    zones: 'Aisselles · Jambes entières',
-  },
-  {
-    titre: 'Maillot + Demi-jambes',
-    zones: 'Maillot · Demi-jambes',
-  },
-  {
-    titre: 'Maillot + Jambes entières',
-    zones: 'Maillot · Jambes entières',
-  },
-  {
-    titre: 'Aisselles + Jambes + Maillot',
-    zones: 'Aisselles · Jambes entières · Maillot',
-    note: 'Trio complet',
-  },
-  {
-    titre: 'Aisselles + Demi-jambes + Maillot',
-    zones: 'Aisselles · Demi-jambes · Maillot',
-    note: 'Trio essentiel',
-  },
-  {
-    titre: 'Bras + Jambes + Aisselles + Maillot',
-    zones: 'Aisselles · Bras entier · Jambes entières · Maillot',
-    note: 'Forfait intégral corps',
-  },
-];
+const DIAG_ENTRY = { zone: 'Diagnostic gratuit', prix: 'Offert' };
 
 const conseilsAvant: string[] = [
   'Raser la zone à traiter 24 à 48 h avant la séance (ne pas épiler à la cire ni à la pince)',
@@ -176,9 +126,10 @@ function ZoneTable({ titre, genre, zones, accentClass, headerClass }: ZoneTableP
             {zones.map((row, i) => (
               <tr
                 key={i}
-                className={`border-b border-sand-50 transition-colors duration-150 ${
+                onClick={() => window.open(PLANITY_URL, '_blank', 'noopener,noreferrer')}
+                className={`border-b border-sand-50 transition-colors duration-150 cursor-pointer group ${
                   row.zone === 'Diagnostic gratuit'
-                    ? 'bg-sage-50'
+                    ? 'bg-sage-50 hover:bg-sage-100'
                     : i % 2 === 0
                     ? 'bg-white hover:bg-sand-50'
                     : 'bg-sand-50/40 hover:bg-sand-50'
@@ -191,7 +142,10 @@ function ZoneTable({ titre, genre, zones, accentClass, headerClass }: ZoneTableP
                       <span className="font-medium text-sage-700">{row.zone}</span>
                     </span>
                   ) : (
-                    row.zone
+                    <span className="flex items-center gap-1.5">
+                      {row.zone}
+                      <ExternalLink size={11} className="text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                    </span>
                   )}
                 </td>
                 <td
@@ -222,7 +176,7 @@ function ZoneTable({ titre, genre, zones, accentClass, headerClass }: ZoneTableP
 // ---------------------------------------------------------------------------
 
 export default function EpilationLaser() {
-  const { byCategory } = useCategoryTarifs(['laser-femme', 'laser-homme']);
+  const { byCategory } = useCategoryTarifs(['laser-femme', 'laser-homme', 'forfaits-laser']);
 
   const zonesFemme = [DIAG_ENTRY, ...byCategory('laser-femme').map((t) => ({ zone: t.name, prix: t.price }))];
   const zonesHomme = [DIAG_ENTRY, ...byCategory('laser-homme').map((t) => ({ zone: t.name, prix: t.price }))];
@@ -497,16 +451,20 @@ export default function EpilationLaser() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* ZONES FEMME                                                         */}
+      {/* TARIFS — ZONES + FORFAITS                                          */}
       {/* ------------------------------------------------------------------ */}
       <section className="section-padding bg-nude-50">
         <div className="container-wide">
+
+          {/* Titre de section */}
           <div className="text-center mb-10">
             <span className="tag">Tarifs</span>
-            <h2 className="section-title mb-2">Zones traitées — Femme</h2>
+            <h2 className="section-title mb-2">Zones traitées & Forfaits</h2>
             <p className="text-stone-500 text-sm">Prix par séance unitaire · diagnostic gratuit inclus</p>
           </div>
-          <div className="max-w-2xl mx-auto">
+
+          {/* Zones Femme + Homme côte à côte */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
             <ZoneTable
               titre="Zones Femme"
               genre="Femme"
@@ -514,21 +472,6 @@ export default function EpilationLaser() {
               accentClass="text-nude-600"
               headerClass="bg-gradient-to-r from-nude-600 to-nude-500"
             />
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      {/* ZONES HOMME                                                         */}
-      {/* ------------------------------------------------------------------ */}
-      <section className="section-padding bg-white">
-        <div className="container-wide">
-          <div className="text-center mb-10">
-            <span className="tag">Tarifs</span>
-            <h2 className="section-title mb-2">Zones traitées — Homme</h2>
-            <p className="text-stone-500 text-sm">Prix par séance unitaire · diagnostic gratuit inclus</p>
-          </div>
-          <div className="max-w-2xl mx-auto">
             <ZoneTable
               titre="Zones Homme"
               genre="Homme"
@@ -537,52 +480,79 @@ export default function EpilationLaser() {
               headerClass="bg-gradient-to-r from-sage-700 to-sage-600"
             />
           </div>
-        </div>
-      </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* FORFAITS FEMME                                                      */}
-      {/* ------------------------------------------------------------------ */}
-      <section className="section-padding bg-sand-50">
-        <div className="container-wide">
-          <div className="text-center mb-12">
-            <span className="tag">Économies</span>
-            <h2 className="section-title mb-4">Forfaits combinés — Femme</h2>
-            <p className="text-stone-500 max-w-xl mx-auto">
-              Nos forfaits multi-zones vous permettent de traiter plusieurs zones simultanément à un tarif
-              avantageux. Contactez-nous pour obtenir votre devis personnalisé.
-            </p>
-          </div>
+          {/* Forfaits combinés */}
+          <div className="mb-2">
+            <div className="text-center mb-6">
+              <h3 className="font-serif text-2xl font-light text-stone-800">Forfaits combinés <span className="text-nude-600">— Femme</span></h3>
+              <p className="text-stone-500 text-sm mt-1">Traiter plusieurs zones simultanément à un tarif avantageux</p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {forfaitsFemme.map((f, i) => (
-              <div
-                key={i}
-                className="card-service bg-white p-5 flex flex-col gap-3 border border-sand-100"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <h4 className="font-serif text-lg font-light text-stone-800 leading-snug">{f.titre}</h4>
-                  {f.note && (
-                    <span className="shrink-0 inline-block text-xs font-sans font-medium bg-nude-100 text-nude-700 px-2.5 py-1 rounded-full">
-                      {f.note}
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-stone-500 leading-relaxed flex-1">{f.zones}</p>
-                <div className="pt-3 border-t border-sand-100 flex items-center justify-between">
-                  <span className="text-xs font-sans text-stone-400">Tarif</span>
-                  <span className="font-sans font-semibold text-nude-600 text-sm">Sur devis</span>
-                </div>
+            <div className="card-service overflow-hidden">
+              {/* En-tête */}
+              <div className="bg-gradient-to-r from-nude-600 to-nude-500 px-6 py-4 flex items-center gap-3">
+                <span className="font-serif text-2xl font-light text-white">Forfaits combinés</span>
+                <span className="badge bg-white/20 text-white border-white/30 text-xs">Femme</span>
               </div>
-            ))}
+
+              {/* Tableau */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-sand-100">
+                      <th className="text-left px-6 py-3 font-sans font-semibold text-stone-500 uppercase tracking-wider text-xs w-1/3">Forfait</th>
+                      <th className="text-left px-6 py-3 font-sans font-semibold text-stone-500 uppercase tracking-wider text-xs">Zones incluses</th>
+                      <th className="text-right px-6 py-3 font-sans font-semibold text-stone-500 uppercase tracking-wider text-xs whitespace-nowrap">Tarif séance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {byCategory('forfaits-laser').map((f, i) => (
+                      <tr
+                        key={f.id}
+                        onClick={() => window.open(PLANITY_URL, '_blank', 'noopener,noreferrer')}
+                        className={`border-b border-sand-50 transition-colors duration-150 cursor-pointer group ${
+                          i % 2 === 0 ? 'bg-white hover:bg-sand-50' : 'bg-sand-50/40 hover:bg-sand-50'
+                        }`}
+                      >
+                        <td className="px-6 py-4 font-sans font-medium text-stone-700 align-top">
+                          <span className="flex items-center gap-1.5">
+                            {f.name}
+                            <ExternalLink size={11} className="text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 align-top">
+                          {f.note ? (
+                            <ul className="space-y-1.5">
+                              {f.note.split(/[·•\n]/).map((z) => z.trim()).filter(Boolean).map((z, j) => (
+                                <li key={j} className="flex items-start gap-1.5 text-stone-500">
+                                  <CheckCircle size={12} className="text-nude-400 shrink-0 mt-0.5" />
+                                  {z}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <span className="text-stone-400 text-xs italic">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 text-right font-sans font-medium text-nude-600 whitespace-nowrap align-top">
+                          {f.price}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="px-6 py-3 bg-sand-50 border-t border-sand-100 flex items-center justify-between gap-4 flex-wrap">
+                <p className="text-xs text-stone-400 font-sans">* Tarifs indicatifs — nous contacter pour un devis personnalisé.</p>
+                <a href="tel:0762169814" className="btn-secondary text-xs py-2 px-4">
+                  <Phone size={13} />
+                  Demander un devis
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <a href="tel:0762169814" className="btn-secondary">
-              <Phone size={15} />
-              Demander mon devis forfait
-            </a>
-          </div>
         </div>
       </section>
 

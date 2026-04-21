@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Clock, ChevronLeft, ChevronRight, Calendar, Tag, Phone, ArrowRight } from 'lucide-react';
+import { Clock, ChevronLeft, Calendar, Tag, Phone, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { BlogArticle } from '../lib/supabase';
 
@@ -266,14 +266,6 @@ export default function BlogArticlePage() {
       <div className="bg-cream min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
-          {/* Fil d'Ariane */}
-          <nav className="flex items-center gap-1.5 text-xs text-stone-400 mb-8 flex-wrap">
-            <Link to="/" className="hover:text-stone-600 transition-colors">Accueil</Link>
-            <ChevronRight size={11} />
-            <Link to="/blog" className="hover:text-stone-600 transition-colors">Blog</Link>
-            <ChevronRight size={11} />
-            <span className="text-stone-500 line-clamp-1">{article.title}</span>
-          </nav>
 
           {/* Si pas d'image hero, titre ici */}
           {!article.og_image_url && (
