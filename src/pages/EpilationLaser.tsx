@@ -643,24 +643,15 @@ export default function EpilationLaser() {
       {/* ------------------------------------------------------------------ */}
       {/* PHOTO — CURE / REPOUSSE                                            */}
       {/* ------------------------------------------------------------------ */}
-      <section className="bg-white pb-0">
+      <section className="bg-white">
         <div className="container-wide">
-          <div className="relative overflow-hidden rounded-3xl shadow-md">
+          <div className="relative">
             <img
               src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/est-ce-que-les-poils-repoussent-vraiment-apres-une-cure-depilation-laser-complete-1776775995251.webp"
-              alt="Est-ce que les poils repoussent après une cure d'épilation laser ?"
-              className="w-full h-64 md:h-80 object-cover"
+              alt="Épilation laser — résultats durables après une cure complète"
+              className="w-full h-80 lg:h-96 object-cover rounded-3xl shadow-md"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
-            <div className="absolute inset-0 flex items-center px-8 md:px-14">
-              <div className="max-w-md">
-                <span className="inline-block text-xs font-sans font-medium text-white/70 uppercase tracking-widest mb-2">Question fréquente</span>
-                <p className="font-serif text-2xl md:text-3xl font-light text-white leading-snug">
-                  Les poils repoussent-ils après une cure complète ?
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
