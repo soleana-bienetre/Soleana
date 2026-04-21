@@ -1,0 +1,23 @@
+{
+  "name": "Soléana Bien-Être",
+  "short_name": "Soléana",
+  "description": "Institut de bien-être et d'esthétique à Venerque – Épilation laser, Kobido, soins du visage, massages.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#8c9480",
+  "background_color": "#f4efec",
+  "icons": [
+    {
+      "src": "/favicon/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
