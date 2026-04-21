@@ -645,7 +645,7 @@ export default function EpilationLaser() {
       {/* ------------------------------------------------------------------ */}
       <section className="bg-white section-padding pt-0">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="relative">
               <img
                 src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/est-ce-que-les-poils-repoussent-vraiment-apres-une-cure-depilation-laser-complete-1776775995251.webp"
@@ -653,6 +653,34 @@ export default function EpilationLaser() {
                 className="w-full h-80 lg:h-96 object-cover rounded-3xl shadow-md"
                 loading="lazy"
               />
+            </div>
+            <div>
+              <span className="tag">Résultats</span>
+              <h2 className="section-title mb-4">
+                Des résultats durables dans le temps
+              </h2>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Après une cure complète, la grande majorité des poils est définitivement détruite.
+                Des séances d'entretien ponctuelles peuvent être nécessaires en cas de fluctuations
+                hormonales, mais la peau reste lisse et douce au quotidien.
+              </p>
+              <p className="text-stone-600 leading-relaxed">
+                Contrairement aux idées reçues, les résultats du laser sont stables sur le long terme.
+                Chaque séance réduit progressivement la densité et la repousse — jusqu'à une quasi-disparition
+                sur les zones traitées.
+              </p>
+              <div className="mt-6 flex flex-col gap-2.5">
+                {[
+                  'Réduction jusqu\'à 90 % des poils après cure complète',
+                  'Peau lisse et douce entre les séances dès le début',
+                  'Entretien annuel possible selon le profil hormonal',
+                ].map((point, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <CheckCircle size={15} className="text-nude-500 shrink-0 mt-0.5" />
+                    <span className="text-sm text-stone-600">{point}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
