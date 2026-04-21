@@ -48,14 +48,18 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mb-6">
               <a
-                href="#"
+                href="https://www.instagram.com/soleana_bien_etre/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram Soléana Bien-Être"
                 className="p-2.5 rounded-full bg-stone-800 text-stone-400 hover:text-white hover:bg-nude-600 transition-all duration-200"
               >
                 <Instagram size={16} />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61570696485834"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook Soléana Bien-Être"
                 className="p-2.5 rounded-full bg-stone-800 text-stone-400 hover:text-white hover:bg-nude-600 transition-all duration-200"
               >
