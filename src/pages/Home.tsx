@@ -218,13 +218,13 @@ export default function Home() {
         <div className="relative z-10 w-full px-6 sm:px-10 md:px-12 lg:px-20 xl:px-32 pt-24 sm:pt-24 md:pt-0 pb-0 sm:pb-14 md:pb-16 lg:pb-20">
           <div className="max-w-2xl text-left sm:text-left mx-0">
 
-            <h1 className="font-serif font-light text-white text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 md:mb-8">
+            <h1 className="font-serif font-light text-white text-5xl sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 sm:mb-3 md:mb-8">
               <span className="italic text-nude-200">Institut de bien-être</span><br />
               <span className="italic text-nude-200">et d'esthétique</span><br />
               <span>à Venerque</span>
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-white/85 font-light max-w-xl mb-0 sm:mb-12 leading-relaxed">
+            <p className="text-base sm:text-sm md:text-xl text-white/85 font-light max-w-xl mb-0 sm:mb-6 md:mb-12 leading-relaxed">
               Un espace de soin et de détente<br className="sm:hidden" />
               pensé pour vous.<br />
               Épilation laser, soins du visage,<br className="sm:hidden" />
@@ -234,17 +234,17 @@ export default function Home() {
             </p>
 
             {/* Boutons + badge — masqués sur mobile, visibles sur sm+ */}
-            <div className="hidden sm:flex flex-row items-start gap-4 mt-0">
-              <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-8 py-4 shadow-lg shadow-nude-900/30 justify-center">
+            <div className="hidden sm:flex flex-row items-start gap-3 mt-0">
+              <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary sm:text-sm sm:px-5 sm:py-3 md:text-base md:px-8 md:py-4 shadow-lg shadow-nude-900/30 justify-center">
                 <Calendar size={15} />
                 Prendre rendez-vous
               </a>
-              <Link to="/soins" className="btn-outline-light text-base px-8 py-4 justify-center">
+              <Link to="/soins" className="btn-outline-light sm:text-sm sm:px-5 sm:py-3 md:text-base md:px-8 md:py-4 justify-center">
                 <Leaf size={15} />
                 Découvrir les soins
               </Link>
             </div>
-            <div className="hidden sm:inline-flex mt-12 items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2.5">
+            <div className="hidden sm:inline-flex sm:mt-5 md:mt-12 items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2.5">
               <Star size={13} className="fill-ecru-400 text-ecru-400 shrink-0" />
               <span className="text-white/90 text-sm font-medium">5/5 – Avis clients vérifiés</span>
             </div>
