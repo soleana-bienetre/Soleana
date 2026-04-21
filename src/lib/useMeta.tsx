@@ -13,7 +13,7 @@ interface PageMetaProps {
 }
 
 export function PageMeta({ title, description, url, image }: PageMetaProps) {
-  const pageUrl = url ?? (typeof window !== 'undefined' ? window.location.href : SITE_URL);
+  const pageUrl = url ?? (typeof window !== 'undefined' ? SITE_URL + window.location.pathname : SITE_URL);
   const pageImage = image ?? OG_IMAGE;
 
   return (

@@ -32,8 +32,5 @@ User-agent: Bingbot
 Allow: /
 Disallow: /admin/
 
-# Fichier de description pour les LLMs
-LLMs: https://www.soleana-bienetre.com/llms.txt
-
 # Sitemap
 Sitemap: https://www.soleana-bienetre.com/sitemap.xml

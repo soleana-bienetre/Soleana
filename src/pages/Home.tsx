@@ -218,7 +218,7 @@ export default function Home() {
         <div className="relative z-10 w-full px-6 sm:px-10 md:px-12 lg:px-20 xl:px-32 pt-24 sm:pt-24 md:pt-0 pb-0 sm:pb-14 md:pb-16 lg:pb-20">
           <div className="max-w-2xl text-left sm:text-left mx-0">
 
-            <h1 className="font-serif font-light text-white text-5xl sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 sm:mb-3 md:mb-8">
+            <h1 className="font-serif font-light text-white text-4xl sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 sm:mb-3 md:mb-8">
               <span className="italic text-nude-200">Institut de bien-être</span><br />
               <span className="italic text-nude-200">et d'esthétique</span><br />
               <span>à Venerque</span>
