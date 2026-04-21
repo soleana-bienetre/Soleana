@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save, Upload, X, Eye } from 'lucide-react';
+import { ArrowLeft, Save, Upload, X, Eye, Loader2 } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { adminRequest } from '../../lib/adminApi';
 import type { BlogArticle } from '../../lib/supabase';
