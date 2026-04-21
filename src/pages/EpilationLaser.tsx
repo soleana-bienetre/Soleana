@@ -643,15 +643,17 @@ export default function EpilationLaser() {
       {/* ------------------------------------------------------------------ */}
       {/* PHOTO — CURE / REPOUSSE                                            */}
       {/* ------------------------------------------------------------------ */}
-      <section className="bg-white">
+      <section className="bg-white section-padding pt-0">
         <div className="container-wide">
-          <div className="relative">
-            <img
-              src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/est-ce-que-les-poils-repoussent-vraiment-apres-une-cure-depilation-laser-complete-1776775995251.webp"
-              alt="Épilation laser — résultats durables après une cure complète"
-              className="w-full h-80 lg:h-96 object-cover rounded-3xl shadow-md"
-              loading="lazy"
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            <div className="relative">
+              <img
+                src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/blog-images/est-ce-que-les-poils-repoussent-vraiment-apres-une-cure-depilation-laser-complete-1776775995251.webp"
+                alt="Épilation laser — résultats durables après une cure complète"
+                className="w-full h-80 lg:h-96 object-cover rounded-3xl shadow-md"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
