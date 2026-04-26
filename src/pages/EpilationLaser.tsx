@@ -321,9 +321,10 @@ export default function EpilationLaser() {
                 {[
                   'Peau claire à mate avec des poils foncés',
                   'Hommes et femmes dès 18 ans',
+                  'Possible avant 18 ans avec consentement parental (consulter préalablement la praticienne pour plus d\'informations)',
                   'Peaux sensibles souhaitant une alternative douce à la cire',
                   'Personnes avec une pousse rapide et dense',
-                  'Zones intimes, corps et visage (selon zones)',
+                  'Zones intimes et corps',
                   'Tous phototypes avec protocole adapté',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm text-stone-600">
@@ -345,7 +346,7 @@ export default function EpilationLaser() {
               <ul className="space-y-3">
                 {[
                   'Grossesse et allaitement',
-                  'Bronzage actif ou exposition solaire récente (< 4 semaines)',
+                  'Bronzage actif ou exposition solaire 2 semaines avant ou après la séance',
                   'Poils blancs, blonds très clairs ou roux (pigmentation insuffisante)',
                   'Prise de médicaments photosensibilisants',
                   'Maladies de peau actives (eczéma, psoriasis sur zone)',

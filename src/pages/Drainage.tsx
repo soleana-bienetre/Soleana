@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import {
   Calendar,
   Phone,
@@ -8,7 +7,6 @@ import {
   Shield,
   CheckCircle2,
   Clock,
-  ArrowRight,
   Layers,
   Activity,
   Star,
@@ -227,8 +225,8 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-sage-700 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-2xl font-light text-white">Méthode Vodder</p>
-                <p className="text-sage-200 text-xs mt-1">référence mondiale depuis 1932</p>
+                <p className="font-serif text-2xl font-light text-white">60 min</p>
+                <p className="text-sage-200 text-xs mt-1">Méthode Vodder</p>
               </div>
             </div>
           </div>
@@ -249,8 +247,8 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">Bois naturel</p>
-                <p className="text-nude-200 text-xs mt-1">instruments artisanaux</p>
+                <p className="font-serif text-xl font-light text-white">60 min</p>
+                <p className="text-nude-200 text-xs mt-1">Maderothérapie</p>
               </div>
             </div>
 
@@ -594,64 +592,63 @@ export default function Drainage() {
             <span className="tag">Tarifs</span>
             <h2 className="section-title text-3xl md:text-4xl">Nos formules</h2>
             <p className="text-stone-500 mt-4 max-w-xl mx-auto">
-              Séances à l'unité ou en cure — contactez-nous pour un devis adapté à vos objectifs.
+              Séances à l'unité ou en cure, selon vos objectifs et vos besoins.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+          <div className="max-w-md mx-auto rounded-3xl p-6 border-2 border-nude-300 bg-nude-50 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div className="mb-3">
+              <span className="px-3 py-1 bg-nude-600 text-white text-xs font-medium rounded-full">
+                Programme phare
+              </span>
+            </div>
+            <h3 className="font-serif text-base font-light text-stone-800 mb-2">Cure Drainage & Remodelage</h3>
+            <div className="flex items-center gap-1.5 mb-3">
+              <Clock size={11} className="text-stone-400" />
+              <span className="text-xs text-stone-500">10 séances</span>
+            </div>
+            <p className="text-stone-500 text-xs leading-relaxed mb-5">
+              Notre programme signature complet pour transformer votre silhouette et votre bien-être.
+            </p>
+            <p className="text-lg font-semibold text-nude-700">669€</p>
+          </div>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
             {[
               {
                 title: 'Drainage Vodder à la séance',
-                duration: '45 – 60 min',
+                duration: '60 min',
+                price: '65€',
                 desc: "Séance de drainage lymphatique méthode Vodder pour soulager les œdèmes et stimuler l'immunité.",
-                highlight: false,
               },
               {
                 title: 'Drainage Vodder en forfait',
                 duration: '5 ou 10 séances',
+                price: '310€ à 590€',
                 desc: 'Cure drainante pour traiter les œdèmes chroniques, les jambes lourdes ou accompagner une chirurgie.',
-                highlight: false,
               },
               {
                 title: 'Maderothérapie à la séance',
-                duration: '45 – 60 min',
+                duration: '60 min',
+                price: '80€',
                 desc: 'Séance de massage avec instruments en bois pour drainer et sculpter les zones ciblées.',
-                highlight: false,
               },
               {
-                title: 'Cure Drainage & Remodelage',
-                duration: '10 séances',
-                desc: 'Notre programme signature complet pour transformer votre silhouette et votre bien-être.',
-                highlight: true,
+                title: 'Maderothérapie au forfait',
+                duration: '5 ou 10 séances',
+                price: '360€ à 690€',
+                desc: 'Forfait de maderothérapie pour accompagner le remodelage et travailler les zones ciblées sur plusieurs séances.',
               },
             ].map((f) => (
               <div
                 key={f.title}
-                className={`rounded-3xl p-6 border-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                  f.highlight
-                    ? 'border-nude-300 bg-nude-50 shadow-md'
-                    : 'border-sand-200 bg-white shadow-sm'
-                }`}
+                className="rounded-3xl p-6 border-2 border-sand-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                {f.highlight && (
-                  <div className="mb-3">
-                    <span className="px-3 py-1 bg-nude-600 text-white text-xs font-medium rounded-full">
-                      Programme phare
-                    </span>
-                  </div>
-                )}
                 <h3 className="font-serif text-base font-light text-stone-800 mb-2">{f.title}</h3>
                 <div className="flex items-center gap-1.5 mb-3">
                   <Clock size={11} className="text-stone-400" />
                   <span className="text-xs text-stone-500">{f.duration}</span>
                 </div>
                 <p className="text-stone-500 text-xs leading-relaxed mb-5">{f.desc}</p>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-nude-600 hover:text-nude-700 transition-colors group"
-                >
-                  Demander un devis
-                  <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <p className="text-lg font-semibold text-nude-700">{f.price}</p>
               </div>
             ))}
           </div>

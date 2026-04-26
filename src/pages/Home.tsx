@@ -219,18 +219,16 @@ export default function Home() {
           <div className="max-w-2xl text-left sm:text-left mx-0">
 
             <h1 className="font-serif font-light text-white text-4xl sm:text-2xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6 sm:mb-3 md:mb-8">
-              <span className="italic text-nude-200">Institut de bien-être</span><br />
-              <span className="italic text-nude-200">et d'esthétique</span><br />
+              <span className="italic text-nude-200">Institut bien être</span><br />
+              <span className="italic text-nude-200">et socio-esthétique</span><br />
               <span>à Venerque</span>
             </h1>
 
             <p className="text-base sm:text-sm md:text-xl text-white/85 font-light max-w-xl mb-0 sm:mb-6 md:mb-12 leading-relaxed">
-              Un espace de soin et de détente<br className="sm:hidden" />
+              Un espace de soin et de détente <br className="sm:hidden" />
               pensé pour vous.<br />
-              Épilation laser, soins du visage,<br className="sm:hidden" />
-              Kobido,<br className="sm:hidden" />
-              massages<br className="hidden sm:block" />
-              et modelage corps.
+              Épilation laser, soins du visage, <br className="sm:hidden" />
+              Kobido et massages&nbsp;bien-être.
             </p>
 
             {/* Boutons + badge — masqués sur mobile, visibles sur sm+ */}
@@ -336,7 +334,7 @@ export default function Home() {
                 créer un lieu chaleureux, bienveillant et professionnel, où chaque personne
                 se sent accueillie et choyée.
               </p>
-              <p className="text-stone-600 leading-relaxed mb-8 text-base">
+              <p className="text-stone-600 leading-relaxed mb-8 text-base md:text-lg">
                 De l'épilation laser aux soins du visage, du Kobido aux massages bien-être,
                 chaque soin est pensé pour vous ressourcer en profondeur. Ici, la technique
                 rencontre la douceur, pour des résultats visibles et une expérience inoubliable.
@@ -439,10 +437,13 @@ export default function Home() {
               </blockquote>
 
               <p className="text-stone-600 leading-relaxed mb-6">
-                Forte d'un parcours riche entre le monde du soin médical et l'esthétique,
-                Laetitia a réuni ces deux univers pour offrir une approche globale, bienveillante
-                et professionnelle du bien-être. Son expertise repose sur des formations
-                reconnues et une passion sincère pour l'accompagnement humain.
+                Après plusieurs années dans le soin médical comme aide-soignante puis
+                infirmière, j'ai créé Soléana Bien-Être pour réunir mon expérience du
+                corps, de l'écoute et de l'accompagnement avec ma passion pour l'esthétique.
+                À Venerque, je propose des soins personnalisés autour du bien-être, de la
+                socio-esthétique, des soins du visage, de l'épilation laser, du Kobido et
+                des massages, avec une approche douce, professionnelle et attentive à chaque
+                personne.
               </p>
 
               <div className="flex flex-wrap gap-2 mb-8">
@@ -452,7 +453,7 @@ export default function Home() {
               </div>
 
               <Link to="/a-propos" className="btn-secondary">
-                Son parcours complet
+                Mon parcours complet
               </Link>
             </div>
 

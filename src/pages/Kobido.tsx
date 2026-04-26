@@ -4,7 +4,6 @@ import {
   Clock,
   Star,
   CheckCircle2,
-  ArrowRight,
   Zap,
   Heart,
   Sun,
@@ -94,39 +93,45 @@ const steps = [
 
 const forfaits = [
   {
-    title: 'Kobido à la séance',
-    duration: '60 min',
-    description: 'Séance complète de massage facial japonais avec manœuvres de lifting, drainage et sculpture du visage.',
-    highlight: false,
-  },
-  {
-    title: 'Kobido en forfait',
-    duration: '5 ou 10 séances',
-    description: 'Cure intensive pour des résultats durables. Idéal pour un vrai programme anti-âge naturel.',
-    highlight: true,
-  },
-  {
     title: 'Kobido express à la séance',
     duration: '30 min',
+    price: '45€',
     description: 'Version condensée ciblant les gestes essentiels de lifting et de drainage. Parfait avant un événement.',
-    highlight: false,
-  },
-  {
-    title: 'Kobido express en forfait',
-    duration: '5 ou 10 séances',
-    description: "Programme express pour maintenir l'éclat du visage au quotidien, sans rogner sur son agenda.",
     highlight: false,
   },
   {
     title: 'Soin Sublime & Kobido à la séance',
     duration: '90 min',
+    price: '130€',
     description: "L'alliance d'un soin visage premium et du Kobido pour une expérience beauté d'exception.",
     highlight: true,
   },
   {
-    title: 'Soin Sublime & Kobido en forfait',
-    duration: '5 ou 10 séances',
+    title: 'Kobido à la séance',
+    duration: '60 min',
+    price: '80€',
+    description: 'Séance complète de massage facial japonais avec manœuvres de lifting, drainage et sculpture du visage.',
+    highlight: false,
+  },
+  {
+    title: 'Kobido express au forfait',
+    duration: '4, 6 ou 8 séances',
+    price: '162€ à 288€',
+    description: "Programme express pour maintenir l'éclat du visage au quotidien, sans rogner sur son agenda.",
+    highlight: false,
+  },
+  {
+    title: 'Soin Sublime & Kobido au forfait',
+    duration: '3 ou 4 séances',
+    price: '351€ à 442€',
     description: 'Le nec plus ultra des soins visage en cure. Résultats spectaculaires et durables garantis.',
+    highlight: true,
+  },
+  {
+    title: 'Kobido au forfait',
+    duration: '4, 6 ou 8 séances',
+    price: '288€ à 512€',
+    description: 'Cure intensive pour des résultats durables. Idéal pour un vrai programme anti-âge naturel.',
     highlight: false,
   },
 ];
@@ -221,21 +226,20 @@ export default function Kobido() {
               </h2>
               <p className="text-stone-600 leading-relaxed mb-5">
                 Le <strong className="font-medium text-stone-800">Kobido</strong> — « Kobidō » (古美道) en japonais,
-                littéralement « l'ancienne voie de la beauté » — est une technique de massage facial née au
+                littéralement « voie de la beauté ancestrale » — est une technique de massage facial née au
                 Japon au <strong className="font-medium text-stone-800">XV<sup>e</sup> siècle</strong>. Pratiqué
                 à l'origine à la cour impériale japonaise, il a été transmis de maître à élève pendant des
                 siècles avant d'être codifié et exporté en Occident.
               </p>
               <p className="text-stone-600 leading-relaxed mb-5">
-                Véritable <strong className="font-medium text-stone-800">lifting naturel sans injection</strong>,
-                le Kobido associe des manœuvres rapides et précises — effleurages, pétrissages, percussions,
-                pressions acuponcturales — pour raffermir les contours, redonner de l'éclat et estomper
-                visiblement les signes du temps.
+                Le Kobido associe des manœuvres rapides et précises pour stimuler les muscles du visage,
+                raffermir les contours, raviver l'éclat du teint et atténuer visiblement les signes de fatigue.
               </p>
               <p className="text-stone-600 leading-relaxed">
-                Contrairement aux soins visage classiques, le Kobido travaille en profondeur sur les muscles
-                faciaux, le tissu conjonctif et la microcirculation, offrant des résultats comparables à ceux
-                d'un lifting chirurgical, en totalement non invasif.
+                Contrairement à un soin visage classique, le Kobido agit en profondeur sur les muscles du
+                visage, les tissus et la microcirculation. Ses gestes précis aident à tonifier les traits,
+                stimuler l'éclat du teint et lisser visiblement le visage, dans une approche naturelle et
+                non invasive.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="badge">
@@ -279,7 +283,7 @@ export default function Kobido() {
               Un soin aux effets multiples, visibles dès la première séance.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
             {bienfaits.map(({ icon: Icon, title, desc }) => (
               <div
                 key={title}
@@ -316,6 +320,7 @@ export default function Kobido() {
                 <div>
                   <h3 className="font-serif text-xl font-light text-stone-800">Kobido Express</h3>
                   <span className="text-sm text-stone-500">30 minutes</span>
+                  <span className="block text-sm font-semibold text-sand-700 mt-1">45€*</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6">
@@ -351,12 +356,12 @@ export default function Kobido() {
                 <div>
                   <h3 className="font-serif text-xl font-light text-stone-800">Kobido Complet</h3>
                   <span className="text-sm text-stone-500">60 minutes</span>
+                  <span className="block text-sm font-semibold text-nude-700 mt-1">80€*</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6">
                 {[
                   'Travail approfondi sur le décolleté',
-                  'Massage du cuir chevelu inclus',
                   "Sculpture complète de l'ovale",
                   'Manœuvres anti-rides avancées',
                   'Résultats anti-âge globaux',
@@ -373,6 +378,13 @@ export default function Kobido() {
               </p>
             </div>
           </div>
+          <p className="mt-5 text-center text-xs text-stone-500">
+            * Des forfaits existent, à retrouver dans nos{' '}
+            <Link to="/tarifs" className="text-nude-600 underline underline-offset-2 hover:text-nude-700">
+              tarifs
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
@@ -538,13 +550,7 @@ export default function Kobido() {
                   <span className="text-xs text-stone-500">{f.duration}</span>
                 </div>
                 <p className="text-stone-500 text-sm leading-relaxed mb-6">{f.description}</p>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-nude-600 hover:text-nude-700 transition-colors group"
-                >
-                  Demander un devis
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <p className="text-lg font-semibold text-nude-700">{f.price}</p>
               </div>
             ))}
           </div>

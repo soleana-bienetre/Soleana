@@ -224,25 +224,25 @@ export default function About() {
             <div className="pt-8 lg:pt-0">
               <span className="tag">Qui suis-je ?</span>
               <h2 className="section-title text-4xl md:text-5xl mb-8">
-                Le parcours de<br />
-                <em>Laetitia</em>
+                Mon<br />
+                <em>parcours</em>
               </h2>
               <div className="space-y-5 text-stone-600 leading-relaxed">
                 <p>
-                  Avant de fonder Soléana Bien-Être, Laetitia Sevrin a consacré de nombreuses
+                  Avant de fonder Soléana Bien-Être, j'ai consacré de nombreuses
                   années au soin des autres dans le milieu médical, d'abord comme
                   <strong className="text-stone-800"> aide-soignante</strong>, puis comme
                   <strong className="text-stone-800"> infirmière diplômée d'État</strong>. Ces
-                  années passées au contact des patients lui ont forgé une sensibilité profonde
+                  années passées au contact des patients m'ont forgé une sensibilité profonde
                   à l'être humain, une écoute bienveillante et une approche globale du soin.
                 </p>
                 <p>
-                  En parallèle, sa passion pour l'esthétique n'a jamais faibli. Titulaire
+                  En parallèle, ma passion pour l'esthétique n'a jamais faibli. Titulaire
                   d'un <strong className="text-stone-800">CAP</strong> et d'un{' '}
                   <strong className="text-stone-800">BP Esthétique Cosmétique Parfumerie</strong>,
-                  elle a également obtenu un{' '}
+                  j'ai également obtenu un{' '}
                   <strong className="text-stone-800">Certificat de Socio-Esthétique</strong>,
-                  attestant de sa capacité à prendre soin des personnes les plus vulnérables
+                  attestant de ma capacité à prendre soin des personnes les plus vulnérables
                   avec respect et expertise.
                 </p>
                 <p>
@@ -250,7 +250,7 @@ export default function About() {
                   qui a donné naissance à Soléana Bien-Être. Formée au{' '}
                   <strong className="text-stone-800">massage TEMANA</strong> et à
                   l'<strong className="text-stone-800">épilation laser par l'Institut AESTAM Paris</strong>,
-                  Laetitia propose aujourd'hui des soins d'une qualité rare, alliant
+                  je propose aujourd'hui des soins d'une qualité rare, alliant
                   techniques avancées et présence humaine.
                 </p>
               </div>

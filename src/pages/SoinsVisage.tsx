@@ -46,7 +46,7 @@ const soins: SoinCard[] = [
     tag: 'Soin express',
     titre: 'Soin Éclat Express',
     sousTitre: "Un coup d\'éclat en moins d\'une heure",
-    duree: '45 min',
+    duree: '30 min',
     prix: '[PRIX À DÉFINIR]',
     description:
       "Le Soin Éclat Express est conçu pour les peaux ternes qui ont besoin d\'un boost lumineux rapide. Grâce à une combinaison ciblée de soins actifs, il unifie le teint, resserre les pores et restaure la vitalité de l\'épiderme en une seule séance. Idéal avant un événement ou en cure mensuelle pour maintenir l\'éclat au quotidien.",
@@ -66,8 +66,8 @@ const soins: SoinCard[] = [
     tag: 'Soin signature',
     titre: 'Soin Visage Bio-Expert',
     sousTitre: "L\'expertise bio au service de votre peau",
-    duree: '60 à 75 min',
-    prix: '[PRIX À DÉFINIR]',
+    duree: '60 min',
+    prix: '75€',
     description:
       'Le Soin Visage Bio-Expert est notre protocole phare issu de la gamme Estime & Sens. Il combine des actifs biologiques certifiés, des techniques de modelage facial et une personnalisation poussée selon votre type de peau. Peeling doux, masque actif, sérums concentrés : chaque étape est sélectionnée pour répondre précisément aux besoins de votre épiderme.',
     bienfaits: [
@@ -85,27 +85,53 @@ const soins: SoinCard[] = [
   },
   {
     slug: 'human',
-    tag: 'Soin premium',
+    tag: 'Soin visage',
     titre: 'Soin Visage Human',
-    sousTitre: "L\'expérience sensorielle complète",
-    duree: '90 min',
+    sousTitre: "Un soin issu de la gamme Human",
+    duree: '60 min',
     prix: '[PRIX À DÉFINIR]',
     description:
-      "Le Soin Visage Human est notre protocole le plus complet. Véritable rituel de bien-être, il associe des soins haute performance à un massage du visage, de la nuque et des épaules. Les formules Human d\'Estime & Sens exploitent la puissance des biotechnologies vertes pour une peau régénérée en profondeur. Un moment de lâcher-prise absolu et de transformation visible.",
+      "Le Soin Visage Human est un soin du visage adapté aux femmes comme aux hommes, réalisé avec la gamme Human d'Estime & Sens. Il associe nettoyage, hydratation, modelage et actifs ciblés pour apporter confort, éclat et détente, selon les besoins de votre peau.",
     bienfaits: [
-      'Soins haute concentration à action cellulaire profonde',
-      'Massage du visage, de la nuque et des épaules inclus',
-      'Protocole anti-âge ou régénérant selon votre bilan cutané',
-      'Rituel sensoriel complet pour corps et esprit',
-      'Résultat tenseur et éclat longue durée',
+      'Nettoyage et hydratation adaptés aux besoins de la peau',
+      'Modelage relaxant du visage',
+      'Actifs ciblés selon le diagnostic cutané',
+      'Confort, éclat et sensation de peau nette',
+      'Soin adapté aux femmes comme aux hommes',
     ],
     accentBg: 'bg-nude-50',
     accentText: 'text-nude-700',
     iconBg: 'bg-nude-100',
     icon: <Award size={22} className="text-nude-600" />,
-    highlight: 'Expérience premium',
+    highlight: 'Gamme Human',
   },
 ];
+
+const ESTIME_HOMME_URL = 'https://www.estime-et-sens.fr/soin/homme/';
+
+function SoinDescription({ soin }: { soin: SoinCard }) {
+  if (soin.slug !== 'human') {
+    return <>{soin.description}</>;
+  }
+
+  const linkText = 'Estime & Sens';
+  const [before, after] = soin.description.split(linkText);
+
+  return (
+    <>
+      {before}
+      <a
+        href={ESTIME_HOMME_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-nude-700 underline underline-offset-2 hover:text-nude-800 transition-colors"
+      >
+        {linkText}
+      </a>
+      {after}
+    </>
+  );
+}
 
 const etapes = [
   {
@@ -129,19 +155,19 @@ const etapes = [
   {
     num: '04',
     titre: 'Application des soins actifs',
-    desc: 'Sérum concentré, masque personnalisé, ampoules actives… chaque produit est sélectionné en fonction des résultats du diagnostic pour répondre précisément aux besoins de votre peau.',
+    desc: 'Sérum concentré, masque personnalisé… chaque produit est sélectionné en fonction des résultats du diagnostic pour répondre précisément aux besoins de votre peau.',
     icon: <Leaf size={16} className="text-nude-600" />,
   },
   {
     num: '05',
     titre: 'Modelage & drainage',
-    desc: 'Des techniques de modelage manuel stimulent la microcirculation, favorisent le drainage lymphatique et procurent une profonde détente. Le Soin Human inclut un massage nuque et épaules.',
+    desc: 'Des techniques de modelage manuel stimulent la microcirculation, favorisent le drainage lymphatique et procurent une profonde détente.',
     icon: <Heart size={16} className="text-nude-600" />,
   },
   {
     num: '06',
     titre: 'Hydratation & protection finales',
-    desc: "La séance se conclut par l\'application d\'une crème hydratante et d\'une protection solaire adaptée à votre peau. Votre praticienne vous remet ses conseils de soin à domicile.",
+    desc: "La séance se conclut par l\'application d\'une crème hydratante adaptée à votre peau. Votre praticienne vous remet ses conseils de soin à domicile.",
     icon: <Shield size={16} className="text-nude-600" />,
   },
 ];
@@ -245,12 +271,12 @@ const faqItems = [
   {
     question: 'Les soins Estime & Sens conviennent-ils aux peaux sensibles ?',
     answer:
-      "Oui. La gamme Estime & Sens est précisément formulée pour respecter les peaux les plus sensibles et réactives. Les formules sont hypoallergéniques, sans parfum de synthèse ni composants perturbateurs. Elles contiennent des actifs apaisants comme l\'aloe vera biologique, la camomille et le calendula. Un diagnostic préalable permet néanmoins de s\'assurer du protocole adapté à votre peau.",
+      "Oui. La gamme Estime & Sens est précisément formulée pour respecter les peaux sensibles, réactives ou fragilisées, notamment après certains traitements ou cures, adaptée à vos besoins médicaux entraînant une période de grande sensibilité cutanée. Les formules sont hypoallergéniques, sans parfum de synthèse ni composants perturbateurs. Elles contiennent des actifs apaisants comme l\'aloe vera biologique, la camomille et le calendula. Un diagnostic préalable permet néanmoins de s\'assurer du protocole adapté à votre peau.",
   },
   {
     question: 'Quelle est la différence entre le Soin Bio-Expert et le Soin Human ?',
     answer:
-      "Le Soin Bio-Expert se concentre sur l\'expertise des actifs bio Estime & Sens avec un protocole complet de soin cutané (nettoyage, exfoliation, masque, sérums). Le Soin Human est plus global : en plus des soins du visage à haute concentration, il inclut un massage du visage, de la nuque et des épaules pour une expérience sensorielle et relaxante complète. Il représente l\'offre la plus aboutie de notre carte.",
+      "Le Soin Bio-Expert et le Soin Human sont deux soins du visage différents, sans notion de hiérarchie ou de gamme premium. Le Bio-Expert s'appuie sur les actifs bio Estime & Sens, tandis que le Human utilise la gamme homme Human pour proposer un soin ciblé sur le nettoyage, l'hydratation, le confort et l'éclat du teint.",
   },
   {
     question: 'Puis-je me maquiller directement après un soin visage ?',
@@ -277,7 +303,7 @@ export default function SoinsVisage() {
   const { getUrl } = useSiteImages();
   const { getPrice } = useCategoryTarifs('soins-visage');
 
-  const soinsWithPrices = soins.map((s) => ({ ...s, prix: getPrice(s.titre) }));
+  const soinsWithPrices = soins.map((s) => ({ ...s, prix: getPrice(s.titre, s.prix) }));
 
   return (
     <main className="bg-cream">
@@ -401,18 +427,19 @@ export default function SoinsVisage() {
           <span className="tag">Notre philosophie</span>
           <h2 className="section-title mb-6">Notre approche des soins visage</h2>
           <p className="text-stone-600 leading-relaxed mb-4 text-lg">
-            Chez Soléana Bien-Être, nous refusons le soin « prêt-à-porter ». Chaque rendez-vous débute
-            par un{' '}
-            <strong className="text-stone-700 font-medium">diagnostic cutané approfondi</strong> qui nous
-            permet de comprendre votre peau telle qu'elle est aujourd'hui — et non pas telle qu'elle était
-            la dernière fois.
+            Chez Soléana Bien-Être, chaque soin du visage est pensé sur mesure. Avant de commencer,
+            nous prenons le temps d'observer votre peau, d'échanger sur vos besoins et de réaliser
+            un{' '}
+            <strong className="text-stone-700 font-medium">diagnostic cutané précis</strong> afin
+            d'adapter le soin.
           </p>
-          <p className="text-stone-600 leading-relaxed mb-4">
-            La peau évolue avec les saisons, les émotions, le stress, l'alimentation et les hormones. C'est
-            pourquoi notre protocole est révisé à chaque séance : nous ajustons les actifs, l'intensité du
-            soin et les techniques de massage à vos besoins du moment.
+          <p className="text-stone-600 leading-relaxed mb-4 text-lg">
+            Votre peau évolue au fil des saisons, du stress, de l'alimentation, des émotions ou encore
+            des variations hormonales. C'est pourquoi chaque séance est ajustée avec soin : choix des
+            actifs, gestuelle, intensité du modelage et conseils personnalisés sont adaptés pour répondre
+            au plus près à ses besoins.
           </p>
-          <p className="text-stone-600 leading-relaxed">
+          <p className="text-stone-600 leading-relaxed text-lg">
             Notre approche conjugue efficacité des formules et plaisir sensoriel. Vous repartez avec une
             peau transformée et un état d'esprit apaisé.
           </p>
@@ -581,7 +608,9 @@ export default function SoinsVisage() {
                     <span className="font-sans font-semibold text-stone-700 text-sm">{soin.prix}</span>
                   </div>
 
-                  <p className="text-sm text-stone-600 leading-relaxed mb-5 flex-1">{soin.description}</p>
+                  <p className="text-sm text-stone-600 leading-relaxed mb-5 flex-1">
+                    <SoinDescription soin={soin} />
+                  </p>
 
                   {/* Bienfaits */}
                   <div className="mb-5">

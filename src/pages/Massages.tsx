@@ -10,13 +10,13 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
-  ArrowRight,
   Users,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
 import { PageMeta } from '../lib/useMeta';
+import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -114,12 +114,7 @@ const faqItems = [
   {
     question: "Les huiles utilisées sont-elles naturelles ? Que faire en cas d'allergie ?",
     answer:
-      "Nous utilisons exclusivement des huiles végétales biologiques et des huiles essentielles pures. En cas d'allergie connue à certaines plantes ou huiles (sésame, noix de coco, etc.), informez-en votre praticienne avant la séance. Des huiles de substitution seront systématiquement proposées pour adapter le soin à vos contraintes.",
-  },
-  {
-    question: 'Le massage bien-être est-il remboursé par la mutuelle ?',
-    answer:
-      'Les massages bien-être ne sont généralement pas remboursés par la Sécurité Sociale. Certaines mutuelles proposent des prises en charge partielles dans le cadre de forfaits « médecines douces » ou « bien-être ». Renseignez-vous auprès de votre complémentaire santé et demandez-nous une facture pour faciliter votre démarche.',
+      "Nous utilisons exclusivement des huiles végétales biologiques et des huiles essentielles. En cas d'allergie connue à certaines plantes ou huiles, informez-en votre praticienne avant la séance. Des huiles de substitution seront systématiquement proposées pour adapter le soin à vos contraintes.",
   },
   {
     question: 'Que se passe-t-il si je suis enceinte et souhaite un massage ?',
@@ -132,6 +127,8 @@ const faqItems = [
 
 export default function Massages() {
   const { getUrl } = useSiteImages();
+  const { getPrice } = useCategoryTarifs('massages');
+  const balinaisPrice = getPrice('Massage Balinais', '80€');
   return (
     <main className="min-h-screen bg-cream">
       <PageMeta
@@ -243,7 +240,7 @@ export default function Massages() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">60 – 90 min</p>
+                <p className="font-serif text-xl font-light text-white">60 min</p>
                 <p className="text-nude-200 text-xs mt-1">voyage intérieur</p>
               </div>
             </div>
@@ -260,8 +257,7 @@ export default function Massages() {
                 L'<strong className="font-medium text-stone-800">Abhyanga</strong> est le massage
                 corps complet de la médecine ayurvédique indienne, l'une des plus anciennes traditions
                 de santé au monde. Pratiqué depuis des millénaires, il consiste en l'application généreuse
-                d'<strong className="font-medium text-stone-800">huiles végétales chaudes</strong>
-                &nbsp;— choisies selon votre dosha (constitution énergétique) — sur l'ensemble du corps,
+                d'<strong className="font-medium text-stone-800">huiles végétales chaudes</strong> sur l'ensemble du corps,
                 du visage au bout des pieds.
               </p>
               <p className="text-stone-600 leading-relaxed mb-5">
@@ -329,12 +325,11 @@ export default function Massages() {
               <p className="text-stone-600 leading-relaxed mb-5">
                 Le <strong className="font-medium text-stone-800">massage Balinais</strong> est
                 une technique de massage corps complet née sur l'île de Bali, en Indonésie. Il
-                combine de manière unique quatre approches complémentaires : l'
+                combine plusieurs approches complémentaires : l'
                 <strong className="font-medium text-stone-800">acupression</strong> sur les points
                 énergétiques, des <strong className="font-medium text-stone-800">étirements doux</strong>,
-                la <strong className="font-medium text-stone-800">réflexologie</strong> et l'
-                <strong className="font-medium text-stone-800">aromathérapie</strong> par application
-                d'huiles essentielles sélectionnées.
+                la <strong className="font-medium text-stone-800">réflexologie</strong> et des manœuvres
+                profondes pour relâcher les tensions.
               </p>
               <p className="text-stone-600 leading-relaxed mb-5">
                 Les manœuvres alternent entre pressions fermes, pétrissages profonds et effleurages
@@ -391,7 +386,7 @@ export default function Massages() {
                 />
               </div>
               <div className="absolute -bottom-5 -left-5 bg-sage-700 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">75 – 90 min</p>
+                <p className="font-serif text-xl font-light text-white">60 min · {balinaisPrice}</p>
                 <p className="text-sage-200 text-xs mt-1">détente profonde</p>
               </div>
             </div>
@@ -424,7 +419,7 @@ export default function Massages() {
             <div className="order-1 lg:order-2">
               <span className="tag">Maternité • Périnatalité</span>
               <h2 className="section-title text-3xl md:text-4xl mb-2">
-                Massage Pré et Post Natal
+                Massage femmes enceintes
               </h2>
               <p className="text-stone-500 font-serif italic text-lg mb-6">
                 « Prendre soin de vous, prendre soin de la vie »
@@ -437,10 +432,10 @@ export default function Massages() {
               </p>
               <p className="text-stone-600 leading-relaxed mb-5">
                 Les techniques utilisées sont adaptées à chaque trimestre et à la morphologie
-                spécifique de la grossesse : position en décubitus latéral sécurisé, manœuvres
-                exclusivement en effleurage et pétrissage doux, sans pression sur le ventre ni
-                les zones à éviter. Le massage post-natal accompagne quant à lui la jeune maman
-                dans sa récupération physique et émotionnelle.
+                spécifique de la grossesse : installation confortable sur le côté avec coussins
+                de maintien, gestes enveloppants et pressions légères, sans appui sur le ventre
+                ni sur les zones à éviter. Le massage post-natal accompagne quant à lui la jeune
+                maman dans sa récupération physique et émotionnelle.
               </p>
 
               {/* Bienfaits */}
@@ -576,24 +571,24 @@ export default function Massages() {
               Réservez votre massage
             </h2>
             <p className="text-stone-400 mt-4 max-w-md mx-auto text-sm">
-              Séances à l'unité ou en forfait — contactez-nous pour un devis personnalisé.
+              Retrouvez les durées et tarifs de nos massages bien-être.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
               {
                 label: 'Massage Ayurvédique Abhyanga',
-                duration: '60 ou 90 min',
+                duration: '60 min · 80€',
                 href: '#abhyanga',
               },
               {
                 label: 'Massage Balinais',
-                duration: '75 ou 90 min',
+                duration: '60 min · 80€',
                 href: '#balinais',
               },
               {
-                label: 'Massage Pré & Post Natal',
-                duration: '60 min',
+                label: 'Massage femmes enceintes',
+                duration: '60 min · 70€',
                 href: '#prenatal',
               },
             ].map((m) => (
@@ -606,13 +601,6 @@ export default function Massages() {
                   <Clock size={12} className="text-stone-400" />
                   <span className="text-xs text-stone-400">{m.duration}</span>
                 </div>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-nude-300 hover:text-nude-200 transition-colors group"
-                >
-                  Demander un devis
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
               </div>
             ))}
           </div>
