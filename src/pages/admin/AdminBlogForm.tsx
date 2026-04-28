@@ -18,24 +18,28 @@ function slugify(str: string): string {
     .replace(/-+/g, '-');
 }
 
+const MAX_WIDTH = 1200;
+const WEBP_QUALITY = 0.82;
+
 async function convertToWebp(file: File): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
+      const scale = img.naturalWidth > MAX_WIDTH ? MAX_WIDTH / img.naturalWidth : 1;
       const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
       const ctx = canvas.getContext('2d');
       if (!ctx) { reject(new Error('Canvas error')); return; }
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       canvas.toBlob((blob) => {
         URL.revokeObjectURL(url);
         if (blob) resolve(blob);
-        else reject(new Error('Conversion failed'));
-      }, 'image/webp', 0.85);
+        else reject(new Error('Conversion WebP échouée'));
+      }, 'image/webp', WEBP_QUALITY);
     };
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load error')); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Impossible de charger l\'image')); };
     img.src = url;
   });
 }
@@ -99,8 +103,18 @@ export default function AdminBlogForm() {
       }).then((data) => {
         if (data) {
           setForm({
-            ...data,
+            title: data.title ?? '',
+            slug: data.slug ?? '',
+            excerpt: data.excerpt ?? '',
+            content: data.content ?? '',
+            meta_title: data.meta_title ?? '',
+            meta_description: data.meta_description ?? '',
+            og_image_url: data.og_image_url ?? '',
+            og_image_alt: data.og_image_alt ?? '',
+            category: data.category ?? '',
             tags: Array.isArray(data.tags) ? data.tags.join(', ') : '',
+            read_time: data.read_time ?? 5,
+            published: data.published ?? false,
           });
           if (data.og_image_url) setImagePreview(data.og_image_url);
           setSlugManual(true);
@@ -145,8 +159,9 @@ export default function AdminBlogForm() {
         contentType: 'image/webp',
         base64Data,
       });
-    } catch {
-      setError('Erreur lors de l\'upload de l\'image.');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erreur inconnue';
+      setError(`Erreur upload image : ${msg}`);
       return null;
     } finally {
       setUploading(false);
@@ -160,6 +175,12 @@ export default function AdminBlogForm() {
     setError('');
 
     const imageUrl = await uploadImage();
+
+    // Si une nouvelle image était sélectionnée mais l'upload a échoué, ne pas continuer
+    if (imageFile !== null && imageUrl === null) {
+      setSaving(false);
+      return;
+    }
 
     const payload: Partial<BlogArticle> = {
       title: form.title,
@@ -284,7 +305,7 @@ export default function AdminBlogForm() {
                         <X size={14} />
                       </button>
                       <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded-lg">
-                        {imageFile ? `→ WebP · ${(imageFile.size / 1024).toFixed(0)} Ko` : 'Image existante'}
+                        {imageFile ? `→ WebP max 1200px · ${(imageFile.size / 1024).toFixed(0)} Ko originale` : 'Image existante'}
                       </div>
                     </div>
                   ) : (
