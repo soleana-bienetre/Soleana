@@ -6,6 +6,14 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+[edge_functions]
+  directory = "netlify/edge-functions"
+
+# OG meta dynamique pour les bots sociaux (Facebook, WhatsApp, etc.)
+[[edge_functions]]
+  path = "/blog/*"
+  function = "og-blog"
+
 [build.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
