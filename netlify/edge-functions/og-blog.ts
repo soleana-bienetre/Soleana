@@ -1,4 +1,5 @@
-import type { Context } from '@netlify/edge-functions';
+// Deno est disponible dans le runtime Netlify Edge Functions
+declare const Deno: { env: { get(key: string): string | undefined } };
 
 const BOT_UA = [
   'facebookexternalhit', 'Facebot',
@@ -20,19 +21,20 @@ function esc(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
-export default async function handler(request: Request, context: Context) {
-  const ua = request.headers.get('user-agent') ?? '';
-  if (!isBot(ua)) return context.next();
-
-  const url = new URL(request.url);
-  const slug = url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
-  if (!slug) return context.next();
-
-  const supabaseUrl = Deno.env.get('VITE_SUPABASE_URL') ?? '';
-  const supabaseKey = Deno.env.get('VITE_SUPABASE_ANON_KEY') ?? '';
-  if (!supabaseUrl || !supabaseKey) return context.next();
-
+// deno-lint-ignore no-explicit-any
+export default async function handler(request: Request, context: any) {
   try {
+    const ua = request.headers.get('user-agent') ?? '';
+    if (!isBot(ua)) return context.next();
+
+    const url = new URL(request.url);
+    const slug = url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
+    if (!slug) return context.next();
+
+    const supabaseUrl = Deno.env.get('VITE_SUPABASE_URL') ?? '';
+    const supabaseKey = Deno.env.get('VITE_SUPABASE_ANON_KEY') ?? '';
+    if (!supabaseUrl || !supabaseKey) return context.next();
+
     const apiUrl =
       `${supabaseUrl}/rest/v1/blog_articles` +
       `?slug=eq.${encodeURIComponent(slug)}` +
@@ -49,10 +51,11 @@ export default async function handler(request: Request, context: Context) {
 
     if (!res.ok) return context.next();
 
-    const [article] = await res.json();
+    const articles = await res.json();
+    const article = Array.isArray(articles) ? articles[0] : null;
     if (!article) return context.next();
 
-    const title = esc((article.meta_title || article.title) + ' – Soléana Bien-Être');
+    const title = esc((article.meta_title || article.title || '') + ' – Soléana Bien-Être');
     const description = esc(article.meta_description || article.excerpt || '');
     const image = esc(article.og_image_url || 'https://www.soleana-bienetre.com/og-share.jpg');
     const pageUrl = esc(`https://www.soleana-bienetre.com/blog/${article.slug}`);

@@ -32,5 +32,21 @@ User-agent: Bingbot
 Allow: /
 Disallow: /admin/
 
+# Bots de partage social
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
 # Sitemap
 Sitemap: https://www.soleana-bienetre.com/sitemap.xml
