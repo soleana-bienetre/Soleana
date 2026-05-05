@@ -7,6 +7,7 @@ import {
   Star,
   Tag,
   Image,
+  BarChart2,
   LogOut,
   ExternalLink,
   Menu,
@@ -22,6 +23,7 @@ const navItems = [
   { href: '/admin/avis', label: 'Avis clients', icon: Star },
   { href: '/admin/tarifs', label: 'Tarifs', icon: Tag },
   { href: '/admin/photos', label: 'Photos du site', icon: Image },
+  { href: '/admin/statistiques', label: 'Statistiques', icon: BarChart2 },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

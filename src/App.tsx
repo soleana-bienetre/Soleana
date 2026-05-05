@@ -27,8 +27,10 @@ import AdminReviews from './pages/admin/AdminReviews';
 import AdminReviewForm from './pages/admin/AdminReviewForm';
 import AdminTarifs from './pages/admin/AdminTarifs';
 import AdminPhotos from './pages/admin/AdminPhotos';
+import AdminStats from './pages/admin/AdminStats';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import { SiteImagesProvider } from './contexts/SiteImagesContext';
+import { usePlanityTracker } from './hooks/usePlanityTracker';
 
 function SchemaOrg() {
   useEffect(() => {
@@ -131,6 +133,7 @@ function AdminRoutes() {
       <Route path="/admin/avis/:id" element={<ProtectedRoute><AdminReviewForm /></ProtectedRoute>} />
       <Route path="/admin/tarifs" element={<ProtectedRoute><AdminTarifs /></ProtectedRoute>} />
       <Route path="/admin/photos" element={<ProtectedRoute><AdminPhotos /></ProtectedRoute>} />
+      <Route path="/admin/statistiques" element={<ProtectedRoute><AdminStats /></ProtectedRoute>} />
     </Routes>
   );
 }
@@ -138,6 +141,7 @@ function AdminRoutes() {
 function AppLayout() {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith('/admin');
+  usePlanityTracker();
 
   if (isAdmin) return <AdminRoutes />;
 
