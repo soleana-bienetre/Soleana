@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   ClipboardList,
 } from 'lucide-react';
+import { PageMeta } from '../lib/useMeta';
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -123,6 +124,11 @@ const tocItems = [
 export default function PolitiqueConfidentialite() {
   return (
     <>
+      <PageMeta
+        title="Politique de confidentialité – Soléana Bien-Être"
+        description="Découvrez comment Soléana Bien-Être collecte, utilise et protège vos données personnelles conformément au RGPD."
+        url="https://www.soleana-bienetre.com/politique-de-confidentialite"
+      />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream py-12 md:py-16">
         <div className="container-narrow">

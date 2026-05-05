@@ -309,7 +309,8 @@ export default function SoinsVisage() {
     <main className="bg-cream">
       <PageMeta
         title="Soins du visage à Venerque – Sur-mesure | Soléana"
-        description="Soins du visage personnalisés à Venerque (31) : hydratation, éclat, anti-âge, peau sensible. Produits bio Estime & Sens. Diagnostic cutané offert. Réservez votre soin chez Soléana."
+        description="Soins du visage personnalisés à Venerque (31) : hydratation, éclat, anti-âge et peau sensible. Diagnostic cutané offert avec produits bio Estime & Sens."
+        url="https://www.soleana-bienetre.com/soins-visage"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/soins-visage" />
       {/* ------------------------------------------------------------------ */}

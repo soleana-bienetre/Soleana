@@ -251,6 +251,7 @@ export default function FAQ() {
       <PageMeta
         title="FAQ – Questions fréquentes | Soléana Bien-Être Venerque"
         description="Toutes les réponses à vos questions : durée des séances, nombre de séances laser, indications du Kobido, parking, réservation… Soléana Bien-Être répond avant votre visite."
+        url="https://www.soleana-bienetre.com/faq"
       />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">

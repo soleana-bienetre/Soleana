@@ -8,6 +8,7 @@ import {
   FileText,
   ChevronRight,
 } from 'lucide-react';
+import { PageMeta } from '../lib/useMeta';
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -72,6 +73,11 @@ const tocItems = [
 export default function MentionsLegales() {
   return (
     <>
+      <PageMeta
+        title="Mentions légales – Soléana Bien-Être"
+        description="Consultez les mentions légales du site Soléana Bien-Être : éditeur, hébergeur, propriété intellectuelle, responsabilité et données personnelles."
+        url="https://www.soleana-bienetre.com/mentions-legales"
+      />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream py-12 md:py-16">
         <div className="container-narrow">

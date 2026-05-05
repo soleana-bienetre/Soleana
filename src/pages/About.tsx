@@ -162,8 +162,9 @@ export default function About() {
   return (
     <main>
       <PageMeta
-        title="À propos – Laetitia Sevrin, praticienne | Soléana Venerque"
-        description="Infirmière reconvertie, Laetitia Sevrin a créé Soléana pour allier soin médical et esthétique. Certifiée Vodder, AESTAM et TEMANA. Découvrez son parcours à Venerque (31)."
+        title="À propos Soléana | Institut bien-être & esthétique Venerque"
+        description="Découvrez l’univers Soléana à Venerque : un institut qui unit expertise esthétique, soins experts et accompagnement sur mesure pour votre bien-être."
+        url="https://www.soleana-bienetre.com/a-propos"
       />
       {/* ── PAGE HERO ──────────────────────────────────────────────────── */}
       <section className="relative py-24 md:py-36 overflow-hidden">

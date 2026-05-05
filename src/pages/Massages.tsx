@@ -133,7 +133,8 @@ export default function Massages() {
     <main className="min-h-screen bg-cream">
       <PageMeta
         title="Massages bien-être à Venerque – Détente profonde | Soléana"
-        description="Massages relaxants et thérapeutiques à Venerque (31). Massage TEMANA, relaxant corps entier, ventre drainant. Laetitia vous accueille dans un cadre apaisant. Réservez en ligne."
+        description="Massages bien-être à Venerque (31) : relaxants et thérapeutiques, dont TEMANA et ventre drainant. Détente profonde dans le cadre apaisant de Soléana."
+        url="https://www.soleana-bienetre.com/massages"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/massages" />
 

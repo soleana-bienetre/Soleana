@@ -179,7 +179,8 @@ export default function Kobido() {
     <main className="min-h-screen bg-cream">
       <PageMeta
         title="Kobido à Venerque – Lifting naturel japonais | Soléana"
-        description="Découvrez le Kobido, massage facial japonais aux effets liftants visibles dès la 1ère séance. Tonifie, sculpte et illumine le visage naturellement. Réservez à Venerque."
+        description="Kobido à Venerque : massage facial japonais liftant. Tonifie, sculpte et illumine le visage dès la 1ère séance. Réservez votre soin chez Soléana."
+        url="https://www.soleana-bienetre.com/kobido"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/kobido" />
 

@@ -122,6 +122,7 @@ export default function PolitiqueCookies() {
       <PageMeta
         title="Politique de cookies – Soléana Bien-Être"
         description="Découvrez comment Soléana Bien-Être utilise les cookies sur son site et comment gérer vos préférences."
+        url="https://www.soleana-bienetre.com/politique-cookies"
       />
 
       {/* ── Hero ── */}

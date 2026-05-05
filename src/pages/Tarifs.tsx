@@ -380,7 +380,8 @@ export default function Tarifs() {
     <>
       <PageMeta
         title="Tarifs soins & épilation laser Venerque | Soléana"
-        description="Tous les tarifs de Soléana Bien-Être à Venerque (31) : épilation laser, Kobido, soins du visage, massages, drainage. Transparent, sans surprise. Réservez en ligne sur Planity."
+        description="Tarifs Soléana à Venerque (31) : épilation laser, Kobido, soins du visage, massages et drainage. Prix clairs, sans surprise. Réservez en ligne."
+        url="https://www.soleana-bienetre.com/tarifs"
       />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">

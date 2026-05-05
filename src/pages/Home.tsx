@@ -199,6 +199,7 @@ export default function Home() {
       <PageMeta
         title="Soléana Bien-Être – Institut de beauté à Venerque (31)"
         description="Offrez-vous un moment de bien-être à Venerque (31) : épilation laser, Kobido, soins du visage et drainage. Praticienne certifiée. Réservez en ligne sur Planity."
+        url="https://www.soleana-bienetre.com/"
       />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-start sm:items-end overflow-hidden">

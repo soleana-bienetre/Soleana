@@ -309,7 +309,8 @@ export default function Blog() {
     <>
       <PageMeta
         title="Blog bien-être & beauté – Conseils Soléana Venerque"
-        description="Conseils bien-être, guides soins et réponses à vos questions par Laetitia Sevrin. Kobido, épilation laser, drainage lymphatique : tout savoir avant votre prochaine séance."
+        description="Conseils bien-être et beauté de Soléana à Venerque : guides soins, Kobido, épilation laser et drainage pour préparer vos prochaines séances."
+        url="https://www.soleana-bienetre.com/blog"
       />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">

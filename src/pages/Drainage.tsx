@@ -129,7 +129,8 @@ export default function Drainage() {
     <main className="min-h-screen bg-cream">
       <PageMeta
         title="Drainage lymphatique & Maderothérapie Venerque | Soléana"
-        description="Jambes légères, silhouette affinée, récupération post-op. Drainage Vodder et maderothérapie à Venerque (31) par Laetitia Sevrin, certifiée. Résultats visibles dès la 1ère séance."
+        description="Drainage lymphatique Vodder et maderothérapie à Venerque (31). Jambes légères, silhouette affinée et récupération post-op avec protocoles certifiés Soléana."
+        url="https://www.soleana-bienetre.com/drainage-lymphatique"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/drainage-lymphatique" />
 

@@ -184,7 +184,8 @@ export default function EpilationLaser() {
     <main className="bg-cream">
       <PageMeta
         title="Épilation laser à Venerque – Résultats durables | Soléana"
-        description="Épilation laser certifiée AESTAM à Venerque (31). Peaux durablement lisses, protocole adapté à votre phototype. Diagnostic gratuit. Réservez votre séance chez Soléana Bien-Être."
+        description="Épilation laser certifiée AESTAM à Venerque (31). Protocole adapté à votre phototype pour une peau lisse durablement. Diagnostic gratuit chez Soléana."
+        url="https://www.soleana-bienetre.com/epilation-laser"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/epilation-laser" />
       {/* ------------------------------------------------------------------ */}

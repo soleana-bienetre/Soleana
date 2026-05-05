@@ -191,6 +191,7 @@ export default function Contact() {
       <PageMeta
         title="Contact & Réservation – Soléana Bien-Être Venerque"
         description="Prenez rendez-vous chez Soléana Bien-Être à Venerque (31). Réservation en ligne 24h/24, appel au 07 62 16 98 14, ou message via le formulaire. Laetitia vous répond rapidement."
+        url="https://www.soleana-bienetre.com/contact"
       />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">

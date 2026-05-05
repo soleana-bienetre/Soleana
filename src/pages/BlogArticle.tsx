@@ -160,10 +160,18 @@ export default function BlogArticlePage() {
             el.setAttribute('content', content);
           };
           setOg('og:title', a.meta_title || a.title);
-          setOg('og:description', a.meta_description || a.excerpt || '');
           setOg('og:type', 'article');
-          setOg('og:url', `https://www.soleana-bienetre.com/blog/${a.slug}`);
+          const canonicalUrl = `https://www.soleana-bienetre.com/blog/${a.slug}`;
+          setOg('og:url', canonicalUrl);
           if (a.og_image_url) setOg('og:image', a.og_image_url);
+
+          let canonical = document.querySelector('link[rel="canonical"]');
+          if (!canonical) {
+            canonical = document.createElement('link');
+            canonical.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonical);
+          }
+          canonical.setAttribute('href', canonicalUrl);
 
           // ── JSON-LD Article ───────────────────────────────────────────
           const existing = document.getElementById('schema-article');
