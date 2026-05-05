@@ -15,7 +15,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta } from '../lib/useMeta';
+import { PageMeta, FAQSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -135,6 +135,7 @@ export default function Massages() {
         title="Massages bien-être à Venerque – Détente profonde | Soléana"
         description="Massages relaxants et thérapeutiques à Venerque (31). Massage TEMANA, relaxant corps entier, ventre drainant. Laetitia vous accueille dans un cadre apaisant. Réservez en ligne."
       />
+      <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/massages" />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">

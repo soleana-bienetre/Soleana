@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
-import { PageMeta } from '../lib/useMeta';
+import { PageMeta, FAQSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ---------------------------------------------------------------------------
@@ -186,6 +186,7 @@ export default function EpilationLaser() {
         title="Épilation laser à Venerque – Résultats durables | Soléana"
         description="Épilation laser certifiée AESTAM à Venerque (31). Peaux durablement lisses, protocole adapté à votre phototype. Diagnostic gratuit. Réservez votre séance chez Soléana Bien-Être."
       />
+      <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/epilation-laser" />
       {/* ------------------------------------------------------------------ */}
       {/* HERO                                                                */}
       {/* ------------------------------------------------------------------ */}

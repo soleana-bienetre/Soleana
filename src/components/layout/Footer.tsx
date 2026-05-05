@@ -121,6 +121,9 @@ export default function Footer() {
                   07 62 16 98 14
                 </a>
               </div>
+              <p className="text-xs text-stone-600 leading-relaxed mt-3">
+                Soins accessibles depuis Auterive, Labarthe-sur-Lèze, Eaunes, Noé, Cintegabelle, Le Fauga et Toulouse Sud.
+              </p>
             </div>
           </div>
 

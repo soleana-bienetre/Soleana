@@ -15,7 +15,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta } from '../lib/useMeta';
+import { PageMeta, FAQSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -181,6 +181,7 @@ export default function Kobido() {
         title="Kobido à Venerque – Lifting naturel japonais | Soléana"
         description="Découvrez le Kobido, massage facial japonais aux effets liftants visibles dès la 1ère séance. Tonifie, sculpte et illumine le visage naturellement. Réservez à Venerque."
       />
+      <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/kobido" />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">

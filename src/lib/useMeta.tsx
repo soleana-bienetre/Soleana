@@ -43,5 +43,32 @@ export function PageMeta({ title, description, url, image }: PageMetaProps) {
   );
 }
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export function FAQSchema({ items, pageUrl }: { items: FAQItem[]; pageUrl: string }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+    url: pageUrl,
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+}
+
 /** Compat shim — ne fait rien, le composant PageMeta gère tout */
 export function useMeta(_title: string, _description: string) {}
