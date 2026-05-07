@@ -15,8 +15,8 @@ const SPRING_PROMO_IMAGES = [
 type PromoView = 'menu' | 'mothers-day' | 'spring';
 type TargetOffer = 'mothers-day' | 'spring';
 
-const CONFETTI_COLORS = ['#f43f5e', '#f97316', '#10b981', '#14b8a6', '#eab308', '#8b5cf6'];
-const CONFETTI_COUNT = 52;
+const CONFETTI_COLORS = ['#f43f5e', '#f97316', '#10b981', '#14b8a6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4'];
+const CONFETTI_COUNT = 70;
 
 export default function SeasonalPopups() {
   const [isPromoCardVisible, setIsPromoCardVisible] = useState(true);
@@ -24,6 +24,7 @@ export default function SeasonalPopups() {
   const [view, setView] = useState<PromoView>('menu');
   const [storyIndex, setStoryIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiOrigin, setConfettiOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const openModal = () => {
     setView('menu');
@@ -35,12 +36,17 @@ export default function SeasonalPopups() {
     setView('menu');
   };
 
-  const launchConfettiThenOpen = (target: TargetOffer) => {
+  const launchConfettiThenOpen = (target: TargetOffer, e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setConfettiOrigin({
+      x: rect.left + rect.width / 2,
+      y: rect.bottom,
+    });
     setShowConfetti(true);
     window.setTimeout(() => {
       setShowConfetti(false);
       setView(target);
-    }, 900);
+    }, 950);
   };
 
   return (
@@ -88,7 +94,7 @@ export default function SeasonalPopups() {
                 <div className="mt-5 grid grid-cols-1 gap-3">
                   <button
                     type="button"
-                    onClick={() => launchConfettiThenOpen('mothers-day')}
+                    onClick={(e) => launchConfettiThenOpen('mothers-day', e)}
                     className="w-full text-left rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 hover:bg-rose-100 transition-colors"
                   >
                     <p className="text-sm font-semibold text-rose-700">Fete des meres</p>
@@ -97,53 +103,13 @@ export default function SeasonalPopups() {
 
                   <button
                     type="button"
-                    onClick={() => launchConfettiThenOpen('spring')}
+                    onClick={(e) => launchConfettiThenOpen('spring', e)}
                     className="w-full text-left rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 hover:bg-emerald-100 transition-colors"
                   >
                     <p className="text-sm font-semibold text-emerald-700">Promotion printemps</p>
                     <p className="text-xs text-stone-600 mt-1">Notre offre minceur</p>
                   </button>
                 </div>
-              </div>
-            )}
-
-            {showConfetti && (
-              <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden">
-                {Array.from({ length: CONFETTI_COUNT }).map((_, i) => {
-                  const left = `${(i * 37) % 100}%`;
-                  const delay = `${(i % 10) * 35}ms`;
-                  const duration = `${850 + (i % 8) * 120}ms`;
-                  const drift = `${(i % 2 === 0 ? 1 : -1) * (12 + (i % 6) * 6)}px`;
-                  const size = `${5 + (i % 4)}px`;
-                  const radius = i % 3 === 0 ? '9999px' : '2px';
-                  const rotateStart = `${(i % 2 === 0 ? 1 : -1) * (40 + (i % 7) * 18)}deg`;
-                  const rotateEnd = `${(i % 2 === 0 ? 1 : -1) * (360 + (i % 7) * 65)}deg`;
-                  const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
-
-                  return (
-                    <span
-                      key={`confetti-${i}`}
-                      className="absolute top-[-14px] opacity-95"
-                      style={{
-                        left,
-                        width: size,
-                        height: `${Math.max(3, Number.parseInt(size, 10) - 1)}px`,
-                        borderRadius: radius,
-                        backgroundColor: color,
-                        boxShadow: `0 0 0 1px ${color}22, 0 2px 6px ${color}66`,
-                        animationName: 'promo-confetti-burst',
-                        animationDuration: duration,
-                        animationDelay: delay,
-                        animationTimingFunction: 'cubic-bezier(.21,.98,.31,1)',
-                        animationFillMode: 'forwards',
-                        transform: `translateX(0) translateY(0) rotate(${rotateStart})`,
-                        ['--confetti-drift' as string]: drift,
-                        ['--confetti-rotate-end' as string]: rotateEnd,
-                      }}
-                    />
-                  );
-                })}
-                <div className="absolute inset-0 bg-white/0 animate-[promo-confetti-flash_280ms_ease-out]" />
               </div>
             )}
 
@@ -244,29 +210,65 @@ export default function SeasonalPopups() {
         </div>
       )}
 
+      {showConfetti && (
+        <div className="pointer-events-none fixed inset-0 z-[250] overflow-hidden">
+          {Array.from({ length: CONFETTI_COUNT }).map((_, i) => {
+            const spread = (i % 2 === 0 ? 1 : -1) * (2 + (i % 11) * 5);
+            const peak = -(150 + (i % 11) * 32);
+            const drift = (i % 2 === 0 ? 1 : -1) * (10 + (i % 9) * 15);
+            const delay = (i % 13) * 22;
+            const duration = 800 + (i % 7) * 75;
+            const size = 5 + (i % 4);
+            const radius = i % 4 === 0 ? '9999px' : '2px';
+            const rotateEnd = (i % 2 === 0 ? 1 : -1) * (300 + (i % 6) * 80);
+            const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+
+            return (
+              <span
+                key={`confetti-${i}`}
+                className="absolute"
+                style={{
+                  left: `${confettiOrigin.x + spread}px`,
+                  top: `${confettiOrigin.y}px`,
+                  width: `${size}px`,
+                  height: `${Math.max(3, size - 1)}px`,
+                  borderRadius: radius,
+                  backgroundColor: color,
+                  boxShadow: `0 0 0 1px ${color}22, 0 2px 8px ${color}66`,
+                  animationName: 'promo-confetti-burst',
+                  animationDuration: `${duration}ms`,
+                  animationDelay: `${delay}ms`,
+                  animationTimingFunction: 'cubic-bezier(.12,.9,.22,1)',
+                  animationFillMode: 'forwards',
+                  opacity: 0,
+                  ['--peak' as string]: `${peak}px`,
+                  ['--drift' as string]: `${drift}px`,
+                  ['--rotate-end' as string]: `${rotateEnd}deg`,
+                }}
+              />
+            );
+          })}
+        </div>
+      )}
+
       <style>{`
         @keyframes promo-confetti-burst {
           0% {
-            transform: translateX(0) translateY(0) rotate(0deg) scale(.5);
+            transform: translateX(0) translateY(0) rotate(0deg) scale(0.2);
             opacity: 0;
           }
-          12% {
+          8% {
             opacity: 1;
-            transform: translateX(calc(var(--confetti-drift) * 0.4)) translateY(40px) rotate(90deg) scale(1);
+            transform: translateX(calc(var(--drift) * 0.1)) translateY(-18px) rotate(35deg) scale(1.2);
           }
-          60% {
+          48% {
             opacity: 1;
-            transform: translateX(calc(var(--confetti-drift) * 1.1)) translateY(250px) rotate(220deg) scale(1);
+            transform: translateX(calc(var(--drift) * 0.6)) translateY(var(--peak)) rotate(210deg) scale(1);
           }
           100% {
-            transform: translateX(calc(var(--confetti-drift) * 1.8)) translateY(520px) rotate(var(--confetti-rotate-end)) scale(.8);
+            transform: translateX(var(--drift)) translateY(calc(var(--peak) * 0.38)) rotate(var(--rotate-end)) scale(0.3);
             opacity: 0;
           }
-        }
-        @keyframes promo-confetti-flash {
-          0% { background: rgba(255,255,255,0.00); }
-          35% { background: rgba(255,255,255,0.18); }
-          100% { background: rgba(255,255,255,0.00); }
         }
       `}</style>
     </>
