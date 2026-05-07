@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 
+const ESTIME_SENS_IMAGE =
+  'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/essences-destime.webp';
+
 const values = [
   {
     icon: Ear,
@@ -474,6 +477,10 @@ export default function About() {
                 src={getUrl('about-estime-sens')}
                 alt="Cabine de massage avec huiles Estime & Sens – Soléana Bien-Être"
                 className="w-full h-full object-cover object-center"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = ESTIME_SENS_IMAGE;
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-sage-900/40 to-transparent" />
               <div className="absolute bottom-5 left-5 glass-card px-4 py-3">

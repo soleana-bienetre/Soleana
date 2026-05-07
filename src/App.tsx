@@ -9,6 +9,7 @@ import SoinsVisage from './pages/SoinsVisage';
 import Kobido from './pages/Kobido';
 import Massages from './pages/Massages';
 import Drainage from './pages/Drainage';
+import SocioEsthetique from './pages/SocioEsthetique';
 import Tarifs from './pages/Tarifs';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
@@ -18,6 +19,7 @@ import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
 import PolitiqueCookies from './pages/PolitiqueCookies';
 import CookieBanner from './components/ui/CookieBanner';
+import SeasonalPopups from './components/ui/SeasonalPopups';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminContacts from './pages/admin/AdminContacts';
@@ -151,6 +153,7 @@ function AppLayout() {
       <ScrollToTop />
       <Header />
       <CookieBanner />
+      <SeasonalPopups />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -160,6 +163,7 @@ function AppLayout() {
           <Route path="/kobido" element={<Kobido />} />
           <Route path="/massages" element={<Massages />} />
           <Route path="/drainage-lymphatique" element={<Drainage />} />
+          <Route path="/socio-esthetique" element={<SocioEsthetique />} />
           <Route path="/tarifs" element={<Tarifs />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />

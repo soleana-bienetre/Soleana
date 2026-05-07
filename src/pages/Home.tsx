@@ -16,6 +16,7 @@ import {
   Waves,
   CheckCircle2,
   Quote,
+  Sparkles,
 } from 'lucide-react';
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
@@ -97,6 +98,15 @@ const services = [
     description:
       'Des techniques manuelles et aux galets de bois pour stimuler la circulation, réduire la cellulite et redessiner les contours du corps.',
     tag: 'Modelage corps',
+  },
+  {
+    icon: Sparkles,
+    title: 'Socio-esthétique',
+    slug: 'socio-esthetique',
+    imageKey: 'home-service-socio-esthetique',
+    description:
+      'Des soins esthétiques d’accompagnement pour restaurer l’estime de soi, apaiser les tensions et préserver le lien social.',
+    tag: 'Accompagnement humain',
   },
 ];
 

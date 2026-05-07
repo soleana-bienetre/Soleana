@@ -8,6 +8,7 @@ const services = [
   { label: 'Kobido', href: '/kobido' },
   { label: 'Massages bien-être', href: '/massages' },
   { label: 'Drainage & Maderothérapie', href: '/drainage-lymphatique' },
+  { label: 'Socio-esthétique', href: '/socio-esthetique' },
 ];
 
 const navLinks = [
