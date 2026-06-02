@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
-const MOTHERS_DAY_IMAGE = 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/fete-des-meres-annonce-Evenement-Salon-Bien-etre-soleana.webp';
 const PLANITY_URL = 'https://www.planity.com/soleana-bien-etre-31810-venerque';
 
 const SPRING_PROMO_IMAGES = [
@@ -10,10 +9,18 @@ const SPRING_PROMO_IMAGES = [
   'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20primptemps/3.webp',
   'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20primptemps/4.webp',
   'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20primptemps/5.webp',
+  'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/video/WhatsApp%20Image%202026-06-01%20at%2017.12.42.webp',
 ];
 
-type PromoView = 'menu' | 'mothers-day' | 'spring';
-type TargetOffer = 'mothers-day' | 'spring';
+const ESTIME_SENS_VIDEO = 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/video/video%20estime%20et%20sens.mp4';
+const ESTIME_SENS_MEDIA = [
+  { type: 'video' as const, src: ESTIME_SENS_VIDEO },
+  { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/video/WhatsApp%20Image%202026-06-01%20at%2017.23.37.webp' },
+  { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/video/WhatsApp%20Image%202026-06-01%20at%2017.25.06.webp' },
+];
+
+type PromoView = 'menu' | 'spring' | 'estime-sens';
+type TargetOffer = 'spring' | 'estime-sens';
 
 const CONFETTI_COLORS = ['#f43f5e', '#f97316', '#10b981', '#14b8a6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4'];
 const CONFETTI_COUNT = 70;
@@ -23,6 +30,7 @@ export default function SeasonalPopups() {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<PromoView>('menu');
   const [storyIndex, setStoryIndex] = useState(0);
+  const [estimeSensIndex, setEstimeSensIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiOrigin, setConfettiOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -48,6 +56,8 @@ export default function SeasonalPopups() {
       setView(target);
     }, 950);
   };
+
+  const currentEstimeMedia = ESTIME_SENS_MEDIA[estimeSensIndex];
 
   return (
     <>
@@ -94,48 +104,21 @@ export default function SeasonalPopups() {
                 <div className="mt-5 grid grid-cols-1 gap-3">
                   <button
                     type="button"
-                    onClick={(e) => launchConfettiThenOpen('mothers-day', e)}
-                    className="w-full text-left rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 hover:bg-rose-100 transition-colors"
+                    onClick={(e) => launchConfettiThenOpen('spring', e)}
+                    className="w-full text-left rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 hover:bg-emerald-100 transition-colors"
                   >
-                    <p className="text-sm font-semibold text-rose-700">Fete des meres</p>
-                    <p className="text-xs text-stone-600 mt-1">Massage ayurvedique ou balinais + 30 min offertes</p>
+                    <p className="text-sm font-semibold text-emerald-700">Promotion minceur</p>
+                    <p className="text-xs text-stone-600 mt-1">Notre offre drainage &amp; madero</p>
                   </button>
 
                   <button
                     type="button"
-                    onClick={(e) => launchConfettiThenOpen('spring', e)}
-                    className="w-full text-left rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 hover:bg-emerald-100 transition-colors"
+                    onClick={(e) => launchConfettiThenOpen('estime-sens', e)}
+                    className="w-full text-left rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 hover:bg-amber-100 transition-colors"
                   >
-                    <p className="text-sm font-semibold text-emerald-700">Promotion printemps</p>
-                    <p className="text-xs text-stone-600 mt-1">Notre offre minceur</p>
+                    <p className="text-sm font-semibold text-amber-700">Duo Bonne Mine — Estime &amp; Sens</p>
+                    <p className="text-xs text-stone-600 mt-1">Gommage + gouttes autobronzantes à 39,90 €</p>
                   </button>
-                </div>
-              </div>
-            )}
-
-            {view === 'mothers-day' && (
-              <div>
-                <img src={MOTHERS_DAY_IMAGE} alt="Offre Fete des meres" className="w-full max-h-[60vh] object-contain bg-white" />
-                <div className="p-4 border-t border-stone-100 space-y-2">
-                  <p className="text-sm text-stone-700">Pour tout bon cadeau de massage ayurvedique ou balinais : 30 min offertes.</p>
-                  <div className="flex items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setView('menu')}
-                      className="text-xs text-stone-500 hover:text-stone-700"
-                    >
-                      Retour au choix
-                    </button>
-                    <a
-                      href={PLANITY_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-600 text-white text-sm font-medium hover:bg-rose-700 transition-colors"
-                    >
-                      Reserver sur Planity
-                      <ChevronRight size={14} />
-                    </a>
-                  </div>
                 </div>
               </div>
             )}
@@ -145,11 +128,11 @@ export default function SeasonalPopups() {
                 <img
                   key={SPRING_PROMO_IMAGES[storyIndex]}
                   src={SPRING_PROMO_IMAGES[storyIndex]}
-                  alt={`Promotion printemps visuel ${storyIndex + 1}`}
+                  alt={`Promotion minceur visuel ${storyIndex + 1}`}
                   className="w-full max-h-[60vh] object-contain bg-white"
                 />
                 <div className="p-4 border-t border-stone-100 space-y-3">
-                  {storyIndex === 4 && (
+                  {storyIndex === SPRING_PROMO_IMAGES.length - 1 && (
                     <div className="flex justify-center">
                       <a
                         href={PLANITY_URL}
@@ -197,6 +180,86 @@ export default function SeasonalPopups() {
                         type="button"
                         onClick={() => setStoryIndex((prev) => (prev + 1) % SPRING_PROMO_IMAGES.length)}
                         className="h-8 w-8 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 flex items-center justify-center"
+                        aria-label="Suivant"
+                      >
+                        <ChevronRight size={15} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {view === 'estime-sens' && (
+              <div>
+                <div className="w-full max-h-[55vh] bg-stone-50 flex items-center justify-center overflow-hidden">
+                  {currentEstimeMedia.type === 'video' ? (
+                    <video
+                      key={currentEstimeMedia.src}
+                      src={currentEstimeMedia.src}
+                      className="w-full max-h-[55vh] object-contain"
+                      controls
+                      autoPlay
+                      muted
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      key={currentEstimeMedia.src}
+                      src={currentEstimeMedia.src}
+                      alt={`Estime & Sens visuel ${estimeSensIndex}`}
+                      className="w-full max-h-[55vh] object-contain"
+                    />
+                  )}
+                </div>
+
+                <div className="p-4 border-t border-stone-100 space-y-3">
+                  <div className="space-y-1">
+                    <p className="text-sm font-semibold text-amber-800">Duo Bonne Mine — Estime &amp; Sens</p>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      Gouttes autobronzantes Éclat de Soleil disponibles à l'institut ! Quelques gouttes à mélanger à votre crème pour un hâle progressif et naturel.
+                      Pour un résultat encore plus uniforme, combinez avec le Gommage Éclat Immédiat.
+                    </p>
+                    <p className="text-xs font-semibold text-amber-700 mt-1">
+                      Coffret Duo à 39,90 € au lieu de 48,90 €
+                    </p>
+                  </div>
+
+                  <div className="flex gap-1">
+                    {ESTIME_SENS_MEDIA.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setEstimeSensIndex(i)}
+                        className={`h-1.5 flex-1 rounded-full ${i === estimeSensIndex ? 'bg-amber-500' : 'bg-stone-200'}`}
+                        aria-label={`Visuel ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setView('menu')}
+                      className="text-xs text-stone-500 hover:text-stone-700"
+                    >
+                      Retour au choix
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setEstimeSensIndex((prev) => (prev - 1 + ESTIME_SENS_MEDIA.length) % ESTIME_SENS_MEDIA.length)}
+                        className="h-8 w-8 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 flex items-center justify-center"
+                        aria-label="Precedent"
+                      >
+                        <ChevronLeft size={15} />
+                      </button>
+                      <p className="text-xs text-stone-600">{estimeSensIndex + 1}/{ESTIME_SENS_MEDIA.length}</p>
+                      <button
+                        type="button"
+                        onClick={() => setEstimeSensIndex((prev) => (prev + 1) % ESTIME_SENS_MEDIA.length)}
+                        className="h-8 w-8 rounded-full bg-amber-500 text-white hover:bg-amber-600 flex items-center justify-center"
                         aria-label="Suivant"
                       >
                         <ChevronRight size={15} />
