@@ -225,6 +225,20 @@ export default function SeasonalPopups() {
                     </p>
                   </div>
 
+                  {estimeSensIndex === ESTIME_SENS_MEDIA.length - 1 && (
+                    <div className="flex justify-center">
+                      <a
+                        href={PLANITY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-colors"
+                      >
+                        Reserver sur Planity
+                        <ChevronRight size={14} />
+                      </a>
+                    </div>
+                  )}
+
                   <div className="flex gap-1">
                     {ESTIME_SENS_MEDIA.map((_, i) => (
                       <button
