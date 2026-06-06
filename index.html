@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://ssenglsjrkjmambtxckl.supabase.co" crossorigin />
+    <!-- DNS prefetch pour les images Pexels (~300 ms économisés sur réseau mobile) -->
+    <link rel="dns-prefetch" href="https://images.pexels.com" />
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin />
 
     <!-- Google Fonts — non-bloquant -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -43,13 +46,19 @@
     <meta name="geo.position" content="43.3539;1.4511" />
     <meta name="ICBM" content="43.3539, 1.4511" />
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T6GMQR72T1"></script>
+    <!-- Google Analytics — chargé après window.load pour ne pas peser sur LCP/FCP -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-T6GMQR72T1');
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T6GMQR72T1';
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-T6GMQR72T1');
+      });
     </script>
 
     <!-- LLMs / GEO -->
@@ -83,9 +92,9 @@
           "longitude": "1.4511"
         },
         "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "13:30", "closes": "18:00" },
           { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "09:00", "closes": "18:00" },
-          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "09:00", "closes": "11:00" },
-          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "09:00", "closes": "20:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "09:00", "closes": "19:00" },
           { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "18:00" },
           { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:30" }
         ],
@@ -138,7 +147,7 @@
           {
             "@type": "Question",
             "name": "Quels sont les horaires de Soléana Bien-Être ?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Mardi 9h-18h, Mercredi 9h-11h, Jeudi 9h-20h, Vendredi 9h-18h, Samedi 9h-13h30. Fermé lundi et dimanche. Réservation en ligne disponible 24h/24." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Lundi 13h30-18h (sur rendez-vous), Mardi 9h-18h, Jeudi 9h-19h, Vendredi 9h-18h, Samedi 9h-13h30. Fermé mercredi et dimanche. Réservation en ligne disponible 24h/24." }
           },
           {
             "@type": "Question",

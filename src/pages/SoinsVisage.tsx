@@ -17,7 +17,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta, FAQSchema } from '../lib/useMeta';
+import { PageMeta, FAQSchema, ServiceSchema, BreadcrumbSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ---------------------------------------------------------------------------
@@ -47,7 +47,7 @@ const soins: SoinCard[] = [
     titre: 'Soin Éclat Express',
     sousTitre: "Un coup d\'éclat en moins d\'une heure",
     duree: '30 min',
-    prix: '[PRIX À DÉFINIR]',
+    prix: 'Sur demande',
     description:
       "Le Soin Éclat Express est conçu pour les peaux ternes qui ont besoin d\'un boost lumineux rapide. Grâce à une combinaison ciblée de soins actifs, il unifie le teint, resserre les pores et restaure la vitalité de l\'épiderme en une seule séance. Idéal avant un événement ou en cure mensuelle pour maintenir l\'éclat au quotidien.",
     bienfaits: [
@@ -89,7 +89,7 @@ const soins: SoinCard[] = [
     titre: 'Soin Visage Human',
     sousTitre: "Un soin issu de la gamme Human",
     duree: '60 min',
-    prix: '[PRIX À DÉFINIR]',
+    prix: 'Sur demande',
     description:
       "Le Soin Visage Human est un soin du visage adapté aux femmes comme aux hommes, réalisé avec la gamme Human d'Estime & Sens. Il associe nettoyage, hydratation, modelage et actifs ciblés pour apporter confort, éclat et détente, selon les besoins de votre peau.",
     bienfaits: [
@@ -313,6 +313,13 @@ export default function SoinsVisage() {
         url="https://www.soleana-bienetre.com/soins-visage"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/soins-visage" />
+      <ServiceSchema
+        name="Soins du visage"
+        description="Soins du visage personnalisés à Venerque (31) : hydratation, éclat, anti-âge et peau sensible. Diagnostic cutané offert avec produits bio Estime & Sens."
+        url="https://www.soleana-bienetre.com/soins-visage"
+        serviceType="Soin du visage"
+      />
+      <BreadcrumbSchema items={[{ name: 'Soins du visage', url: 'https://www.soleana-bienetre.com/soins-visage' }]} />
       {/* ------------------------------------------------------------------ */}
       {/* HERO                                                                */}
       {/* ------------------------------------------------------------------ */}

@@ -15,7 +15,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta, FAQSchema } from '../lib/useMeta';
+import { PageMeta, FAQSchema, ServiceSchema, BreadcrumbSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -183,6 +183,13 @@ export default function Kobido() {
         url="https://www.soleana-bienetre.com/kobido"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/kobido" />
+      <ServiceSchema
+        name="Kobido"
+        description="Kobido à Venerque : massage facial japonais liftant. Tonifie, sculpte et illumine le visage dès la 1ère séance. Soin anti-âge naturel chez Soléana."
+        url="https://www.soleana-bienetre.com/kobido"
+        serviceType="Massage facial"
+      />
+      <BreadcrumbSchema items={[{ name: 'Kobido', url: 'https://www.soleana-bienetre.com/kobido' }]} />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">

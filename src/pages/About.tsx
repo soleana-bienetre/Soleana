@@ -527,7 +527,7 @@ export default function About() {
                   </span>
                 ))}
               </div>
-              <Link to="/soins" className="btn-secondary border-sage-400 text-sage-700 hover:bg-sage-50 hover:border-sage-500">
+              <Link to="/tarifs" className="btn-secondary border-sage-400 text-sage-700 hover:bg-sage-50 hover:border-sage-500">
                 Découvrir nos soins
               </Link>
             </div>

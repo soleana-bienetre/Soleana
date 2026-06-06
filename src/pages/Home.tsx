@@ -23,7 +23,36 @@ import FAQAccordion from '../components/ui/FAQAccordion';
 import { supabase } from '../lib/supabase';
 import type { Review } from '../lib/supabase';
 import { useSiteImages } from '../contexts/SiteImagesContext';
+import { Helmet } from 'react-helmet-async';
 import { PageMeta } from '../lib/useMeta';
+
+function ReviewsSchema({ reviews }: { reviews: Review[] }) {
+  if (!reviews.length) return null;
+  const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Soléana Bien-Être',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: avg.toFixed(1),
+      reviewCount: String(reviews.length),
+      bestRating: '5',
+    },
+    review: reviews.slice(0, 5).map((r) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: r.name },
+      reviewRating: { '@type': 'Rating', ratingValue: String(r.rating), bestRating: '5' },
+      reviewBody: r.text,
+      ...(r.date ? { datePublished: r.date } : {}),
+    })),
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+}
 
 const faqItems = [
   {
@@ -151,6 +180,8 @@ const hours = [
 export default function Home() {
   const { getUrl } = useSiteImages();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewsLoaded, setReviewsLoaded] = useState(false);
+  const reviewsSectionRef = useRef<HTMLElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -195,14 +226,33 @@ export default function Home() {
     }
   }, [reviews.length]);
 
+  // Charge les avis uniquement quand la section entre dans le viewport
   useEffect(() => {
+    const el = reviewsSectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setReviewsLoaded(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!reviewsLoaded) return;
     supabase
       .from('reviews')
-      .select('*')
+      .select('id, name, initials, rating, text, date, service, location, published, created_at')
       .eq('published', true)
       .order('created_at', { ascending: false })
+      .limit(15)
       .then(({ data }) => { if (data) setReviews(data); });
-  }, []);
+  }, [reviewsLoaded]);
 
   return (
     <main>
@@ -211,6 +261,7 @@ export default function Home() {
         description="Offrez-vous un moment de bien-être à Venerque (31) : épilation laser, Kobido, soins du visage et drainage. Praticienne certifiée. Réservez en ligne sur Planity."
         url="https://www.soleana-bienetre.com/"
       />
+      <ReviewsSchema reviews={reviews} />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-start sm:items-end overflow-hidden">
         {/* Background image */}
@@ -220,6 +271,8 @@ export default function Home() {
             alt="Moment de détente au spa – Soléana Bien-Être à Venerque"
             className="w-full h-full object-cover object-center"
             loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-stone-900/80 via-stone-900/50 to-stone-900/20" />
           <div className="absolute inset-0 bg-gradient-to-b from-stone-900/30 via-transparent to-stone-900/40" />
@@ -248,7 +301,7 @@ export default function Home() {
                 <Calendar size={15} />
                 Prendre rendez-vous
               </a>
-              <Link to="/soins" className="btn-outline-light sm:text-sm sm:px-5 sm:py-3 md:text-base md:px-8 md:py-4 justify-center">
+              <Link to="/tarifs" className="btn-outline-light sm:text-sm sm:px-5 sm:py-3 md:text-base md:px-8 md:py-4 justify-center">
                 <Leaf size={15} />
                 Découvrir les soins
               </Link>
@@ -266,7 +319,7 @@ export default function Home() {
             <Calendar size={15} />
             Prendre rendez-vous
           </a>
-          <Link to="/soins" className="btn-outline-light w-full text-sm px-5 py-3 justify-center">
+          <Link to="/tarifs" className="btn-outline-light w-full text-sm px-5 py-3 justify-center">
             <Leaf size={15} />
             Découvrir les soins
           </Link>
@@ -316,6 +369,8 @@ export default function Home() {
                   src={getUrl('home-discover')}
                   alt="Institut Soléana Bien-Être – espace soin"
                   className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               {/* Floating card */}
@@ -390,6 +445,10 @@ export default function Home() {
                     src={getUrl(service.imageKey)}
                     alt={service.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                    width={400}
+                    height={208}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent" />
                   <span className="absolute top-4 left-4 tag bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-nude-700 text-xs font-medium">
@@ -418,7 +477,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/soins" className="btn-primary">
+            <Link to="/tarifs" className="btn-primary">
               Voir tous nos soins & tarifs
             </Link>
           </div>
@@ -475,6 +534,8 @@ export default function Home() {
                   src={getUrl('home-laetitia')}
                   alt="Laetitia Sevrin – praticienne Soléana Bien-Être"
                   className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/30 to-transparent" />
               </div>
@@ -484,7 +545,7 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
-      <section className="section-padding bg-nude-50 overflow-hidden">
+      <section ref={reviewsSectionRef} className="section-padding bg-nude-50 overflow-hidden">
         <div className="container-wide">
           <div className="text-center mb-14">
             <span className="tag">Témoignages</span>

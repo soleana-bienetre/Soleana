@@ -15,7 +15,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta, FAQSchema } from '../lib/useMeta';
+import { PageMeta, FAQSchema, ServiceSchema, BreadcrumbSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -139,6 +139,13 @@ export default function Massages() {
         url="https://www.soleana-bienetre.com/massages"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/massages" />
+      <ServiceSchema
+        name="Massages bien-être"
+        description="Massages bien-être à Venerque (31) : relaxants et thérapeutiques, dont TEMANA et ventre drainant. Détente profonde dans le cadre apaisant de Soléana."
+        url="https://www.soleana-bienetre.com/massages"
+        serviceType="Massage bien-être"
+      />
+      <BreadcrumbSchema items={[{ name: 'Massages bien-être', url: 'https://www.soleana-bienetre.com/massages' }]} />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">

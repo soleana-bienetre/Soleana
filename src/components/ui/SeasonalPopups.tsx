@@ -60,6 +60,7 @@ export default function SeasonalPopups() {
     window.setTimeout(() => {
       setShowConfetti(false);
       setView(target);
+      setIsOpen(true);
     }, 950);
   };
 

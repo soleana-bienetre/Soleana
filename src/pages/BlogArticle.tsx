@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Clock, ChevronLeft, Calendar, Tag, Phone, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { BlogArticle } from '../lib/supabase';
+import { PageMeta } from '../lib/useMeta';
 
 const PLANITY_URL = 'https://www.planity.com/soleana-bien-etre-31810-venerque';
 const PHONE = '07 62 16 98 14';
@@ -143,36 +144,6 @@ export default function BlogArticlePage() {
           setArticle(data as BlogArticle);
           const a = data as BlogArticle;
 
-          // ── SEO meta ──────────────────────────────────────────────────
-          document.title = (a.meta_title || a.title) + ' – Soléana Bien-Être';
-          let metaDesc = document.querySelector('meta[name="description"]');
-          if (!metaDesc) {
-            metaDesc = document.createElement('meta');
-            (metaDesc as HTMLMetaElement).name = 'description';
-            document.head.appendChild(metaDesc);
-          }
-          metaDesc.setAttribute('content', a.meta_description || a.excerpt || '');
-
-          // ── OG tags ───────────────────────────────────────────────────
-          const setOg = (prop: string, content: string) => {
-            let el = document.querySelector(`meta[property="${prop}"]`);
-            if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
-            el.setAttribute('content', content);
-          };
-          setOg('og:title', a.meta_title || a.title);
-          setOg('og:type', 'article');
-          const canonicalUrl = `https://www.soleana-bienetre.com/blog/${a.slug}`;
-          setOg('og:url', canonicalUrl);
-          if (a.og_image_url) setOg('og:image', a.og_image_url);
-
-          let canonical = document.querySelector('link[rel="canonical"]');
-          if (!canonical) {
-            canonical = document.createElement('link');
-            canonical.setAttribute('rel', 'canonical');
-            document.head.appendChild(canonical);
-          }
-          canonical.setAttribute('href', canonicalUrl);
-
           // ── JSON-LD Article ───────────────────────────────────────────
           const existing = document.getElementById('schema-article');
           if (existing) existing.remove();
@@ -211,19 +182,25 @@ export default function BlogArticlePage() {
       });
 
     return () => {
-      document.title = 'Soléana Bien-Être – Institut à Venerque';
       document.getElementById('schema-article')?.remove();
     };
   }, [slug]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-cream">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-nude-300 border-t-nude-600 animate-spin" />
-          <p className="text-stone-400 text-sm">Chargement de l'article…</p>
+      <>
+        <PageMeta
+          title="Blog – Soléana Bien-Être"
+          description="Conseils beauté et bien-être par Soléana Bien-Être à Venerque."
+          url="https://www.soleana-bienetre.com/blog"
+        />
+        <div className="min-h-screen flex items-center justify-center bg-cream">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 rounded-full border-2 border-nude-300 border-t-nude-600 animate-spin" />
+            <p className="text-stone-400 text-sm">Chargement de l'article…</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -245,6 +222,12 @@ export default function BlogArticlePage() {
 
   return (
     <>
+      <PageMeta
+        title={(article.meta_title || article.title) + ' – Soléana Bien-Être'}
+        description={article.meta_description || article.excerpt || ''}
+        url={`https://www.soleana-bienetre.com/blog/${article.slug}`}
+        image={article.og_image_url || undefined}
+      />
       {/* ── Hero image ── */}
       {article.og_image_url && (
         <div className="relative w-full h-64 md:h-[420px] overflow-hidden">

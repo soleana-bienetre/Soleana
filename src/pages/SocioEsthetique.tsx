@@ -1,5 +1,5 @@
 import { Heart, Shield, Sparkles, Users, HandHeart, Calendar, FileText, Clock3 } from 'lucide-react';
-import { PageMeta } from '../lib/useMeta';
+import { PageMeta, ServiceSchema, BreadcrumbSchema } from '../lib/useMeta';
 
 const socioImages = [
   'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Socio%20esthetique/atelier-socio-%20esthetique-1.webp',
@@ -66,6 +66,13 @@ export default function SocioEsthetique() {
         description="Accompagnements individuels et ateliers collectifs de socio-esthétique en structure : bien-être, image de soi, lien social et interventions sur mesure."
         url="https://www.soleana-bienetre.com/socio-esthetique"
       />
+      <ServiceSchema
+        name="Socio-esthétique"
+        description="Accompagnements individuels et ateliers collectifs de socio-esthétique en structure : bien-être, image de soi, lien social et interventions sur mesure."
+        url="https://www.soleana-bienetre.com/socio-esthetique"
+        serviceType="Socio-esthétique"
+      />
+      <BreadcrumbSchema items={[{ name: 'Socio-esthétique', url: 'https://www.soleana-bienetre.com/socio-esthetique' }]} />
 
       <section className="relative min-h-[55vh] md:min-h-[65vh] flex items-end overflow-hidden">
         <div

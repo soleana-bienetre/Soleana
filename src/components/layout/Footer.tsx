@@ -16,8 +16,8 @@ const services = [
   { label: 'Soins du visage', href: '/soins-visage' },
   { label: 'Kobido', href: '/kobido' },
   { label: 'Massages bien-être', href: '/massages' },
-  { label: 'Drainage lymphatique', href: '/drainage-lymphatique' },
-  { label: 'Maderothérapie', href: '/drainage-lymphatique' },
+  { label: 'Drainage lymphatique & Maderothérapie', href: '/drainage-lymphatique' },
+  { label: 'Socio-Esthétique', href: '/socio-esthetique' },
   { label: 'Tarifs', href: '/tarifs' },
 ];
 

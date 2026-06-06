@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { PageMeta } from '../lib/useMeta';
+import { PageMeta, ContactSchema, BreadcrumbSchema } from '../lib/useMeta';
 import {
   MapPin,
   Phone,
@@ -193,6 +193,8 @@ export default function Contact() {
         description="Prenez rendez-vous chez Soléana Bien-Être à Venerque (31). Réservation en ligne 24h/24, appel au 07 62 16 98 14, ou message via le formulaire. Laetitia vous répond rapidement."
         url="https://www.soleana-bienetre.com/contact"
       />
+      <ContactSchema />
+      <BreadcrumbSchema items={[{ name: 'Contact', url: 'https://www.soleana-bienetre.com/contact' }]} />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">

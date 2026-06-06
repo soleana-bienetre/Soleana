@@ -1,6 +1,32 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PageMeta } from '../lib/useMeta';
+import { Helmet } from 'react-helmet-async';
+import { PageMeta, BreadcrumbSchema } from '../lib/useMeta';
+
+function BlogCollectionSchema({ articles }: { articles: Article[] }) {
+  if (!articles.length) return null;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Blog bien-être & beauté – Soléana Bien-Être',
+    description: 'Conseils bien-être et beauté par Soléana à Venerque : épilation laser, Kobido, soins visage, drainage.',
+    url: 'https://www.soleana-bienetre.com/blog',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: articles.slice(0, 10).map((a, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `https://www.soleana-bienetre.com/blog/${a.slug}`,
+        name: a.title,
+      })),
+    },
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+}
 import {
   Clock,
   ChevronRight,
@@ -312,6 +338,8 @@ export default function Blog() {
         description="Conseils bien-être et beauté de Soléana à Venerque : guides soins, Kobido, épilation laser et drainage pour préparer vos prochaines séances."
         url="https://www.soleana-bienetre.com/blog"
       />
+      <BlogCollectionSchema articles={articles} />
+      <BreadcrumbSchema items={[{ name: 'Blog', url: 'https://www.soleana-bienetre.com/blog' }]} />
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-sand-50 to-cream section-padding">
         <div className="container-narrow">

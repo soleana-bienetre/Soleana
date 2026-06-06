@@ -15,7 +15,7 @@ import {
 import CTABanner from '../components/ui/CTABanner';
 import FAQAccordion from '../components/ui/FAQAccordion';
 import { useSiteImages } from '../contexts/SiteImagesContext';
-import { PageMeta, FAQSchema } from '../lib/useMeta';
+import { PageMeta, FAQSchema, ServiceSchema, BreadcrumbSchema } from '../lib/useMeta';
 import { useCategoryTarifs } from '../lib/useTarifs';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -135,6 +135,13 @@ export default function Drainage() {
         url="https://www.soleana-bienetre.com/drainage-lymphatique"
       />
       <FAQSchema items={faqItems} pageUrl="https://www.soleana-bienetre.com/drainage-lymphatique" />
+      <ServiceSchema
+        name="Drainage lymphatique & Maderothérapie"
+        description="Drainage lymphatique Vodder et maderothérapie à Venerque (31). Jambes légères, silhouette affinée et récupération post-op avec protocoles certifiés."
+        url="https://www.soleana-bienetre.com/drainage-lymphatique"
+        serviceType="Drainage lymphatique"
+      />
+      <BreadcrumbSchema items={[{ name: 'Drainage lymphatique', url: 'https://www.soleana-bienetre.com/drainage-lymphatique' }]} />
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[60vh] md:min-h-[72vh] flex items-end overflow-hidden">
