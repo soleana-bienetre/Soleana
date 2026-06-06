@@ -276,7 +276,7 @@ const faqItems = [
   {
     question: 'Quelle est la différence entre le Soin Bio-Expert et le Soin Human ?',
     answer:
-      "Le Soin Bio-Expert et le Soin Human sont deux soins du visage différents, sans notion de hiérarchie ou de gamme premium. Le Bio-Expert s'appuie sur les actifs bio Estime & Sens, tandis que le Human utilise la gamme homme Human pour proposer un soin ciblé sur le nettoyage, l'hydratation, le confort et l'éclat du teint.",
+      "Le Soin Bio-Expert est un soin personnalisé, adapté aux besoins spécifiques de votre peau au moment de la séance. Il convient aussi bien aux femmes qu'aux hommes, et s'appuie sur les actifs bio Estime & Sens pour nourrir, apaiser ou rééquilibrer la peau selon son état du jour. Le Soin Human utilise quant à lui une gamme spécifiquement formulée pour les hommes, avec des textures, des senteurs et des produits adaptés à la peau masculine — dont des produits dédiés à la barbe. Les deux soins sont distincts et sans notion de hiérarchie.",
   },
   {
     question: 'Puis-je me maquiller directement après un soin visage ?',

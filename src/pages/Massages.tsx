@@ -129,6 +129,8 @@ export default function Massages() {
   const { getUrl } = useSiteImages();
   const { getPrice } = useCategoryTarifs('massages');
   const balinaisPrice = getPrice('Massage Balinais', '80€');
+  const ayurvedaPrice = getPrice('Massage Ayurvédique Abhyanga', '80€');
+  const prenatalPrice = getPrice('Massage femmes enceintes', '70€');
   return (
     <main className="min-h-screen bg-cream">
       <PageMeta
@@ -242,7 +244,7 @@ export default function Massages() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">60 min</p>
+                <p className="font-serif text-xl font-light text-white">60 min · {ayurvedaPrice}</p>
                 <p className="text-nude-200 text-xs mt-1">voyage intérieur</p>
               </div>
             </div>
@@ -412,7 +414,7 @@ export default function Massages() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">60 min</p>
+                <p className="font-serif text-xl font-light text-white">60 min · {prenatalPrice}</p>
                 <p className="text-nude-200 text-xs mt-1">douceur absolue</p>
               </div>
             </div>

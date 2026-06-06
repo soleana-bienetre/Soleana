@@ -139,10 +139,10 @@ const reassuranceItems = [
 ];
 
 const hours = [
-  { day: 'Lundi', time: 'Fermé', closed: true },
+  { day: 'Lundi', time: '13:30 – 18:00 (sur rendez-vous)', closed: false },
   { day: 'Mardi', time: '09:00 – 18:00', closed: false },
-  { day: 'Mercredi', time: '09:00 – 11:00', closed: false },
-  { day: 'Jeudi', time: '09:00 – 20:00', closed: false },
+  { day: 'Mercredi', time: 'Fermé', closed: true },
+  { day: 'Jeudi', time: '09:00 – 19:00', closed: false },
   { day: 'Vendredi', time: '09:00 – 18:00', closed: false },
   { day: 'Samedi', time: '09:00 – 13:30', closed: false },
   { day: 'Dimanche', time: 'Fermé', closed: true },

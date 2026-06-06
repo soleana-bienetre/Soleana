@@ -36,10 +36,10 @@ interface FormErrors {
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const hoursData = [
-  { day: 'Lundi', hours: 'Fermé', closed: true },
+  { day: 'Lundi', hours: '13h30 – 18h00 (sur rendez-vous)', closed: false },
   { day: 'Mardi', hours: '09h00 – 18h00', closed: false },
-  { day: 'Mercredi', hours: '09h00 – 11h00', closed: false },
-  { day: 'Jeudi', hours: '09h00 – 20h00', closed: false },
+  { day: 'Mercredi', hours: 'Fermé', closed: true },
+  { day: 'Jeudi', hours: '09h00 – 19h00', closed: false },
   { day: 'Vendredi', hours: '09h00 – 18h00', closed: false },
   { day: 'Samedi', hours: '09h00 – 13h30', closed: false },
   { day: 'Dimanche', hours: 'Fermé', closed: true },

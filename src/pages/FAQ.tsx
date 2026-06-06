@@ -109,7 +109,7 @@ const faqSections: FAQSection[] = [
       {
         question: 'Quel soin visage choisir selon mon type de peau ?',
         answer:
-          "Le choix dépend de vos besoins spécifiques : le Soin Éclat Express est idéal pour un coup d\'éclat rapide avant un événement ; le Soin Bio-Expert est particulièrement adapté aux peaux sensibles ou réactives grâce à ses formules naturelles ; le Soin Human est une approche holistique personnalisée, parfaite si vous cherchez un soin global alliant technicité et bien-être. Un bilan de peau est réalisé en début de séance pour adapter chaque protocole à vos besoins du moment.",
+          "Le choix dépend de vos besoins spécifiques : le Soin Éclat Express est idéal pour un coup d\'éclat rapide avant un événement ; le Soin Bio-Expert est un soin personnalisé selon les besoins de la peau, adapté aussi bien aux femmes qu\'aux hommes, avec les actifs bio Estime & Sens ; le Soin Human utilise une gamme spécifiquement formulée pour les hommes, avec des textures, senteurs et produits adaptés à la peau masculine, dont des produits dédiés à la barbe. Un bilan de peau est réalisé en début de séance pour adapter chaque protocole à vos besoins du moment.",
       },
       {
         question: 'Le Kobido est-il fait pour moi ?',
@@ -119,7 +119,7 @@ const faqSections: FAQSection[] = [
       {
         question: 'Quelle différence entre le Kobido express et le Kobido complet ?',
         answer:
-          "Le Kobido express (30 min) est une version raccourcie qui cible principalement la stimulation du visage pour un effet revitalisant et tonifiant rapide, idéal en pause déjeuner ou pour un entretien régulier. Le Kobido complet (60 min) suit un protocole intégral incluant l\'ensemble du visage, du cou, du décolleté et du crâne, offrant un véritable lifting naturel, une profonde relaxation musculaire et un effet visible plus marqué.",
+          "Le Kobido express (30 min) est une version raccourcie qui cible le décolleté, le cou et le visage pour un effet revitalisant et tonifiant rapide, idéal en pause déjeuner ou pour un entretien régulier. Le Kobido complet (60 min) suit un protocole intégral sur ces mêmes zones — décolleté, cou et visage — avec des manœuvres plus poussées offrant un véritable lifting naturel, une profonde relaxation musculaire et un effet visible plus marqué.",
       },
     ],
   },

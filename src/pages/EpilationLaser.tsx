@@ -29,7 +29,7 @@ const DIAG_ENTRY = { zone: 'Diagnostic gratuit', prix: 'Offert' };
 
 const conseilsAvant: string[] = [
   'Raser la zone à traiter 24 à 48 h avant la séance (ne pas épiler à la cire ni à la pince)',
-  "Ne pas s\'exposer au soleil ou aux UV 4 semaines avant la séance",
+  "Ne pas s\'exposer au soleil ou aux UV 2 semaines avant la séance",
   'Éviter les crèmes autobronzantes et les produits photosensibilisants',
   'Prévenir votre praticienne de tout traitement médical en cours',
   'Arriver avec une peau propre, sans déodorant ni parfum sur la zone',
@@ -39,8 +39,9 @@ const conseilsAvant: string[] = [
 const conseilsApres: string[] = [
   'Appliquer une crème apaisante ou un gel aloe vera sur la zone traitée',
   'Éviter tout contact avec la chaleur (bain chaud, sauna, hammam) pendant 48 h',
-  "Ne pas s\'exposer au soleil sans écran total (SPF 50+) pendant 4 semaines",
-  'Ne pas raser la zone avant que les poils restants aient naturellement chuté (7 à 21 jours)',
+  "Ne pas s\'exposer au soleil sans écran total (SPF 50+) pendant 2 semaines",
+  "Attendre quelques jours avant de raser afin d\'éviter toute irritation.",
+  'Les poils commenceront à chuter naturellement environ 10 jours après la séance.',
   'Éviter les frottements et vêtements serrés sur la zone traitée',
   'Hydrater quotidiennement la peau entre les séances',
 ];

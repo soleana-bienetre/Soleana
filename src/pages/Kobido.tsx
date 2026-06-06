@@ -155,7 +155,7 @@ const faqItems = [
   {
     question: 'Quelle est la différence entre le Kobido express et le Kobido complet ?',
     answer:
-      "Le Kobido express (30 min) se concentre sur les manœuvres essentielles de lifting et de drainage, idéal pour un coup d'éclat rapide avant un événement. Le Kobido complet (60 min) inclut en plus un travail approfondi sur le décolleté, le cuir chevelu, et des manœuvres de sculpture du visage plus poussées pour un résultat anti-âge global.",
+      "Le Kobido express (30 min) se concentre sur les manœuvres essentielles de lifting et de drainage sur le décolleté, le cou et le visage, idéal pour un coup d'éclat rapide avant un événement. Le Kobido complet (60 min) travaille de façon plus approfondie ces mêmes zones — décolleté, cou et visage — avec des manœuvres de sculpture et de drainage plus poussées pour un résultat anti-âge global.",
   },
   {
     question: 'Le Kobido convient-il à tous les types de peau ?',

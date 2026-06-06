@@ -149,7 +149,7 @@ const reasons = [
     icon: Clock,
     title: 'Flexibilité & disponibilité',
     description:
-      "Avec des horaires étendus (jusqu'à 20h le jeudi) et la réservation en ligne 24h/24, prendre soin de soi s'intègre facilement dans votre emploi du temps.",
+      "Avec des horaires flexibles et la réservation en ligne 24h/24, prendre soin de soi s'intègre facilement dans votre emploi du temps.",
   },
   {
     icon: CheckCircle2,
@@ -275,25 +275,23 @@ export default function About() {
           </div>
           {(() => {
             const fixed = [
-              { key: 'about-gallery-1', label: 'Espace d\'accueil', sub: 'Un cadre chaleureux dès l\'entrée' },
-              { key: 'about-gallery-2', label: 'Cabine laser & soins', sub: 'Équipements homologués & certifiés' },
-              { key: 'about-gallery-3', label: 'Cabine massage & détente', sub: 'Huiles Estime & Sens, 100% naturelles' },
+              { key: 'about-gallery-1', url: getUrl('about-gallery-1'), label: 'Espace d\'accueil', sub: 'Un cadre chaleureux dès l\'entrée', fit: 'object-cover object-center' },
+              { key: 'about-gallery-3', url: getUrl('about-gallery-3'), label: 'Cabine massage & détente', sub: 'Huiles Estime & Sens, 100% naturelles', fit: 'object-cover object-center' },
+              { key: 'salon-table', url: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/salon-table-de-soin-soleana.webp', label: 'Salle de soins', sub: 'Un espace pensé pour votre confort', fit: 'object-cover object-center' },
             ];
-            const extra = ['about-gallery-4', 'about-gallery-5', 'about-gallery-6']
+            const extra = ['about-gallery-5', 'about-gallery-6']
               .map((k) => ({ key: k, url: getUrl(k) }))
-              .filter((e) => e.url && !e.url.startsWith('/Capture'));
-            const allPhotos = [
-              ...fixed.map((f) => ({ key: f.key, url: getUrl(f.key), label: f.label, sub: f.sub })),
-              ...extra.map((e) => ({ key: e.key, url: e.url, label: 'Institut Soléana', sub: '' })),
-            ];
+              .filter((e) => e.url && !e.url.startsWith('/Capture'))
+              .map((e) => ({ key: e.key, url: e.url, label: 'Institut Soléana', sub: '', fit: 'object-cover object-center' }));
+            const allPhotos = [...fixed, ...extra];
             return (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {allPhotos.map((photo) => (
-                  <div key={photo.key} className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group">
+                  <div key={photo.key} className="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3] group bg-stone-50">
                     <img
                       src={photo.url}
                       alt={`${photo.label} – Soléana Bien-Être`}
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      className={`w-full h-full ${photo.fit} transition-transform duration-500 group-hover:scale-105`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     {photo.label && (

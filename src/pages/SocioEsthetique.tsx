@@ -36,18 +36,18 @@ const workshops = [
 ];
 
 const interventions = [
-  'Tarif horaire : 80 € (intervention ponctuelle).',
-  "Créneaux de 1 à 4 heures consécutives, adaptés aux temps d'après-midi en structure.",
-  'Un ajustement tarifaire peut être envisagé pour des interventions prolongées ou dans le cadre d’un partenariat régulier.',
-  "Un devis personnalisé est établi selon la fréquence, la durée et le cadre d'intervention.",
-  'Un contrat de prestation est formalisé en collaboration avec la structure.',
+  "Intervention sur devis selon les besoins de la structure.",
+  "Créneaux de 1 à 4 heures consécutives, adaptés aux temps d’après-midi en structure.",
+  "Un ajustement tarifaire peut être envisagé pour des interventions prolongées ou dans le cadre d’un partenariat régulier.",
+  "Un devis personnalisé est établi selon la fréquence, la durée et le cadre d’intervention.",
+  "Un contrat de prestation est formalisé en collaboration avec la structure.",
 ];
 
 const pricing = [
-  ['Sourcils (15 min)', '10€'],
-  ['Lèvre (15 min)', '8€'],
-  ['Menton (15 min)', '8€'],
-  ['Forfait visage (15 min)', '22€'],
+  ['Épilation Sourcils (15 min)', '10€'],
+  ['Épilation Lèvres (15 min)', '8€'],
+  ['Épilation Menton (15 min)', '8€'],
+  ['Épilation forfait visage complet (15 min)', '22€'],
   ['Modelage relaxant mains (15 min)', '20€'],
   ['Modelage relaxant pieds (20 min)', '25€'],
   ['Massage assis Amma habillé (20 min)', '30€'],
@@ -229,7 +229,12 @@ export default function SocioEsthetique() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+          <div className="mt-6 rounded-xl border border-sand-200 bg-sand-50 p-5 space-y-2 text-sm text-stone-600">
+            <p>Ces prestations à la carte peuvent également être réalisées directement à l'institut Soléana Bien-Être à Venerque.</p>
+            <p>Certaines mutuelles peuvent prendre en charge tout ou partie des séances de socio-esthétique. Renseignez-vous auprès de votre complémentaire santé. Une facture détaillée pourra vous être remise.</p>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3 justify-center">
             <a href="https://www.planity.com/soleana-bien-etre-31810-venerque" target="_blank" rel="noopener noreferrer" className="btn-primary">
               <Calendar size={16} />
               Réserver sur Planity

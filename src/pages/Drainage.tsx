@@ -123,7 +123,9 @@ const faqItems = [
 
 export default function Drainage() {
   const { getUrl } = useSiteImages();
-  const { tarifs: drainageTarifs } = useCategoryTarifs('drainage');
+  const { tarifs: drainageTarifs, getPrice: getDrainagePrice } = useCategoryTarifs('drainage');
+  const drainagePrice = getDrainagePrice('Drainage lymphatique Vodder', '65€');
+  const maderoPrice = getDrainagePrice('Maderothérapie', '80€');
 
   return (
     <main className="min-h-screen bg-cream">
@@ -227,7 +229,7 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-sage-700 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-2xl font-light text-white">60 min</p>
+                <p className="font-serif text-2xl font-light text-white">60 min · {drainagePrice}</p>
                 <p className="text-sage-200 text-xs mt-1">Méthode Vodder</p>
               </div>
             </div>
@@ -249,7 +251,7 @@ export default function Drainage() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-nude-600 text-white rounded-2xl p-5 shadow-xl">
-                <p className="font-serif text-xl font-light text-white">60 min</p>
+                <p className="font-serif text-xl font-light text-white">60 min · {maderoPrice}</p>
                 <p className="text-nude-200 text-xs mt-1">Maderothérapie</p>
               </div>
             </div>

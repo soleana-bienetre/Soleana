@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { Phone, MapPin, Clock, Instagram, Facebook, Calendar } from 'lucide-react';
 
 const horaires = [
-  { jour: 'Lundi', heure: 'Fermé' },
+  { jour: 'Lundi', heure: '13:30 – 18:00 (sur rendez-vous)' },
   { jour: 'Mardi', heure: '09:00 – 18:00' },
-  { jour: 'Mercredi', heure: '09:00 – 11:00' },
-  { jour: 'Jeudi', heure: '09:00 – 20:00' },
+  { jour: 'Mercredi', heure: 'Fermé' },
+  { jour: 'Jeudi', heure: '09:00 – 19:00' },
   { jour: 'Vendredi', heure: '09:00 – 18:00' },
   { jour: 'Samedi', heure: '09:00 – 13:30' },
   { jour: 'Dimanche', heure: 'Fermé' },
