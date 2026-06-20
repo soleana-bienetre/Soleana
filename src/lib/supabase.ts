@@ -59,6 +59,34 @@ export type Tarif = {
   updated_at: string;
 };
 
+export type GiftCard = {
+  id: string;
+  title: string;
+  description?: string;
+  price?: string;
+  image_url?: string;
+  card_order: number;
+  visible: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GiftCardRequest = {
+  id: string;
+  buyer_name: string;
+  buyer_email: string;
+  buyer_phone?: string;
+  recipient?: string;
+  gift_choice?: string;
+  amount?: string;
+  message?: string;
+  delivery_method?: string;
+  postal_address?: string;
+  status: string;
+  is_read: boolean;
+  created_at: string;
+};
+
 export type BlogArticle = {
   id: string;
   title: string;

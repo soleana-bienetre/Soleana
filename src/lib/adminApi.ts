@@ -13,7 +13,7 @@ export type AdminOrder = {
   ascending?: boolean;
 };
 
-export type AdminResource = 'contacts' | 'reviews' | 'blog_articles' | 'tarifs';
+export type AdminResource = 'contacts' | 'reviews' | 'blog_articles' | 'tarifs' | 'gift_cards' | 'gift_card_requests';
 
 type AdminRequestPayload =
   | {

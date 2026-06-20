@@ -7,6 +7,7 @@ import {
   Star,
   Tag,
   Image,
+  Gift,
   BarChart2,
   LogOut,
   ExternalLink,
@@ -23,6 +24,7 @@ const navItems = [
   { href: '/admin/avis', label: 'Avis clients', icon: Star },
   { href: '/admin/tarifs', label: 'Tarifs', icon: Tag },
   { href: '/admin/photos', label: 'Photos du site', icon: Image },
+  { href: '/admin/cadeau', label: 'Cartes cadeaux', icon: Gift },
   { href: '/admin/statistiques', label: 'Statistiques', icon: BarChart2 },
 ];
 

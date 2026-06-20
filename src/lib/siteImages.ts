@@ -299,6 +299,17 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
     alt: 'Soins esthétiques visage Soléana',
     aspect: '4/3',
   },
+
+  // ── Carte cadeau ──────────────────────────────────────────────────────────
+  {
+    key: 'bon-cadeau-cover',
+    label: 'Photo de couverture (carte cadeau)',
+    page: 'Carte cadeau',
+    section: 'Bannière en-tête',
+    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/essences-destime.webp',
+    alt: 'Carte cadeau Soléana Bien-Être à Venerque',
+    aspect: '16/9',
+  },
 ];
 
 export function getSlotsByPage(): Record<string, ImageSlot[]> {

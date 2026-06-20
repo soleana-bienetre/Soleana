@@ -16,6 +16,7 @@ const navLinks = [
   { label: 'À propos', href: '/a-propos' },
   { label: 'Soins', href: '#', children: services },
   { label: 'Tarifs', href: '/tarifs' },
+  { label: 'Carte cadeau', href: '/carte-cadeau' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ];

@@ -20,6 +20,7 @@ const SocioEsthetique = lazy(() => import('./pages/SocioEsthetique'));
 const Tarifs = lazy(() => import('./pages/Tarifs'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Contact = lazy(() => import('./pages/Contact'));
+const BonCadeau = lazy(() => import('./pages/BonCadeau'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogArticle = lazy(() => import('./pages/BlogArticle'));
 const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
@@ -37,6 +38,7 @@ const AdminReviews = lazy(() => import('./pages/admin/AdminReviews'));
 const AdminReviewForm = lazy(() => import('./pages/admin/AdminReviewForm'));
 const AdminTarifs = lazy(() => import('./pages/admin/AdminTarifs'));
 const AdminPhotos = lazy(() => import('./pages/admin/AdminPhotos'));
+const AdminCadeau = lazy(() => import('./pages/admin/AdminCadeau'));
 const AdminStats = lazy(() => import('./pages/admin/AdminStats'));
 
 // Fallback minimaliste : réserve la hauteur écran pour éviter tout CLS
@@ -63,6 +65,7 @@ function AdminRoutes() {
         <Route path="/admin/avis/:id" element={<ProtectedRoute><AdminReviewForm /></ProtectedRoute>} />
         <Route path="/admin/tarifs" element={<ProtectedRoute><AdminTarifs /></ProtectedRoute>} />
         <Route path="/admin/photos" element={<ProtectedRoute><AdminPhotos /></ProtectedRoute>} />
+        <Route path="/admin/cadeau" element={<ProtectedRoute><AdminCadeau /></ProtectedRoute>} />
         <Route path="/admin/statistiques" element={<ProtectedRoute><AdminStats /></ProtectedRoute>} />
       </Routes>
     </Suspense>
@@ -96,6 +99,7 @@ function AppLayout() {
             <Route path="/tarifs" element={<Tarifs />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/carte-cadeau" element={<BonCadeau />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/mentions-legales" element={<MentionsLegales />} />
