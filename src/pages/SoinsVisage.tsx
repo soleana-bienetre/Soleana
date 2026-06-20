@@ -91,13 +91,13 @@ const soins: SoinCard[] = [
     duree: '60 min',
     prix: 'Sur demande',
     description:
-      "Le Soin Visage Human est un soin du visage adapté aux femmes comme aux hommes, réalisé avec la gamme Human d'Estime & Sens. Il associe nettoyage, hydratation, modelage et actifs ciblés pour apporter confort, éclat et détente, selon les besoins de votre peau.",
+      "Le Soin Visage Human est un soin du visage exclusivement destiné aux hommes, réalisé avec la gamme Human d'Estime & Sens. Il associe nettoyage, hydratation, modelage et actifs ciblés pour apporter confort, éclat et détente, selon les besoins de votre peau.",
     bienfaits: [
       'Nettoyage et hydratation adaptés aux besoins de la peau',
       'Modelage relaxant du visage',
       'Actifs ciblés selon le diagnostic cutané',
       'Confort, éclat et sensation de peau nette',
-      'Soin adapté aux femmes comme aux hommes',
+      'Soin exclusivement réservé aux hommes',
     ],
     accentBg: 'bg-nude-50',
     accentText: 'text-nude-700',

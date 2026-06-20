@@ -74,7 +74,11 @@ function PhotoSlotCard({ slot, currentUrl, onSuccess }: {
         .from(BUCKET)
         .getPublicUrl(filename);
 
-      const publicUrl = urlData.publicUrl;
+      // Cache-busting : le nom de fichier étant déterministe (upsert), l'URL publique
+      // est identique à chaque remplacement. Sans paramètre unique, le navigateur et le
+      // CDN resservent l'ancienne image (ou un 404 mis en cache) → la nouvelle photo ne
+      // s'affiche jamais. On force une URL unique pour garantir le rafraîchissement.
+      const publicUrl = `${urlData.publicUrl}?v=${Date.now()}`;
 
       // Upsert in site_images table
       const { error: dbError } = await supabaseAdmin

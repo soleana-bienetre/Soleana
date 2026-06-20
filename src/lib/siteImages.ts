@@ -161,7 +161,7 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
     label: 'Galerie – Photo supplémentaire 1',
     page: 'À propos',
     section: 'Galerie photos (optionnel)',
-    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/1-Salon-soleana-table-de-soin.webp',
+    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/salon-table-de-soin-soleana.webp',
     alt: 'Salon Soléana – table de soin',
     aspect: '4/3',
   },
