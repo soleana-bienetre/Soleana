@@ -109,7 +109,7 @@ const faqSections: FAQSection[] = [
       {
         question: 'Quel soin visage choisir selon mon type de peau ?',
         answer:
-          "Le choix dépend de vos besoins spécifiques : le Soin Éclat Express est idéal pour un coup d\'éclat rapide avant un événement ; le Soin Bio-Expert est un soin personnalisé selon les besoins de la peau, adapté aussi bien aux femmes qu\'aux hommes, avec les actifs bio Estime & Sens ; le Soin Human utilise une gamme spécifiquement formulée pour les hommes, avec des textures, senteurs et produits adaptés à la peau masculine, dont des produits dédiés à la barbe. Un bilan de peau est réalisé en début de séance pour adapter chaque protocole à vos besoins du moment.",
+          "Le choix dépend de vos besoins spécifiques : le Soin Éclat Express est idéal pour un coup d\'éclat rapide avant un événement ; le Soin Bio-Expert est un soin personnalisé selon les besoins de la peau, adapté aussi bien aux femmes qu\'aux hommes, avec les actifs bio Estime & Sens ; le Soin Human est exclusivement réservé aux hommes et utilise une gamme spécifiquement formulée pour la peau masculine, avec des textures, senteurs et produits adaptés, dont des produits dédiés à la barbe. Un bilan de peau est réalisé en début de séance pour adapter chaque protocole à vos besoins du moment.",
       },
       {
         question: 'Le Kobido est-il fait pour moi ?',
