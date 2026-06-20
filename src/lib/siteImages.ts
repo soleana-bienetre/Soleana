@@ -158,11 +158,11 @@ export const IMAGE_REGISTRY: ImageSlot[] = [
   },
   {
     key: 'about-gallery-4',
-    label: 'Galerie – Photo supplémentaire 1',
+    label: 'Galerie – Salle de soins',
     page: 'À propos',
-    section: 'Galerie photos (optionnel)',
-    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/salon-table-de-soin-soleana.webp',
-    alt: 'Salon Soléana – table de soin',
+    section: 'Galerie photos (3ème image)',
+    defaultUrl: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/about-gallery-4-galerie-photo-supplementaire-1.webp',
+    alt: 'Salle de soins – Soléana Bien-Être',
     aspect: '4/3',
   },
   {

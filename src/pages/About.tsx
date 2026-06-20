@@ -277,7 +277,7 @@ export default function About() {
             const fixed = [
               { key: 'about-gallery-1', url: getUrl('about-gallery-1'), label: 'Espace d\'accueil', sub: 'Un cadre chaleureux dès l\'entrée', fit: 'object-cover object-center' },
               { key: 'about-gallery-3', url: getUrl('about-gallery-3'), label: 'Cabine massage & détente', sub: 'Huiles Estime & Sens, 100% naturelles', fit: 'object-cover object-center' },
-              { key: 'salon-table', url: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/salon-table-de-soin-soleana.webp', label: 'Salle de soins', sub: 'Un espace pensé pour votre confort', fit: 'object-cover object-center' },
+              { key: 'about-gallery-4', url: getUrl('about-gallery-4'), label: 'Salle de soins', sub: 'Un espace pensé pour votre confort', fit: 'object-cover object-center' },
             ];
             const extra = ['about-gallery-5', 'about-gallery-6']
               .map((k) => ({ key: k, url: getUrl(k) }))
