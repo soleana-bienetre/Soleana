@@ -12,6 +12,7 @@ const PAGE_LABELS: Record<string, string> = {
   '/faq': 'FAQ',
   '/contact': 'Contact',
   '/blog': 'Blog',
+  '/carte-cadeau': 'Carte cadeau',
 };
 
 export function getPageLabel(pathname: string): string {

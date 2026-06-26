@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import {
   Gift,
   Heart,
   FileText,
   Store,
-  Truck,
   CreditCard,
   Send,
   CheckCircle,
@@ -17,6 +17,7 @@ import CTABanner from '../components/ui/CTABanner';
 import { supabase, type GiftCard } from '../lib/supabase';
 import { useSiteImages } from '../contexts/SiteImagesContext';
 import { EMAILJS_CONFIG, ADMIN_EMAIL } from '../lib/emailjs';
+import { trackPlanityClick } from '../lib/trackClick';
 
 // ─── Coordonnées bancaires (à compléter par l'institut) ───────────────────────
 // Laissez les valeurs vides pour ne PAS afficher le RIB sur l'écran de confirmation :
@@ -30,7 +31,6 @@ const BANK_DETAILS = {
 const deliveryOptions = [
   { value: 'pdf', label: 'Envoi par email (PDF)', icon: FileText, desc: 'Vous recevez la carte cadeau en PDF, prête à imprimer ou à transférer.' },
   { value: 'retrait', label: 'Retrait à l\'institut', icon: Store, desc: 'Récupérez une jolie carte cadeau imprimée directement à Venerque.' },
-  { value: 'postal', label: 'Envoi postal', icon: Truck, desc: 'Nous envoyons la carte cadeau à l\'adresse de votre choix.' },
 ];
 
 const steps = [
@@ -69,7 +69,7 @@ const emptyForm: FormState = {
   buyerName: '',
   buyerEmail: '',
   buyerPhone: '',
-  delivery: 'pdf',
+  delivery: '',
   postalAddress: '',
 };
 
@@ -84,6 +84,7 @@ export default function BonCadeau() {
   const [loading, setLoading] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
+  const { pathname } = useLocation();
   const cover = getUrl('bon-cadeau-cover');
 
   useEffect(() => {
@@ -123,9 +124,6 @@ export default function BonCadeau() {
     if (!form.giftChoice.trim() && !form.amount.trim()) {
       next.amount = 'Indiquez un montant ou choisissez une prestation.';
     }
-    if (form.delivery === 'postal' && !form.postalAddress.trim()) {
-      next.postalAddress = 'Veuillez indiquer l\'adresse postale d\'envoi.';
-    }
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -150,7 +148,6 @@ export default function BonCadeau() {
         amount: form.amount || null,
         message: form.message || null,
         delivery_method: deliveryLabel,
-        postal_address: form.delivery === 'postal' ? form.postalAddress : null,
       });
 
       if (dbError) throw dbError;
@@ -171,7 +168,6 @@ export default function BonCadeau() {
               `Cadeau : ${form.giftChoice || 'Montant libre'}\n` +
               `Montant / prestation : ${form.amount || 'Non précisé'}\n` +
               `Réception : ${deliveryLabel}\n` +
-              (form.delivery === 'postal' ? `Adresse : ${form.postalAddress}\n` : '') +
               (form.message ? `\nMessage : ${form.message}\n` : ''),
             to_email: ADMIN_EMAIL,
           },
@@ -254,6 +250,17 @@ export default function BonCadeau() {
                 <p className="text-sm text-stone-500 leading-relaxed">{step.text}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <div className="max-w-xl w-full rounded-2xl overflow-hidden shadow-sm border border-sand-100 bg-white p-2">
+              <img 
+                src="https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Carte-cadeau-soleana.webp" 
+                alt="Visuel Carte Cadeau Soléana" 
+                className="w-full h-auto rounded-xl object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -357,6 +364,19 @@ export default function BonCadeau() {
                   </p>
                 )}
 
+                {form.delivery === 'retrait' && (
+                  <a
+                    href="https://www.planity.com/soleana-bien-etre-31810-venerque"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-stone-800 text-white text-sm font-medium hover:bg-stone-700 transition-colors"
+                  >
+                    <Store size={15} />
+                    Réserver mon créneau de retrait sur Planity
+                    <ChevronRight size={14} />
+                  </a>
+                )}
+
                 <button
                   onClick={() => { setSubmitted(false); setForm(emptyForm); }}
                   className="mt-8 btn-secondary"
@@ -450,119 +470,129 @@ export default function BonCadeau() {
                     <span className="block text-xs font-medium font-sans text-stone-600 mb-2">
                       Mode de réception <span className="text-nude-500">*</span>
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {deliveryOptions.map((opt) => {
-                        const active = form.delivery === opt.value;
-                        return (
-                          <button
-                            type="button"
-                            key={opt.value}
-                            onClick={() => setForm((prev) => ({ ...prev, delivery: opt.value }))}
-                            className={`text-left rounded-2xl border p-4 transition-all duration-200 ${
-                              active ? 'border-nude-400 ring-2 ring-nude-200 bg-nude-50/40' : 'border-sand-200 hover:border-nude-300'
-                            }`}
-                          >
-                            <opt.icon size={18} className={active ? 'text-nude-600' : 'text-stone-400'} />
-                            <p className="text-sm font-medium text-stone-700 mt-2">{opt.label}</p>
-                            <p className="text-xs text-stone-400 mt-1 leading-relaxed">{opt.desc}</p>
-                          </button>
-                        );
-                      })}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                      {/* Option 1 : Email (reste sur le formulaire) */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setForm((prev) => ({ ...prev, delivery: 'pdf' }));
+                          trackPlanityClick(pathname, 'Carte cadeau – Envoi par email (PDF)');
+                        }}
+                        className={`text-left rounded-2xl border p-4 transition-all duration-200 ${
+                          form.delivery === 'pdf' ? 'border-nude-400 ring-2 ring-nude-200 bg-nude-50/40' : 'border-sand-200 hover:border-nude-300'
+                        }`}
+                      >
+                        <FileText size={18} className={form.delivery === 'pdf' ? 'text-nude-600' : 'text-stone-400'} />
+                        <p className="text-sm font-medium text-stone-700 mt-2">Envoi par email (PDF)</p>
+                        <p className="text-xs text-stone-400 mt-1 leading-relaxed">Vous recevez la carte cadeau en PDF, prête à imprimer ou à transférer.</p>
+                      </button>
+
+                      {/* Option 2 : Retrait → lien direct Planity */}
+                      <a
+                        href="https://www.planity.com/soleana-bien-etre-31810-venerque"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackPlanityClick(pathname, 'Carte cadeau – Retrait à l’institut (Planity)')}
+                        className="text-left rounded-2xl border border-sand-200 p-4 hover:border-nude-300 hover:bg-nude-50/30 transition-all duration-200 flex flex-col"
+                      >
+                        <Store size={18} className="text-stone-400" />
+                        <p className="text-sm font-medium text-stone-700 mt-2">Retrait à l'institut</p>
+                        <p className="text-xs text-stone-400 mt-1 leading-relaxed">Réservez votre créneau sur Planity pour récupérer une jolie carte cadeau imprimée.</p>
+                        <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-nude-600">
+                          Réserver sur Planity <ChevronRight size={13} />
+                        </span>
+                      </a>
+
                     </div>
                   </div>
 
-                  {/* Adresse postale conditionnelle */}
-                  {form.delivery === 'postal' && (
-                    <div>
-                      <label htmlFor="postalAddress" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
-                        Adresse postale d'envoi <span className="text-nude-500">*</span>
-                      </label>
-                      <textarea
-                        id="postalAddress"
-                        name="postalAddress"
-                        rows={3}
-                        value={form.postalAddress}
-                        onChange={handleChange}
-                        placeholder="Nom, adresse complète, code postal et ville"
-                        className={`input-field resize-none ${errors.postalAddress ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
-                      />
-                      {errors.postalAddress && <p className="mt-1 text-xs text-red-500">{errors.postalAddress}</p>}
-                    </div>
-                  )}
+                  <div
+                    style={{
+                      maxHeight: form.delivery === 'pdf' ? '800px' : '0px',
+                      opacity: form.delivery === 'pdf' ? 1 : 0,
+                      overflow: 'hidden',
+                      transition: 'max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease',
+                      pointerEvents: form.delivery === 'pdf' ? 'auto' : 'none',
+                    }}
+                  >
+                    <div className="space-y-6 pt-1">
+                      <div className="border-t border-sand-100 pt-6">
+                        <p className="text-xs font-medium font-sans text-stone-500 uppercase tracking-wide mb-4">Vos coordonnées</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label htmlFor="buyerName" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
+                              Nom complet <span className="text-nude-500">*</span>
+                            </label>
+                            <input
+                              id="buyerName"
+                              name="buyerName"
+                              type="text"
+                              autoComplete="name"
+                              value={form.buyerName}
+                              onChange={handleChange}
+                              placeholder="Votre nom et prénom"
+                              className={`input-field ${errors.buyerName ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
+                            />
+                            {errors.buyerName && <p className="mt-1 text-xs text-red-500">{errors.buyerName}</p>}
+                          </div>
+                          <div>
+                            <label htmlFor="buyerEmail" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
+                              Email <span className="text-nude-500">*</span>
+                            </label>
+                            <input
+                              id="buyerEmail"
+                              name="buyerEmail"
+                              type="email"
+                              autoComplete="email"
+                              value={form.buyerEmail}
+                              onChange={handleChange}
+                              placeholder="votre@email.com"
+                              className={`input-field ${errors.buyerEmail ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
+                            />
+                            {errors.buyerEmail && <p className="mt-1 text-xs text-red-500">{errors.buyerEmail}</p>}
+                          </div>
+                        </div>
+                        <div className="mt-5">
+                          <label htmlFor="buyerPhone" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
+                            Téléphone
+                          </label>
+                          <input
+                            id="buyerPhone"
+                            name="buyerPhone"
+                            type="tel"
+                            autoComplete="tel"
+                            value={form.buyerPhone}
+                            onChange={handleChange}
+                            placeholder="06 xx xx xx xx"
+                            className="input-field"
+                          />
+                        </div>
+                      </div>
 
-                  <div className="border-t border-sand-100 pt-6">
-                    <p className="text-xs font-medium font-sans text-stone-500 uppercase tracking-wide mb-4">Vos coordonnées</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="buyerName" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
-                          Nom complet <span className="text-nude-500">*</span>
-                        </label>
-                        <input
-                          id="buyerName"
-                          name="buyerName"
-                          type="text"
-                          autoComplete="name"
-                          value={form.buyerName}
-                          onChange={handleChange}
-                          placeholder="Votre nom et prénom"
-                          className={`input-field ${errors.buyerName ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
-                        />
-                        {errors.buyerName && <p className="mt-1 text-xs text-red-500">{errors.buyerName}</p>}
-                      </div>
-                      <div>
-                        <label htmlFor="buyerEmail" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
-                          Email <span className="text-nude-500">*</span>
-                        </label>
-                        <input
-                          id="buyerEmail"
-                          name="buyerEmail"
-                          type="email"
-                          autoComplete="email"
-                          value={form.buyerEmail}
-                          onChange={handleChange}
-                          placeholder="votre@email.com"
-                          className={`input-field ${errors.buyerEmail ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
-                        />
-                        {errors.buyerEmail && <p className="mt-1 text-xs text-red-500">{errors.buyerEmail}</p>}
-                      </div>
-                    </div>
-                    <div className="mt-5">
-                      <label htmlFor="buyerPhone" className="block text-xs font-medium font-sans text-stone-600 mb-1.5">
-                        Téléphone
-                      </label>
-                      <input
-                        id="buyerPhone"
-                        name="buyerPhone"
-                        type="tel"
-                        autoComplete="tel"
-                        value={form.buyerPhone}
-                        onChange={handleChange}
-                        placeholder="06 xx xx xx xx"
-                        className="input-field"
-                      />
+                      <p className="text-xs text-stone-400 leading-relaxed">
+                        En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour
+                        traiter votre demande conformément à notre{' '}
+                        <a href="/politique-de-confidentialite" className="text-nude-500 hover:text-nude-600 underline underline-offset-2">
+                          politique de confidentialité
+                        </a>.
+                      </p>
+
+                      <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto">
+                        {loading ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                            Envoi en cours…
+                          </>
+                        ) : (
+                          <>
+                            <Send size={16} /> Envoyer ma demande
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
 
-                  <p className="text-xs text-stone-400 leading-relaxed">
-                    En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour
-                    traiter votre demande conformément à notre{' '}
-                    <a href="/politique-de-confidentialite" className="text-nude-500 hover:text-nude-600 underline underline-offset-2">
-                      politique de confidentialité
-                    </a>.
-                  </p>
-
-                  <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto">
-                    {loading ? (
-                      <>
-                        <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                        Envoi en cours…
-                      </>
-                    ) : (
-                      <>
-                        <Send size={16} /> Envoyer ma demande
-                      </>
-                    )}
-                  </button>
                 </form>
               </>
             )}

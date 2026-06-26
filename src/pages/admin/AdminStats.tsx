@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MousePointerClick, TrendingUp, Calendar, Award, RefreshCw } from 'lucide-react';
+import { MousePointerClick, TrendingUp, Calendar, Award, RefreshCw, Gift, FileText, Store } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { supabaseAdmin } from '../../lib/supabase';
 import { getPageLabel } from '../../lib/trackClick';
@@ -275,6 +275,76 @@ export default function AdminStats() {
             </tbody>
           </table>
         )}
+      </div>
+
+      {/* ── Carte Cadeau ── */}
+      <div className="bg-white rounded-2xl border border-stone-100 overflow-hidden mt-6">
+        <div className="px-6 py-4 border-b border-stone-100 flex items-center gap-3">
+          <Gift size={16} className="text-nude-500" />
+          <h2 className="font-sans text-sm font-semibold text-stone-700 uppercase tracking-wider">
+            Carte Cadeau — choix du mode de réception
+          </h2>
+        </div>
+        {loading ? (
+          <div className="p-6 space-y-3">
+            {[...Array(2)].map((_, i) => <div key={i} className="h-10 bg-stone-50 rounded-lg animate-pulse" />)}
+          </div>
+        ) : (() => {
+          const giftClicks = clicks.filter((c) => c.page === '/carte-cadeau');
+          const emailCount = giftClicks.filter((c) => c.button_label.includes('email')).length;
+          const retraitCount = giftClicks.filter((c) => c.button_label.includes('Retrait')).length;
+          const maxGift = Math.max(emailCount, retraitCount, 1);
+          if (giftClicks.length === 0) return (
+            <div className="p-10 text-center">
+              <Gift size={28} className="text-stone-200 mx-auto mb-3" />
+              <p className="text-stone-400 text-sm">Aucun clic enregistré sur la page Carte cadeau.</p>
+            </div>
+          );
+          return (
+            <div className="p-6 space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-stone-50 rounded-xl p-4 text-center">
+                  <p className="text-xs text-stone-400 uppercase tracking-wider mb-1">Total clics</p>
+                  <p className="text-3xl font-serif font-light text-stone-800">{giftClicks.length}</p>
+                </div>
+                <div className="bg-nude-50 rounded-xl p-4 text-center">
+                  <FileText size={14} className="text-nude-500 mx-auto mb-1" />
+                  <p className="text-xs text-stone-400 uppercase tracking-wider mb-1">Envoi email PDF</p>
+                  <p className="text-3xl font-serif font-light text-stone-800">{emailCount}</p>
+                </div>
+                <div className="bg-stone-50 rounded-xl p-4 text-center">
+                  <Store size={14} className="text-stone-400 mx-auto mb-1" />
+                  <p className="text-xs text-stone-400 uppercase tracking-wider mb-1">Retrait Planity</p>
+                  <p className="text-3xl font-serif font-light text-stone-800">{retraitCount}</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-stone-500 w-44 truncate text-right shrink-0">Envoi par email</span>
+                  <div className="flex-1 h-7 bg-stone-50 rounded-lg overflow-hidden">
+                    <div
+                      className="h-full rounded-lg bg-nude-500 flex items-center justify-end pr-2 transition-all duration-700"
+                      style={{ width: `${Math.max(4, (emailCount / maxGift) * 100)}%` }}
+                    >
+                      <span className="text-xs font-semibold text-white">{emailCount}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-stone-500 w-44 truncate text-right shrink-0">Retrait Planity</span>
+                  <div className="flex-1 h-7 bg-stone-50 rounded-lg overflow-hidden">
+                    <div
+                      className="h-full rounded-lg bg-stone-400 flex items-center justify-end pr-2 transition-all duration-700"
+                      style={{ width: `${Math.max(4, (retraitCount / maxGift) * 100)}%` }}
+                    >
+                      <span className="text-xs font-semibold text-white">{retraitCount}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       <p className="text-xs text-stone-400 text-right mt-3">

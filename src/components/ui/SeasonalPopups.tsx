@@ -17,15 +17,8 @@ const ESTIME_SENS_MEDIA = [
   { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/video/WhatsApp%20Image%202026-06-01%20at%2017.25.06.webp' },
 ];
 
-const FETE_DES_PERES_MEDIA = [
-  { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20fetes%20des%20peres/3-Fetes-des-peres-soleana-bien-etre-venerque.webp' },
-  { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20fetes%20des%20peres/1-Fetes-des-peres-soleana-bien-etre-venerque.webp' },
-  { type: 'image' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20fetes%20des%20peres/2-Fetes-des-peres-soleana-bien-etre-venerque.webp' },
-  { type: 'video' as const, src: 'https://ssenglsjrkjmambtxckl.supabase.co/storage/v1/object/public/Images%20du%20site/Promotion%20fetes%20des%20peres/4-fetes-des-peres-promotions.mp4' },
-];
-
-type PromoView = 'menu' | 'spring' | 'estime-sens' | 'fete-des-peres';
-type TargetOffer = 'spring' | 'estime-sens' | 'fete-des-peres';
+type PromoView = 'menu' | 'spring' | 'estime-sens';
+type TargetOffer = 'spring' | 'estime-sens';
 
 const CONFETTI_COLORS = ['#f43f5e', '#f97316', '#10b981', '#14b8a6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4'];
 const CONFETTI_COUNT = 70;
@@ -36,7 +29,6 @@ export default function SeasonalPopups() {
   const [view, setView] = useState<PromoView>('menu');
   const [storyIndex, setStoryIndex] = useState(0);
   const [estimeSensIndex, setEstimeSensIndex] = useState(0);
-  const [feteDesPeresIndex, setFeteDesPeresIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiOrigin, setConfettiOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -70,7 +62,7 @@ export default function SeasonalPopups() {
     <>
       {isPromoCardVisible && (
         <div className="fixed right-3 bottom-3 sm:right-4 sm:bottom-4 z-[120]">
-          <div className="relative w-[88vw] max-w-[290px] rounded-2xl border border-sky-200 bg-sky-50/95 backdrop-blur-sm shadow-lg p-3">
+          <div className="relative w-[88vw] max-w-[290px] rounded-2xl border border-amber-200 bg-amber-50/95 backdrop-blur-sm shadow-lg p-3">
             <button
               type="button"
               onClick={() => setIsPromoCardVisible(false)}
@@ -79,13 +71,13 @@ export default function SeasonalPopups() {
             >
               <X size={12} />
             </button>
-            <p className="text-sm text-sky-700 font-semibold pr-7">💙 Fête des Pères</p>
-            <p className="text-xs text-stone-600 mt-0.5">Soin visage Homme &amp; coffrets cadeaux jusqu'au 21 juin</p>
+            <p className="text-sm text-amber-800 font-semibold pr-7">✨ Duo Bonne Mine</p>
+            <p className="text-xs text-stone-600 mt-0.5">Gommage + gouttes autobronzantes à 39,90 €</p>
             <div className="mt-2 flex items-center gap-2">
               <button
                 type="button"
-                onClick={(e) => launchConfettiThenOpen('fete-des-peres', e)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 transition-colors"
+                onClick={(e) => launchConfettiThenOpen('estime-sens', e)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 transition-colors"
               >
                 Voir l'offre
                 <ChevronRight size={15} />
@@ -137,14 +129,7 @@ export default function SeasonalPopups() {
                     <p className="text-xs text-stone-600 mt-1">Gommage + gouttes autobronzantes à 39,90 €</p>
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={(e) => launchConfettiThenOpen('fete-des-peres', e)}
-                    className="w-full text-left rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 hover:bg-sky-100 transition-colors"
-                  >
-                    <p className="text-sm font-semibold text-sky-700">💙 Fête des Pères</p>
-                    <p className="text-xs text-stone-600 mt-1">Soin visage Homme & coffrets Estime &amp; Sens</p>
-                  </button>
+
                 </div>
               </div>
             )}
@@ -309,101 +294,7 @@ export default function SeasonalPopups() {
                 </div>
               </div>
             )}
-            {view === 'fete-des-peres' && (() => {
-              const media = FETE_DES_PERES_MEDIA[feteDesPeresIndex];
-              return (
-                <div>
-                  <div className="w-full max-h-[55vh] bg-stone-50 flex items-center justify-center overflow-hidden">
-                    {media.type === 'video' ? (
-                      <video
-                        key={media.src}
-                        src={media.src}
-                        className="w-full max-h-[55vh] object-contain"
-                        controls
-                        autoPlay
-                        muted
-                        playsInline
-                      />
-                    ) : (
-                      <img
-                        key={media.src}
-                        src={media.src}
-                        alt={`Fête des Pères visuel ${feteDesPeresIndex + 1}`}
-                        className="w-full max-h-[55vh] object-contain"
-                      />
-                    )}
-                  </div>
 
-                  <div className="p-4 border-t border-stone-100 space-y-3">
-                    <div className="space-y-1">
-                      <p className="text-sm font-semibold text-sky-800">💙 Fête des Pères</p>
-                      <p className="text-xs text-stone-600 leading-relaxed">
-                        Cette année, offrez-lui un moment de bien-être rien qu'à lui.<br />
-                        ✨ <span className="font-medium">Soin Visage Homme HUMAN</span> – 1h de détente à 70 €<br />
-                        🎁 <span className="font-medium">Coffrets cadeaux Homme Estime &amp; Sens</span> prêts à offrir, de 32 € à 65 €, avec trousse offerte.
-                      </p>
-                      <p className="text-xs text-sky-700 font-semibold mt-1">Offre coffrets valable jusqu'au 21 juin.</p>
-                    </div>
-
-                    {feteDesPeresIndex === FETE_DES_PERES_MEDIA.length - 1 && (
-                      <div className="flex justify-center">
-                        <a
-                          href={PLANITY_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 transition-colors"
-                        >
-                          Réserver sur Planity
-                          <ChevronRight size={14} />
-                        </a>
-                      </div>
-                    )}
-
-                    <div className="flex gap-1">
-                      {FETE_DES_PERES_MEDIA.map((_, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => setFeteDesPeresIndex(i)}
-                          className={`h-1.5 flex-1 rounded-full ${i === feteDesPeresIndex ? 'bg-sky-600' : 'bg-stone-200'}`}
-                          aria-label={`Visuel ${i + 1}`}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <button
-                        type="button"
-                        onClick={() => setView('menu')}
-                        className="text-xs text-stone-500 hover:text-stone-700"
-                      >
-                        Retour au choix
-                      </button>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setFeteDesPeresIndex((prev) => (prev - 1 + FETE_DES_PERES_MEDIA.length) % FETE_DES_PERES_MEDIA.length)}
-                          className="h-8 w-8 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 flex items-center justify-center"
-                          aria-label="Precedent"
-                        >
-                          <ChevronLeft size={15} />
-                        </button>
-                        <p className="text-xs text-stone-600">{feteDesPeresIndex + 1}/{FETE_DES_PERES_MEDIA.length}</p>
-                        <button
-                          type="button"
-                          onClick={() => setFeteDesPeresIndex((prev) => (prev + 1) % FETE_DES_PERES_MEDIA.length)}
-                          className="h-8 w-8 rounded-full bg-sky-600 text-white hover:bg-sky-700 flex items-center justify-center"
-                          aria-label="Suivant"
-                        >
-                          <ChevronRight size={15} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
 
           </div>
         </div>
